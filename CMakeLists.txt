@@ -1,8 +1,10 @@
 cmake_minimum_required(VERSION 3.22.1)
 project (TIRALABRA_SCIENTIFIC_CALCULATOR)
 
+include_directories(./include)
+file(GLOB sources
+     "include/*.h"
+     "src/*.cpp"
+)
 
-set(SOURCES ./src/main.cpp ./src/hello.cpp ./headers/main.h ./headers/hello.h)
-add_executable(TIRALABRA_SCIENTIFIC_CALCULATOR ${SOURCES})
-add_subdirectory(./src)
-add_subdirectory(./headers)
+add_executable(TIRALABRA_SCIENTIFIC_CALCULATOR ${sources})
