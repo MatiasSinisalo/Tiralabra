@@ -1,4 +1,4 @@
-#include "hello.h"
+#include "../headers/main.h"
 
 
 int main(){
