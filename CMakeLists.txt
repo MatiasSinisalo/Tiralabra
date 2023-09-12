@@ -1,14 +1,5 @@
 cmake_minimum_required(VERSION 3.22.1)
 
-
-project (TIRALABRA_SCIENTIFIC_CALCULATOR_LIB LANGUAGES CXX)
-file(GLOB sources_lib
-     "./lib/custom_libary/include/*.h"
-     "./lib/custom_libary/src/*.cpp"
-)
-add_library(TIRALABRA_SCIENTIFIC_CALCULATOR_LIB  SHARED ${sources_lib})
-target_include_directories(TIRALABRA_SCIENTIFIC_CALCULATOR_LIB PUBLIC ./lib/custom_libary/include/)
-
 project (TIRALABRA_SCIENTIFIC_CALCULATOR)
 file(GLOB sources
      "include/*.h"
@@ -16,4 +7,24 @@ file(GLOB sources
 )
 add_executable(TIRALABRA_SCIENTIFIC_CALCULATOR ${sources})
 target_include_directories(TIRALABRA_SCIENTIFIC_CALCULATOR PUBLIC ./include)
-target_link_libraries(TIRALABRA_SCIENTIFIC_CALCULATOR PRIVATE TIRALABRA_SCIENTIFIC_CALCULATOR_LIB)
+
+project(TIRALABRA_SCIENTIFIC_CALCULATOR_TESTS)
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.zip
+)
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+
+enable_testing()
+file(GLOB sources_test
+     "./tests/*.cpp"
+     "include/hello.h"
+     "src/hello.cpp"
+)
+add_executable(TIRALABRA_SCIENTIFIC_CALCULATOR_TESTS ${sources_test})
+target_include_directories(TIRALABRA_SCIENTIFIC_CALCULATOR_TESTS PUBLIC ./include)
+target_link_libraries(TIRALABRA_SCIENTIFIC_CALCULATOR_TESTS gtest_main)
+include(GoogleTest)
+gtest_discover_tests(TIRALABRA_SCIENTIFIC_CALCULATOR_TESTS)
