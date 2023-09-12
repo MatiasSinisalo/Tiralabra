@@ -1,5 +1,4 @@
 cmake_minimum_required(VERSION 3.22.1)
-
 project (TIRALABRA_SCIENTIFIC_CALCULATOR)
 file(GLOB sources
      "include/*.h"
@@ -25,6 +24,15 @@ file(GLOB sources_test
 )
 add_executable(TIRALABRA_SCIENTIFIC_CALCULATOR_TESTS ${sources_test})
 target_include_directories(TIRALABRA_SCIENTIFIC_CALCULATOR_TESTS PUBLIC ./include)
-target_link_libraries(TIRALABRA_SCIENTIFIC_CALCULATOR_TESTS gtest_main)
+target_link_libraries(TIRALABRA_SCIENTIFIC_CALCULATOR_TESTS PUBLIC gtest_main)
+
+target_compile_options(TIRALABRA_SCIENTIFIC_CALCULATOR_TESTS PUBLIC --coverage)
+target_link_options(TIRALABRA_SCIENTIFIC_CALCULATOR_TESTS PUBLIC --coverage)
+
 include(GoogleTest)
+include(CTest)
+
+
+
+
 gtest_discover_tests(TIRALABRA_SCIENTIFIC_CALCULATOR_TESTS)
