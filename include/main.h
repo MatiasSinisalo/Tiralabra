@@ -1,2 +1,3 @@
 #pragma once
-#include "hello.h"
+#include <iostream>
+using namespace std;
