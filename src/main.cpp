@@ -86,21 +86,19 @@ vector<token> getTokensFromInputString(const string input){
     return tokens;
 }
 
-int main(){
-    
+void debug_printTokens(const string extraMsg, const vector<token> tokens){
+    cout << extraMsg << "\n";
+    cout << "[";
+    for(const token &t : tokens){
+        cout <<  tokenTypeToString[t.tokenType] << " " << operatorTypeToString[t.opType] << " " << t.numberVal << ", ";
+    }   
+    cout << "]\n";
+}
 
-    string input = "";
-    getline(cin, input);
-    
-    vector<token> tokens = getTokensFromInputString(input);
-
-    for(token &t : tokens){
-        cout << tokenTypeToString[t.tokenType] << " " << operatorTypeToString[t.opType] << " " << t.numberVal << "\n";
-    }
-
+vector<token> shuntingYard(const vector<token> tokens){
     vector<token> output;
     vector<token> operators;
-    for(token &t : tokens){
+    for(const token &t : tokens){
         switch (t.tokenType)
         {
         case NUMBER:
@@ -122,19 +120,9 @@ int main(){
             break;
         }
 
-        cout << "output stack now is: \n";
-        cout << "[";
-        for(token &t : output){
-            cout <<  tokenTypeToString[t.tokenType] << " " << operatorTypeToString[t.opType] << " " << t.numberVal << ", ";
-        }   
-        cout << "]\n";
+        debug_printTokens("output stack not is: ", output);
 
-        cout << "operator stack now is: \n";
-        cout << "[";
-        for(token &t : operators){
-            cout <<  tokenTypeToString[t.tokenType] << " " << operatorTypeToString[t.opType] << " " << t.numberVal << ", ";
-        }   
-        cout << "]\n";
+        debug_printTokens("operator stack not is: ", operators);
     }
 
     
@@ -142,12 +130,24 @@ int main(){
         output.push_back(operators[i]);
     }
 
-    cout << "final output stack now is: \n";
-        cout << "[";
-        for(token &t : output){
-            cout <<  tokenTypeToString[t.tokenType] << " " << operatorTypeToString[t.opType] << " " << t.numberVal << ", ";
-        }   
-        cout << "]\n";
+    return output;
+}
+
+int main(){
+    
+
+    string input = "";
+    getline(cin, input);
+    
+    vector<token> tokens = getTokensFromInputString(input);
+
+    for(token &t : tokens){
+        cout << tokenTypeToString[t.tokenType] << " " << operatorTypeToString[t.opType] << " " << t.numberVal << "\n";
+    }
+
+    vector<token> output = shuntingYard(tokens);
+
+    debug_printTokens("final output stack not is: ", output);
 
     return 0;
 }
