@@ -131,6 +131,15 @@ bool beforeIsHigherPrecedence(vector<token> &output, vector<token> &operators){
     return false;
 }
 
+void followCountingRules(vector<token> &output, vector<token> &operators){
+    if(beforeIsHigherPrecedence(output, operators) || beforeIsLeftAssociative(output, operators))
+    {
+        token operatorBefore = operators.back();
+        output.push_back(operatorBefore);
+        operators.pop_back();
+    }
+}
+
 //currently only supports + and -
 //output should be Reverse Polish notation RPN
 vector<token> shuntingYard(const vector<token> tokens){
@@ -146,22 +155,11 @@ vector<token> shuntingYard(const vector<token> tokens){
             switch (t.opType)
             {
             case PLUS:
-                if(beforeIsHigherPrecedence(output, operators) || beforeIsLeftAssociative(output, operators))
-                {
-                    token operatorBefore = operators.back();
-                    output.push_back(operatorBefore);
-                    operators.pop_back();
-                }
-                
+                followCountingRules(output, operators);
                 operators.push_back(t);
                 break;
             case MINUS:
-                if(beforeIsHigherPrecedence(output, operators) || beforeIsLeftAssociative(output, operators))
-                {
-                    token operatorBefore = operators.back();
-                    output.push_back(operatorBefore);
-                    operators.pop_back();
-                }
+                followCountingRules(output, operators);
                 operators.push_back(t);
                 break;
             case MULTIPLY:
