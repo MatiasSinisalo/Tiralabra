@@ -100,8 +100,25 @@ void checkAndHandleLeftAssociativity(vector<token> &output, vector<token> &opera
         token operatorBefore = operators.back();
         switch (operatorBefore.opType)
         {
+            case MULTIPLY: // multiplty is left and right
             case MINUS: //minus is only left associative
             case PLUS: //plus is both left and right associative so it must also be handled
+                output.push_back(operatorBefore);
+                operators.pop_back();
+                break;
+            
+            default:
+                break;
+        }
+    }
+}
+
+void checkAndHandlePrecedence(vector<token> &output, vector<token> &operators){
+    if(operators.size() > 0){
+        token operatorBefore = operators.back();
+        switch (operatorBefore.opType)
+        {
+            case MULTIPLY: //multiply should be calculated before PLUS so push it to output stack
                 output.push_back(operatorBefore);
                 operators.pop_back();
                 break;
@@ -129,12 +146,15 @@ vector<token> shuntingYard(const vector<token> tokens){
             case PLUS:
                 //check and handle left associative operators
                 checkAndHandleLeftAssociativity(output, operators);
+                checkAndHandlePrecedence(output, operators);
                 operators.push_back(t);
                 break;
             case MINUS:
                 checkAndHandleLeftAssociativity(output, operators);
                 operators.push_back(t);
                 break;
+            case MULTIPLY:
+                operators.push_back(t);
             default:
                 break;
             }
@@ -146,7 +166,7 @@ vector<token> shuntingYard(const vector<token> tokens){
 
         debug_printTokens("operator stack now is: ", operators);
     }
-
+    
     //add the rest of operators to the output
     output.insert(output.end(), operators.begin(), operators.end());
     operators.clear();
