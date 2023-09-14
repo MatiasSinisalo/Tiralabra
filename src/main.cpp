@@ -36,6 +36,8 @@ public:
 };
 
 
+
+
 vector<token> getTokensFromInputString(const string input){
     vector<token> tokens;
     const regex numberRegex("[0-9]");
@@ -119,21 +121,36 @@ int main(){
         default:
             break;
         }
+
+        cout << "output stack now is: \n";
+        cout << "[";
+        for(token &t : output){
+            cout <<  tokenTypeToString[t.tokenType] << " " << operatorTypeToString[t.opType] << " " << t.numberVal << ", ";
+        }   
+        cout << "]\n";
+
+        cout << "operator stack now is: \n";
+        cout << "[";
+        for(token &t : operators){
+            cout <<  tokenTypeToString[t.tokenType] << " " << operatorTypeToString[t.opType] << " " << t.numberVal << ", ";
+        }   
+        cout << "]\n";
     }
 
-    cout << "output stack now is: \n";
-    cout << "[";
-    for(token &t : output){
-        cout <<  tokenTypeToString[t.tokenType] << " " << operatorTypeToString[t.opType] << " " << t.numberVal << ", ";
-    }   
-    cout << "]\n";
+    
+    for(int i = operators.size() - 1; i > -1; i--){
+        output.push_back(operators[i]);
+    }
 
-    cout << "operator stack now is: \n";
-    cout << "[";
-    for(token &t : operators){
-        cout <<  tokenTypeToString[t.tokenType] << " " << operatorTypeToString[t.opType] << " " << t.numberVal << ", ";
-    }   
-    cout << "]\n";
+    cout << "final output stack now is: \n";
+        cout << "[";
+        for(token &t : output){
+            cout <<  tokenTypeToString[t.tokenType] << " " << operatorTypeToString[t.opType] << " " << t.numberVal << ", ";
+        }   
+        cout << "]\n";
+
     return 0;
 }
+
+
 
