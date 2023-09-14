@@ -95,7 +95,45 @@ int main(){
     for(token &t : tokens){
         cout << tokenTypeToString[t.tokenType] << " " << operatorTypeToString[t.opType] << " " << t.numberVal << "\n";
     }
-    
+
+    vector<token> output;
+    vector<token> operators;
+    for(token &t : tokens){
+        switch (t.tokenType)
+        {
+        case NUMBER:
+            output.push_back(t);
+            break;
+        case OPERATOR:
+            switch (t.opType)
+            {
+            case PLUS:
+                operators.push_back(t);
+                break;
+            case MINUS:
+                operators.push_back(t);
+                break;
+            default:
+                break;
+            }
+        default:
+            break;
+        }
+    }
+
+    cout << "output stack now is: \n";
+    cout << "[";
+    for(token &t : output){
+        cout <<  tokenTypeToString[t.tokenType] << " " << operatorTypeToString[t.opType] << " " << t.numberVal << ", ";
+    }   
+    cout << "]\n";
+
+    cout << "operator stack now is: \n";
+    cout << "[";
+    for(token &t : operators){
+        cout <<  tokenTypeToString[t.tokenType] << " " << operatorTypeToString[t.opType] << " " << t.numberVal << ", ";
+    }   
+    cout << "]\n";
     return 0;
 }
 
