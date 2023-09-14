@@ -95,6 +95,23 @@ void debug_printTokens(const string extraMsg, const vector<token> tokens){
     cout << "]\n";
 }
 
+void checkAndHandleLeftAssociativity(vector<token> &output, vector<token> &operators){
+    if(operators.size() > 0){
+        token operatorBefore = operators.back();
+        switch (operatorBefore.opType)
+        {
+            case MINUS: //minus is only left associative
+            case PLUS: //plus is both left and right associative so it must also be handled
+                output.push_back(operatorBefore);
+                operators.pop_back();
+                break;
+            
+            default:
+                break;
+        }
+    }
+}
+
 //currently only supports + and -
 //output should be Reverse Polish notation RPN
 vector<token> shuntingYard(const vector<token> tokens){
@@ -111,38 +128,11 @@ vector<token> shuntingYard(const vector<token> tokens){
             {
             case PLUS:
                 //check and handle left associative operators
-                if(operators.size() > 0){
-                    token operatorBefore = operators.back();
-                    switch (operatorBefore.opType)
-                    {
-                        case MINUS: //minus is only left associative
-                        case PLUS: //plus is both left and right associative so it must also be handled
-                            output.push_back(operatorBefore);
-                            operators.pop_back();
-                            break;
-                        
-                        default:
-                            break;
-                    }
-                }
-               
+                checkAndHandleLeftAssociativity(output, operators);
                 operators.push_back(t);
                 break;
             case MINUS:
-                if(operators.size() > 0){
-                    token operatorBefore = operators.back();
-                    switch (operatorBefore.opType)
-                    {
-                        case MINUS: //minus is only left associative
-                        case PLUS: //plus is both left and right associative so it must also be handled
-                            output.push_back(operatorBefore);
-                            operators.pop_back();
-                            break;
-                        
-                        default:
-                            break;
-                    }
-                }
+                checkAndHandleLeftAssociativity(output, operators);
                 operators.push_back(t);
                 break;
             default:
