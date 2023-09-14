@@ -166,9 +166,11 @@ vector<token> shuntingYard(const vector<token> tokens){
 
         debug_printTokens("operator stack now is: ", operators);
     }
-    
-    //add the rest of operators to the output
-    output.insert(output.end(), operators.begin(), operators.end());
+
+    //add the rest of operators to the output in reverse since the vector is supposed to be a stack.
+    for(int i = operators.size() - 1; i >= 0; i--){
+        output.push_back(operators[i]);
+    }
     operators.clear();
 
     return output;
