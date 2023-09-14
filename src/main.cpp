@@ -95,7 +95,7 @@ void debug_printTokens(const string extraMsg, const vector<token> tokens){
     cout << "]\n";
 }
 
-void checkAndHandleLeftAssociativity(vector<token> &output, vector<token> &operators){
+bool beforeIsLeftAssociative(vector<token> &output, vector<token> &operators){
     if(operators.size() > 0){
         token operatorBefore = operators.back();
         switch (operatorBefore.opType)
@@ -103,30 +103,32 @@ void checkAndHandleLeftAssociativity(vector<token> &output, vector<token> &opera
             case MULTIPLY: // multiplty is left and right
             case MINUS: //minus is only left associative
             case PLUS: //plus is both left and right associative so it must also be handled
-                output.push_back(operatorBefore);
-                operators.pop_back();
+                return true;
                 break;
             
             default:
+                return false;
                 break;
         }
     }
+    return false;
 }
 
-void checkAndHandlePrecedence(vector<token> &output, vector<token> &operators){
+bool beforeIsHigherPrecedence(vector<token> &output, vector<token> &operators){
     if(operators.size() > 0){
         token operatorBefore = operators.back();
         switch (operatorBefore.opType)
         {
-            case MULTIPLY: //multiply should be calculated before PLUS so push it to output stack
-                output.push_back(operatorBefore);
-                operators.pop_back();
+            case MULTIPLY:
+                return true;
                 break;
             
             default:
+                return false;
                 break;
         }
     }
+    return false;
 }
 
 //currently only supports + and -
@@ -144,13 +146,22 @@ vector<token> shuntingYard(const vector<token> tokens){
             switch (t.opType)
             {
             case PLUS:
-                //check and handle left associative operators
-                checkAndHandleLeftAssociativity(output, operators);
-                checkAndHandlePrecedence(output, operators);
+                if(beforeIsHigherPrecedence(output, operators) || beforeIsLeftAssociative(output, operators))
+                {
+                    token operatorBefore = operators.back();
+                    output.push_back(operatorBefore);
+                    operators.pop_back();
+                }
+                
                 operators.push_back(t);
                 break;
             case MINUS:
-                checkAndHandleLeftAssociativity(output, operators);
+                if(beforeIsHigherPrecedence(output, operators) || beforeIsLeftAssociative(output, operators))
+                {
+                    token operatorBefore = operators.back();
+                    output.push_back(operatorBefore);
+                    operators.pop_back();
+                }
                 operators.push_back(t);
                 break;
             case MULTIPLY:
