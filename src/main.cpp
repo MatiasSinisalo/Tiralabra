@@ -164,6 +164,7 @@ vector<token> shuntingYard(const vector<token> tokens){
                 break;
             case MULTIPLY:
                 operators.push_back(t);
+                break;
             default:
                 break;
             }
