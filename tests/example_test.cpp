@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 #include "hello.h"
 #include <iostream>
-
 // Demonstrate some basic assertions.
 TEST(HelloTest, sayHelloPrintsCorrectly) {
     testing::internal::CaptureStdout();
