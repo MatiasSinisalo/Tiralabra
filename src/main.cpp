@@ -98,7 +98,6 @@ void debug_printTokens(const string extraMsg, const vector<token> tokens){
 //currently only supports + and -
 //output should be Reverse Polish notation RPN
 vector<token> shuntingYard(const vector<token> tokens){
-    int numbersBeforeOperator = 0;
     vector<token> output;
     vector<token> operators;
     for(const token &t : tokens){
@@ -106,15 +105,44 @@ vector<token> shuntingYard(const vector<token> tokens){
         {
         case NUMBER:
             output.push_back(t);
-            numbersBeforeOperator++;
             break;
         case OPERATOR:
             switch (t.opType)
             {
             case PLUS:
+                //check and handle left associative operators
+                if(operators.size() > 0){
+                    token operatorBefore = operators.back();
+                    switch (operatorBefore.opType)
+                    {
+                        case MINUS: //minus is only left associative
+                        case PLUS: //plus is both left and right associative so it must also be handled
+                            output.push_back(operatorBefore);
+                            operators.pop_back();
+                            break;
+                        
+                        default:
+                            break;
+                    }
+                }
+               
                 operators.push_back(t);
                 break;
             case MINUS:
+                if(operators.size() > 0){
+                    token operatorBefore = operators.back();
+                    switch (operatorBefore.opType)
+                    {
+                        case MINUS: //minus is only left associative
+                        case PLUS: //plus is both left and right associative so it must also be handled
+                            output.push_back(operatorBefore);
+                            operators.pop_back();
+                            break;
+                        
+                        default:
+                            break;
+                    }
+                }
                 operators.push_back(t);
                 break;
             default:
@@ -123,23 +151,20 @@ vector<token> shuntingYard(const vector<token> tokens){
         default:
             break;
         }
-        //check if there are two numbers in the output if there is, join the operators to the end of output
-        if(numbersBeforeOperator == 2){
-            output.insert(output.end(), operators.begin(), operators.end());
-            operators.clear();
-            numbersBeforeOperator = 1; // the result of A B (OPERATOR) => C so numbersBefore = 1 
-        }
+        
         debug_printTokens("output stack now is: ", output);
 
         debug_printTokens("operator stack now is: ", operators);
     }
-    
+
+    //add the rest of operators to the output
+    output.insert(output.end(), operators.begin(), operators.end());
+    operators.clear();
+
     return output;
 }
 
 int main(){
-    
-
     string input = "";
     getline(cin, input);
     
@@ -155,6 +180,3 @@ int main(){
 
     return 0;
 }
-
-
-
