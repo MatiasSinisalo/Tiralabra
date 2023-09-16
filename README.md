@@ -1,7 +1,8 @@
 # Tiralabra Scientific Calculator
 
 Programming language: c++20  
-User interface: CLI, cin/cout
+User interface: CLI, cin/cout  
+[Weekly Reports](https://github.com/MatiasSinisalo/Tiralabra/tree/main/documents/weeklyreports)  
 
 The goal is to build an scientific calculator using the Shunting yard Algorythm that calculates the value of a given mathematical argument.
 This project is built as a part of my computer science bachelors studies in Helsinki Universitiy (fin: tietojenkäsittelytieteen kandidaatti (TKT)).
