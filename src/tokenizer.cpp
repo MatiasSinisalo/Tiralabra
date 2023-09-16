@@ -8,12 +8,12 @@ vector<token> getTokensFromInputString(const string input) {
     smatch matchOperator;
     for (int i = 0; i < input.size(); i++) {
         string string_char = input.substr(i, 1);
-        cout << string_char << "\n";
+        
         bool confirmedNumber = regex_match(string_char, matchNumber, numberRegex);
         bool confirmedOperator = regex_match(string_char, matchOperator, operatorRegex);
 
         if (confirmedNumber) {
-            cout << "is number!\n";
+            
             tokens.push_back({
                 .type = NUMBER,
                 .opType = NONE,
@@ -21,7 +21,7 @@ vector<token> getTokensFromInputString(const string input) {
             });
         }
         else if (confirmedOperator) {
-            cout << "is operator!\n";
+            
             token newToken{
                 .type = OPERATOR,
             };
