@@ -30,27 +30,39 @@ TEST(shuntingYardTests_beforeIsLeftAssociative, detectsThatMultiplyIsLeftAsscoci
     EXPECT_EQ(isLeftAssociative, true);
 };
 
-TEST(shuntingYardTests_isHigherPrecedence, returnsTrueForMultiply){
+TEST(shuntingYardTests_isHigherPrecedence, returnsTrueForMultiplyPlus){
     vector<token> output = {};
     vector<token> operators = {{.type = OPERATOR, .opType = MULTIPLY}};
-
-    bool isLeftAssociative = beforeIsHigherPrecedence(output, operators);
-    EXPECT_EQ(isLeftAssociative, true);
+    token newToken = {
+        .type = OPERATOR,
+        .opType = PLUS,
+        .numberVal = 0
+    };
+    bool isHigherPrecedence = beforeIsHigherPrecedence(output, operators, newToken);
+    EXPECT_EQ(isHigherPrecedence, true);
 };
 
-TEST(shuntingYardTests_isHigherPrecedence, returnsFalseForPlus){
+TEST(shuntingYardTests_isHigherPrecedence, returnsFalseForPlusMultiply){
     vector<token> output = {};
     vector<token> operators = {{.type = OPERATOR, .opType = PLUS}};
-
-    bool isLeftAssociative = beforeIsHigherPrecedence(output, operators);
-    EXPECT_EQ(isLeftAssociative, false);
+    token newToken = {
+            .type = OPERATOR,
+            .opType = MULTIPLY,
+            .numberVal = 0
+    };
+    bool isHigherPrecedence = beforeIsHigherPrecedence(output, operators, newToken);
+    EXPECT_EQ(isHigherPrecedence, false);
 };
 
-TEST(shuntingYardTests_isHigherPrecedence, returnsFalseForMinus){
+TEST(shuntingYardTests_isHigherPrecedence, returnsFalseForMinusMultiply){
     vector<token> output = {};
     vector<token> operators = {{.type = OPERATOR, .opType = MINUS}};
-
-    bool isLeftAssociative = beforeIsHigherPrecedence(output, operators);
-    EXPECT_EQ(isLeftAssociative, false);
+    token newToken = {
+            .type = OPERATOR,
+            .opType = MULTIPLY,
+            .numberVal = 0
+    };
+    bool isHigherPrecedence = beforeIsHigherPrecedence(output, operators, newToken);
+    EXPECT_EQ(isHigherPrecedence, false);
 };
 
