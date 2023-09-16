@@ -19,7 +19,8 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 file(GLOB sources_test
      "./tests/*.cpp"
-     "src/hello.cpp"
+     "./src/tokenizer.cpp"
+     "./src/shuntingYard.cpp"
 )
 add_executable(TIRALABRA_SCIENTIFIC_CALCULATOR_TESTS ${sources_test})
 target_include_directories(TIRALABRA_SCIENTIFIC_CALCULATOR_TESTS PUBLIC ./include)
