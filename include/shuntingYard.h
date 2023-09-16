@@ -1,7 +1,7 @@
 #pragma once
 #include "tokenizer.h"
 
-void followCountingRules(vector<token>& output, vector<token>& operators);
+void followCountingRules(vector<token>& output, vector<token>& operators, const token newToken);
 
 bool beforeIsLeftAssociative(vector<token>& output, vector<token>& operators);
 

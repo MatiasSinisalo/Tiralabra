@@ -36,13 +36,14 @@ bool beforeIsHigherPrecedence(vector<token>& output, vector<token>& operators) {
     return false;
 }
 
-void followCountingRules(vector<token>& output, vector<token>& operators) {
+void followCountingRules(vector<token>& output, vector<token>& operators, const token newToken) {
     if (beforeIsHigherPrecedence(output, operators) || beforeIsLeftAssociative(output, operators))
     {
         token operatorBefore = operators.back();
         output.push_back(operatorBefore);
         operators.pop_back();
     }
+    operators.push_back(newToken);
 }
 
 //currently only supports + and -
@@ -57,22 +58,8 @@ vector<token> shuntingYard(const vector<token> tokens) {
             output.push_back(t);
             break;
         case OPERATOR:
-            switch (t.opType)
-            {
-            case PLUS:
-                followCountingRules(output, operators);
-                operators.push_back(t);
-                break;
-            case MINUS:
-                followCountingRules(output, operators);
-                operators.push_back(t);
-                break;
-            case MULTIPLY:
-                operators.push_back(t);
-                break;
-            default:
-                break;
-            }
+            followCountingRules(output, operators, t);
+            break;
         default:
             break;
         }
