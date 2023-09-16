@@ -19,7 +19,6 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 file(GLOB sources_test
      "./tests/*.cpp"
-     "include/hello.h"
      "src/hello.cpp"
 )
 add_executable(TIRALABRA_SCIENTIFIC_CALCULATOR_TESTS ${sources_test})
