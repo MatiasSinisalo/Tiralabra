@@ -47,3 +47,12 @@ vector<token> getTokensFromInputString(const string input) {
 
     return tokens;
 }
+
+void debug_printTokens(const string extraMsg, const vector<token> tokens) {
+    cout << extraMsg << "\n";
+    cout << "[";
+    for (const token& t : tokens) {
+        cout << tokenTypeToString[t.tokenType] << " " << operatorTypeToString[t.opType] << " " << t.numberVal << ", ";
+    }
+    cout << "]\n";
+}
