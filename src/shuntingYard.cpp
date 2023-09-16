@@ -19,19 +19,15 @@ bool beforeIsLeftAssociative(vector<token>& output, vector<token>& operators) {
     return false;
 }
 
-bool beforeIsHigherPrecedence(vector<token>& output, vector<token>& operators) {
+bool beforeIsHigherPrecedence(vector<token>& output, vector<token>& operators, const token compareTo) {
     if (operators.size() > 0) {
         token operatorBefore = operators.back();
-        switch (operatorBefore.opType)
-        {
-        case MULTIPLY:
-            return true;
-            break;
-
-        default:
-            return false;
-            break;
+        if(operatorBefore.opType == MULTIPLY || operatorBefore.opType == DIVIDE){
+            if(compareTo.opType == MINUS || compareTo.opType == PLUS){
+                return true;
+            }
         }
+        return false;
     }
     return false;
 }
@@ -60,7 +56,7 @@ bool beforeIsSamePrecedence(const vector<token>& output, const vector<token>& op
 }
 
 void followCountingRules(vector<token>& output, vector<token>& operators, const token newToken) {
-    if (beforeIsHigherPrecedence(output, operators) || (beforeIsSamePrecedence(output, operators, newToken) && beforeIsLeftAssociative(output, operators)))
+    if (beforeIsHigherPrecedence(output, operators, newToken) || (beforeIsSamePrecedence(output, operators, newToken) && beforeIsLeftAssociative(output, operators)))
     {
         token operatorBefore = operators.back();
         output.push_back(operatorBefore);
