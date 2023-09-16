@@ -185,10 +185,6 @@ TEST(shuntingYardTests_isSamePrecedence, returnsFalseForEmptyInputs){
     EXPECT_EQ(isSamePrecedence, false);
 };
 
-void callAndTestWithToken(vector<token> &output, vector<token> &operators, token newToken, int expectedOperatorSizeAfter){
-    
-}
-
 TEST(shuntingYardTests_followCountingRules, PlusPlusCausesPlusToEnterOutput){
     vector<token> output = {};
     vector<token> operators = {};
