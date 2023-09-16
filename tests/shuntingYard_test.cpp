@@ -185,6 +185,12 @@ TEST(shuntingYardTests_isSamePrecedence, returnsFalseForEmptyInputs){
     EXPECT_EQ(isSamePrecedence, false);
 };
 
+void checkFirstTokenIsCorrectOperator(vector<token> tokens, operatorType expectedOperatorType, int expectedSize){
+    EXPECT_EQ(tokens.size(), expectedSize);
+    EXPECT_EQ(tokens[tokens.size() - 1].type, OPERATOR);
+    EXPECT_EQ(tokens[tokens.size() - 1].opType, expectedOperatorType);
+}
+
 TEST(shuntingYardTests_followCountingRules, PlusPlusCausesPlusToEnterOutput){
     vector<token> output = {};
     vector<token> operators = {};
@@ -192,20 +198,27 @@ TEST(shuntingYardTests_followCountingRules, PlusPlusCausesPlusToEnterOutput){
 
     followCountingRules(output, operators, {.type = OPERATOR, .opType = PLUS, .numberVal = 0});
     EXPECT_EQ(output.size(), 0);
-    
-    EXPECT_EQ(operators.size(), 1);
-    EXPECT_EQ(operators[operators.size() - 1].type, OPERATOR);
-    EXPECT_EQ(operators[operators.size() - 1].opType, PLUS);
+    checkFirstTokenIsCorrectOperator(operators, PLUS, 1);
 
     
     followCountingRules(output, operators, {.type = OPERATOR, .opType = PLUS, .numberVal = 0});
-    
-    EXPECT_EQ(output.size(), 1);
-    EXPECT_EQ(output[output.size() - 1].type, OPERATOR);
-    EXPECT_EQ(output[output.size() - 1].opType, PLUS);
+    checkFirstTokenIsCorrectOperator(output, PLUS, 1);
+    checkFirstTokenIsCorrectOperator(operators, PLUS, 1);
+}
 
-    EXPECT_EQ(operators.size(), 1);
-    EXPECT_EQ(operators[operators.size() - 1].type, OPERATOR);
-    EXPECT_EQ(operators[operators.size() - 1].opType, PLUS);
+
+
+TEST(shuntingYardTests_followCountingRules, PlusMinusCausesPlusToEnterOutput){
+    vector<token> output = {};
+    vector<token> operators = {};
+
+
+    followCountingRules(output, operators, {.type = OPERATOR, .opType = PLUS, .numberVal = 0});
+    EXPECT_EQ(output.size(), 0);
+    checkFirstTokenIsCorrectOperator(operators, PLUS, 1);
+    
+    followCountingRules(output, operators, {.type = OPERATOR, .opType = MINUS, .numberVal = 0});
+    checkFirstTokenIsCorrectOperator(output, PLUS, 1);
+    checkFirstTokenIsCorrectOperator(operators, MINUS, 1);
 
 }
