@@ -36,8 +36,31 @@ bool beforeIsHigherPrecedence(vector<token>& output, vector<token>& operators) {
     return false;
 }
 
+bool beforeIsSamePrecedence(const vector<token>& output, const vector<token>& operators, const token compareTo){
+    if(operators.size() > 0){
+        const token beforeToken = operators.back();
+        if(beforeToken.opType == compareTo.opType){
+            return true;
+        }
+        else if(beforeToken.opType == MINUS && compareTo.opType == PLUS){
+            return true;
+        }
+        else if(beforeToken.opType == PLUS && compareTo.opType == MINUS){
+            return true;
+        }
+        else if(beforeToken.opType == MULTIPLY && compareTo.opType == DIVIDE){
+            return true;
+        }
+        else if(beforeToken.opType == DIVIDE && compareTo.opType == MULTIPLY){
+            return true;
+        }
+        return false;
+    }
+   return false;
+}
+
 void followCountingRules(vector<token>& output, vector<token>& operators, const token newToken) {
-    if (beforeIsHigherPrecedence(output, operators) || beforeIsLeftAssociative(output, operators))
+    if (beforeIsHigherPrecedence(output, operators) || (beforeIsSamePrecedence(output, operators, newToken) && beforeIsLeftAssociative(output, operators)))
     {
         token operatorBefore = operators.back();
         output.push_back(operatorBefore);
