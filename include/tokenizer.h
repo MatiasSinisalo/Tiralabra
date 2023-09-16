@@ -33,7 +33,7 @@ const vector<string> operatorTypeToString = {
 
 class token {
 public:
-    tokenType tokenType;
+    tokenType type;
 
     operatorType opType;
     int numberVal;

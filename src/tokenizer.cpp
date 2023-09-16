@@ -15,7 +15,7 @@ vector<token> getTokensFromInputString(const string input) {
         if (confirmedNumber) {
             cout << "is number!\n";
             tokens.push_back({
-                .tokenType = NUMBER,
+                .type = NUMBER,
                 .opType = NONE,
                 .numberVal = stoi(string_char)
             });
@@ -23,7 +23,7 @@ vector<token> getTokensFromInputString(const string input) {
         else if (confirmedOperator) {
             cout << "is operator!\n";
             token newToken{
-                .tokenType = OPERATOR,
+                .type = OPERATOR,
             };
             if (string_char == "+")
             {
@@ -52,7 +52,7 @@ void debug_printTokens(const string extraMsg, const vector<token> tokens) {
     cout << extraMsg << "\n";
     cout << "[";
     for (const token& t : tokens) {
-        cout << tokenTypeToString[t.tokenType] << " " << operatorTypeToString[t.opType] << " " << t.numberVal << ", ";
+        cout << tokenTypeToString[t.type] << " " << operatorTypeToString[t.opType] << " " << t.numberVal << ", ";
     }
     cout << "]\n";
 }

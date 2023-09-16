@@ -7,7 +7,7 @@ int main(){
     vector<token> tokens = getTokensFromInputString(input);
 
     for(token &t : tokens){
-        cout << tokenTypeToString[t.tokenType] << " " << operatorTypeToString[t.opType] << " " << t.numberVal << "\n";
+        cout << tokenTypeToString[t.type] << " " << operatorTypeToString[t.opType] << " " << t.numberVal << "\n";
     }
 
     vector<token> output = shuntingYard(tokens);

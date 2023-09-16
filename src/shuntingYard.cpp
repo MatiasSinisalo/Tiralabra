@@ -51,7 +51,7 @@ vector<token> shuntingYard(const vector<token> tokens) {
     vector<token> output;
     vector<token> operators;
     for (const token& t : tokens) {
-        switch (t.tokenType)
+        switch (t.type)
         {
         case NUMBER:
             output.push_back(t);
