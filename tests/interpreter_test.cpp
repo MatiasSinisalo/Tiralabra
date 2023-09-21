@@ -9,7 +9,7 @@ void testInterpreterFor(vector<token> tokens, token expectedOutput){
     ASSERT_EQ(output.numberVal, expectedOutput.numberVal);
 }
 
-TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForOnePlusOneMinusTwo){
+TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForOnePlusOne){
     vector<token> tokens = {
         {
             .type = NUMBER,
@@ -29,4 +29,26 @@ TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForOnePlusOneMinusTwo
     };
 
     testInterpreterFor(tokens, {.type = NUMBER, .opType = NONE, .numberVal = 2});
+}
+
+TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForTwoMinusOne){
+    vector<token> tokens = {
+        {
+            .type = NUMBER,
+            .opType = NONE,
+            .numberVal = 2
+        },
+        {
+            .type = NUMBER,
+            .opType = NONE,
+            .numberVal = 1
+        },
+        {
+            .type = OPERATOR,
+            .opType = MINUS,
+            .numberVal = 0
+        }
+    };
+
+    testInterpreterFor(tokens, {.type = NUMBER, .opType = NONE, .numberVal = 1});
 }
