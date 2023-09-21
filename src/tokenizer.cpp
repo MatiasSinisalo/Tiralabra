@@ -3,7 +3,7 @@
 vector<token> getTokensFromInputString(const string input) {
     vector<token> tokens;
     const regex numberRegex("[0-9]");
-    const regex operatorRegex("[\\+|\\-|\\*|\\/]");
+    const regex operatorRegex("[\\+|\\-|\\*|\\/|(|)]");
     smatch matchNumber;
     smatch matchOperator;
     for (int i = 0; i < input.size(); i++) {
@@ -40,6 +40,14 @@ vector<token> getTokensFromInputString(const string input) {
             else if (string_char == "*")
             {
                 newToken.opType = MULTIPLY;
+            }
+            else if (string_char == "(")
+            {
+                newToken.opType = PARENTHESE_LEFT;
+            }
+             else if (string_char == ")")
+            {
+                newToken.opType = PARENTHESE_RIGHT;
             }
             tokens.push_back(newToken);
         }
