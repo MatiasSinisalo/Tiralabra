@@ -84,3 +84,35 @@ TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForOnePlusTwoTimesFiv
 
     testInterpreterFor(tokens, {.type = NUMBER, .opType = NONE, .numberVal = 11});
 }
+
+TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForTwoMinusFourDividedBy2){
+    vector<token> tokens = {
+        {
+            .type = NUMBER,
+            .opType = NONE,
+            .numberVal = 2
+        },
+        {
+            .type = NUMBER,
+            .opType = NONE,
+            .numberVal = 4
+        },
+        {
+            .type = NUMBER,
+            .opType = NONE,
+            .numberVal = 2
+        },
+        {
+            .type = OPERATOR,
+            .opType = DIVIDE,
+            .numberVal = 0
+        },
+        {
+            .type = OPERATOR,
+            .opType = MINUS,
+            .numberVal = 0
+        }
+    };
+
+    testInterpreterFor(tokens, {.type = NUMBER, .opType = NONE, .numberVal = 0});
+}
