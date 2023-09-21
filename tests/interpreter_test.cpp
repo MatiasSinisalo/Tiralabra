@@ -52,3 +52,35 @@ TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForTwoMinusOne){
 
     testInterpreterFor(tokens, {.type = NUMBER, .opType = NONE, .numberVal = 1});
 }
+
+TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForOnePlusTwoTimesFive){
+    vector<token> tokens = {
+        {
+            .type = NUMBER,
+            .opType = NONE,
+            .numberVal = 1
+        },
+        {
+            .type = NUMBER,
+            .opType = NONE,
+            .numberVal = 2
+        },
+        {
+            .type = NUMBER,
+            .opType = NONE,
+            .numberVal = 5
+        },
+        {
+            .type = OPERATOR,
+            .opType = MULTIPLY,
+            .numberVal = 0
+        },
+        {
+            .type = OPERATOR,
+            .opType = PLUS,
+            .numberVal = 0
+        }
+    };
+
+    testInterpreterFor(tokens, {.type = NUMBER, .opType = NONE, .numberVal = 11});
+}
