@@ -37,6 +37,11 @@ token interpretFromRPN(const vector<token> tokensInRPN){
                 helperStack.push_back(evaluatedToken);
                 /* code */
                 break;
+            case DIVIDE:
+                evaluatedToken.numberVal = secondToken.numberVal / firstToken.numberVal;
+                helperStack.push_back(evaluatedToken);
+                /* code */
+                break;
             default:
                 break;
             }
