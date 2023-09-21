@@ -21,6 +21,7 @@ file(GLOB sources_test
      "./tests/*.cpp"
      "./src/tokenizer.cpp"
      "./src/shuntingYard.cpp"
+     "./src/interpreter.cpp"
 )
 add_executable(TIRALABRA_SCIENTIFIC_CALCULATOR_TESTS ${sources_test})
 target_include_directories(TIRALABRA_SCIENTIFIC_CALCULATOR_TESTS PUBLIC ./include)
