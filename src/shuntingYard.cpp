@@ -71,7 +71,6 @@ void popTokensBeforeLeftParenthesis(vector<token> &target, vector<token> &source
     for (int i = source.size() - 1; i >= 0; i--) {
         if(source[i].type == OPERATOR){
             if(source[i].opType == PARENTHESE_LEFT){
-                cout << "( found at " << i << "\n"; 
                 stoppingIndex = i;
                 break;
             }
