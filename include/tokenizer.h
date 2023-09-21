@@ -20,7 +20,9 @@ enum operatorType {
     PLUS,
     MINUS,
     MULTIPLY,
-    DIVIDE
+    DIVIDE,
+    PARENTHESE_LEFT, // => (
+    PARENTHESE_RIGHT, // =>  )
 };
 
 const vector<string> operatorTypeToString = {
