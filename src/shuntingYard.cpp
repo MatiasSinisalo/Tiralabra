@@ -66,7 +66,7 @@ void followCountingRules(vector<token>& output, vector<token>& operators, const 
     operators.push_back(newToken);
 }
 
-void popTokensBeforeLeftParenthesis(vector<token> target, vector<token> source){
+void popTokensBeforeLeftParenthesis(vector<token> &target, vector<token> &source){
     int stoppingIndex = 0;
     for (int i = source.size() - 1; i >= 0; i--) {
         if(source[i].type == OPERATOR){
