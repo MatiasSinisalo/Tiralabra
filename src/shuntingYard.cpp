@@ -66,6 +66,21 @@ void followCountingRules(vector<token>& output, vector<token>& operators, const 
     operators.push_back(newToken);
 }
 
+void popTokensBeforeLeftParenthesis(vector<token> target, vector<token> source){
+    int stoppingIndex = 0;
+    for (int i = source.size() - 1; i >= 0; i--) {
+        if(source[i].type == OPERATOR){
+            if(source[i].opType == PARENTHESE_LEFT){
+                cout << "!!!!!!!!!!!!!!!!! ( found at " << i << "\n"; 
+                stoppingIndex = i;
+                break;
+            }
+        }
+        target.push_back(source[i]);
+    }
+    source.erase(source.begin()+ stoppingIndex, source.end());
+}
+
 //currently only supports +, -, * and /
 //output should be Reverse Polish notation RPN
 vector<token> shuntingYard(const vector<token> tokens) {
@@ -80,6 +95,11 @@ vector<token> shuntingYard(const vector<token> tokens) {
         case OPERATOR:
             followCountingRules(output, operators, t);
             break;
+        case PARENTHESE_LEFT:
+            operators.push_back(t);
+        //the operators that are inside the parentheses should be pushed all to output.
+        case PARENTHESE_RIGHT: 
+           popTokensBeforeLeftParenthesis(output, operators);
         default:
             break;
         }
