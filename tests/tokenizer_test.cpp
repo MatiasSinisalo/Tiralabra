@@ -82,6 +82,38 @@ TEST(tokenizerTests, tokenizerDetectsDivideOperator){
 	EXPECT_EQ(tokens[0].numberVal, expectedToken.numberVal);
 };
 
+TEST(tokenizerTests, tokenizerDetectsLeftParenthesesOperator){
+	string input = "(";
+	vector<token> tokens = getTokensFromInputString(input);
+	EXPECT_EQ(tokens.size(), 1);
+
+	token expectedToken = {
+		.type = OPERATOR,
+		.opType = PARENTHESE_LEFT,
+		.numberVal = 0
+	};
+
+	EXPECT_EQ(tokens[0].type, expectedToken.type);
+	EXPECT_EQ(tokens[0].opType, expectedToken.opType);
+	EXPECT_EQ(tokens[0].numberVal, expectedToken.numberVal);
+};
+
+TEST(tokenizerTests, tokenizerDetectsRightParenthesesOperator){
+	string input = ")";
+	vector<token> tokens = getTokensFromInputString(input);
+	EXPECT_EQ(tokens.size(), 1);
+
+	token expectedToken = {
+		.type = OPERATOR,
+		.opType = PARENTHESE_RIGHT,
+		.numberVal = 0
+	};
+
+	EXPECT_EQ(tokens[0].type, expectedToken.type);
+	EXPECT_EQ(tokens[0].opType, expectedToken.opType);
+	EXPECT_EQ(tokens[0].numberVal, expectedToken.numberVal);
+};
+
 TEST(tokenizerTests, tokenizerDetectsNumbersAndOperators){
 	string input = "1+2-3*4/5";
 	vector<token> tokens = getTokensFromInputString(input);
