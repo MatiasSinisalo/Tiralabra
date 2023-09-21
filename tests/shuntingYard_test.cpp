@@ -492,3 +492,85 @@ TEST(shuntingYardTests_shuntingYard, producesExpectedOutputForOnePlus2Plus3Times
 
     checkTokensMatch(output, expected_output);
 }
+
+TEST(shuntingYardTests_shuntingYard, producesExpectedOutputForOnePlusFourDividedByTwoMultipliedByFour){
+    vector<token> input = {
+        {
+            .type = NUMBER,
+            .opType = NONE,
+            .numberVal = 1,
+        },
+        {
+            .type = OPERATOR,
+            .opType = PLUS,
+            .numberVal = 0,
+        },
+        {
+            .type = NUMBER,
+            .opType = NONE,
+            .numberVal = 4,
+        },
+        {
+            .type = OPERATOR,
+            .opType = DIVIDE,
+            .numberVal = 0,
+        },
+        {
+            .type = NUMBER,
+            .opType = NONE,
+            .numberVal = 2,
+        },
+        {
+            .type = OPERATOR,
+            .opType = MULTIPLY,
+            .numberVal = 0,
+        },
+        {
+            .type = NUMBER,
+            .opType = NONE,
+            .numberVal = 4,
+        },
+    };
+
+    vector<token> expected_output = {
+        {
+            .type = NUMBER,
+            .opType = NONE,
+            .numberVal = 1,
+        },
+        {
+            .type = NUMBER,
+            .opType = NONE,
+            .numberVal = 4,
+        },
+        {
+            .type = NUMBER,
+            .opType = NONE,
+            .numberVal = 2,
+        },
+        {
+            .type = OPERATOR,
+            .opType = DIVIDE,
+            .numberVal = 0,
+        },
+        {
+            .type = NUMBER,
+            .opType = NONE,
+            .numberVal = 4,
+        },
+        {
+            .type = OPERATOR,
+            .opType = MULTIPLY,
+            .numberVal = 0,
+        },
+        {
+            .type = OPERATOR,
+            .opType = PLUS,
+            .numberVal = 0,
+        },
+    };
+    
+    vector<token> output = shuntingYard(input);
+
+    checkTokensMatch(output, expected_output);
+}

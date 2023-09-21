@@ -66,7 +66,7 @@ void followCountingRules(vector<token>& output, vector<token>& operators, const 
     operators.push_back(newToken);
 }
 
-//currently only supports +, - and *
+//currently only supports +, -, * and /
 //output should be Reverse Polish notation RPN
 vector<token> shuntingYard(const vector<token> tokens) {
     vector<token> output;
