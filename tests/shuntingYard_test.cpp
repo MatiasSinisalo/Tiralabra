@@ -30,6 +30,14 @@ TEST(shuntingYardTests_beforeIsLeftAssociative, detectsThatMultiplyIsLeftAsscoci
     EXPECT_EQ(isLeftAssociative, true);
 };
 
+TEST(shuntingYardTests_beforeIsLeftAssociative, detectsThatDivideIsLeftAsscociative){
+    vector<token> output = {};
+    vector<token> operators = {{.type = OPERATOR, .opType = DIVIDE}};
+
+    bool isLeftAssociative = beforeIsLeftAssociative(output, operators);
+    EXPECT_EQ(isLeftAssociative, true);
+};
+
 TEST(shuntingYardTests_isHigherPrecedence, returnsTrueForMultiplyPlus){
     vector<token> output = {};
     vector<token> operators = {{.type = OPERATOR, .opType = MULTIPLY}};
