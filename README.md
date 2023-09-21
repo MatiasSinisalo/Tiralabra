@@ -29,7 +29,7 @@ Planned features of the calculator:
     1. make sure you have the latest cmake and make installed
     2. clone the git repository
     3. open terminal at the repository root and type: 
-        - cmake -G "Ubuntu Makefiles" -B "./build"
+        - cmake -G "Unix Makefiles" -B "./build"
         which will generate makefiles to folder ./build
     4. once generation is done navigate to ./build
     5. run make command:
