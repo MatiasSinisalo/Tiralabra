@@ -71,7 +71,7 @@ void popTokensBeforeLeftParenthesis(vector<token> target, vector<token> source){
     for (int i = source.size() - 1; i >= 0; i--) {
         if(source[i].type == OPERATOR){
             if(source[i].opType == PARENTHESE_LEFT){
-                cout << "!!!!!!!!!!!!!!!!! ( found at " << i << "\n"; 
+                cout << "( found at " << i << "\n"; 
                 stoppingIndex = i;
                 break;
             }
@@ -93,13 +93,25 @@ vector<token> shuntingYard(const vector<token> tokens) {
             output.push_back(t);
             break;
         case OPERATOR:
-            followCountingRules(output, operators, t);
+            switch (t.opType)
+            {
+                case PLUS:
+                case MINUS:
+                case MULTIPLY:
+                case DIVIDE:
+                    followCountingRules(output, operators, t);
+                    break;
+                case PARENTHESE_LEFT:
+                    operators.push_back(t);
+                    break;
+                //the operators that are inside the parentheses should be pushed all to output.
+                case PARENTHESE_RIGHT: 
+                    popTokensBeforeLeftParenthesis(output, operators);
+                    break;
+                default:
+                    break;
+            }
             break;
-        case PARENTHESE_LEFT:
-            operators.push_back(t);
-        //the operators that are inside the parentheses should be pushed all to output.
-        case PARENTHESE_RIGHT: 
-           popTokensBeforeLeftParenthesis(output, operators);
         default:
             break;
         }
