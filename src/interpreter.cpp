@@ -16,14 +16,19 @@ token interpretFromRPN(const vector<token> tokensInRPN){
             token secondToken = helperStack[helperStack.size() - 1];
             helperStack.pop_back();
 
+            
+            token evaluatedToken;
+            evaluatedToken.type = NUMBER;
+            evaluatedToken.opType = NONE;
             switch (tokensInRPN[i].opType)
             {
             case PLUS:
-                token evaluatedToken;
-                evaluatedToken.type = NUMBER;
-                evaluatedToken.opType = NONE;
                 evaluatedToken.numberVal = secondToken.numberVal + firstToken.numberVal;
-
+                helperStack.push_back(evaluatedToken);
+                /* code */
+                break;
+            case MINUS:
+                evaluatedToken.numberVal = secondToken.numberVal - firstToken.numberVal;
                 helperStack.push_back(evaluatedToken);
                 /* code */
                 break;
