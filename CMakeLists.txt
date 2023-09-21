@@ -19,12 +19,14 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 file(GLOB sources_test
      "./tests/*.cpp"
+     "./tests/utilities/*.cpp"
      "./src/tokenizer.cpp"
      "./src/shuntingYard.cpp"
      "./src/interpreter.cpp"
 )
 add_executable(TIRALABRA_SCIENTIFIC_CALCULATOR_TESTS ${sources_test})
 target_include_directories(TIRALABRA_SCIENTIFIC_CALCULATOR_TESTS PUBLIC ./include)
+target_include_directories(TIRALABRA_SCIENTIFIC_CALCULATOR_TESTS PUBLIC ./tests/utilities/)
 target_link_libraries(TIRALABRA_SCIENTIFIC_CALCULATOR_TESTS PUBLIC gtest_main)
 
 target_compile_options(TIRALABRA_SCIENTIFIC_CALCULATOR_TESTS PUBLIC --coverage)
