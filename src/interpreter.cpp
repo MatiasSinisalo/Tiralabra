@@ -1,5 +1,43 @@
 #include "interpreter.h"
 
 token interpretFromRPN(const vector<token> tokensInRPN){
-    return {};
+    token nextOperation = {.opType = NONE};
+    vector<token> helperStack;
+    //this loop does not go though the operators like they would be in a stack...
+    //should go in reverse order of the vector.
+    for(int i = 0; i< tokensInRPN.size(); i++){
+        if(tokensInRPN[i].type == NUMBER){
+            helperStack.push_back(tokensInRPN[i]);
+        }
+        else if(tokensInRPN[i].type == OPERATOR){
+            token firstToken = helperStack[helperStack.size() - 1];
+            helperStack.pop_back();
+
+            token secondToken = helperStack[helperStack.size() - 1];
+            helperStack.pop_back();
+
+            switch (tokensInRPN[i].opType)
+            {
+            case PLUS:
+                token evaluatedToken;
+                evaluatedToken.type = NUMBER;
+                evaluatedToken.opType = NONE;
+                evaluatedToken.numberVal = secondToken.numberVal + firstToken.numberVal;
+
+                helperStack.push_back(evaluatedToken);
+                /* code */
+                break;
+            
+            default:
+                break;
+            }
+        }
+    }
+
+    if(helperStack.size() > 1){
+        cout << "SOMETHING WAS INCORRECT??\n";
+        debug_printTokens("token stack should be size 1 but it is: ", helperStack);
+    }
+
+    return helperStack[0];
 }

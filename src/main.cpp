@@ -11,6 +11,7 @@ int main(){
     debug_printTokens("final output stack now is: ", output);
 
     token finalResult = interpretFromRPN(output);
+    cout << "the answer is: " << "\n";
     cout << finalResult.numberVal << "\n";
     return 0;
 }
