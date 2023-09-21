@@ -1,4 +1,5 @@
 #include "main.h"
+
 int main(){
     string input = "";
     getline(cin, input);
@@ -9,5 +10,7 @@ int main(){
 
     debug_printTokens("final output stack now is: ", output);
 
+    token finalResult = interpretFromRPN(output);
+    cout << finalResult.numberVal << "\n";
     return 0;
 }
