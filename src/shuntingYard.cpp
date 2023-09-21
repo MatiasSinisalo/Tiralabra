@@ -8,6 +8,7 @@ bool beforeIsLeftAssociative(vector<token>& output, vector<token>& operators) {
         case MULTIPLY: // multiplty is left and right
         case MINUS: //minus is only left associative
         case PLUS: //plus is both left and right associative so it must also be handled
+        case DIVIDE: //divide is left associative
             return true;
             break;
 
