@@ -74,6 +74,31 @@ TEST(shuntingYardTests_isHigherPrecedence, returnsTrueForDivideMinus){
     EXPECT_EQ(isHigherPrecedence, true);
 };
 
+TEST(shuntingYardTests_isHigherPrecedence, returnsFalseForPlusDivide){
+    vector<token> output = {};
+    vector<token> operators = {{.type = OPERATOR, .opType = PLUS}};
+    token newToken = {
+            .type = OPERATOR,
+            .opType = DIVIDE,
+            .numberVal = 0
+    };
+    bool isHigherPrecedence = beforeIsHigherPrecedence(output, operators, newToken);
+    EXPECT_EQ(isHigherPrecedence, false);
+};
+
+TEST(shuntingYardTests_isHigherPrecedence, returnsFalseForMinusDivide){
+    vector<token> output = {};
+    vector<token> operators = {{.type = OPERATOR, .opType = MINUS}};
+    token newToken = {
+            .type = OPERATOR,
+            .opType = DIVIDE,
+            .numberVal = 0
+    };
+    bool isHigherPrecedence = beforeIsHigherPrecedence(output, operators, newToken);
+    EXPECT_EQ(isHigherPrecedence, false);
+};
+
+
 
 TEST(shuntingYardTests_isHigherPrecedence, returnsFalseForPlusMultiply){
     vector<token> output = {};
