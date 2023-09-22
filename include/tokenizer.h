@@ -8,7 +8,6 @@ using namespace std;
 enum tokenType {
     NUMBER,
     OPERATOR,
-    FUNCTION
 };
 
 const vector<string> tokenTypeToString = {
@@ -41,8 +40,6 @@ public:
     tokenType type;
     operatorType opType;
     int numberVal;
-    //an ID to look up the tokens function
-    uint64_t functionID;
 };
 
 vector<token> getTokensFromInputString(const string input);
