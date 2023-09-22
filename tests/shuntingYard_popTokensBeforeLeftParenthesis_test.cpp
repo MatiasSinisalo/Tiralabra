@@ -9,7 +9,7 @@
 using namespace std;
 
 
-TEST(shuntingYard_popTokensBeforeLeftParenthesis_tests, functionMovesTokensFromSourceToTargetCorrectly){
+TEST(shuntingYard_popTokensBeforeLeftParenthesis_tests, functionMovesTokensFromSourceToTargetCorrectlyWhenParentheseLeftIsLastElement){
     vector<token> output;
     vector<token> operators = {
         {
