@@ -1,47 +1,51 @@
 #include "main.h"
 
 
-//just a test for the sake of it....
-//should probably use an c++ interface to be honest
-token doFunctionEvaluation(token A, token B){
-    cout << "this works! \n";
-    return {};
-};
-
-token doFunctionEvaluationB(token A, token B){
-    cout << "yet another function evaluation\n";
-    return {};
-};
-
+//just a test for the sake of experimentation
 struct evalFunc{
-    token (*eval) (token A, token B);
+    vector<token> functionAsNormalInfixNotation;
 };
+
+//this way of implementig functions 
+//could possibly allow for easy defining of new functions in runtime by the user...
 vector<std::pair<uint64_t, evalFunc>> functions_test = {
     {
         (uint64_t)0,
         {
-            .eval = doFunctionEvaluation
+            .functionAsNormalInfixNotation = {
+                {
+
+                    .type = NUMBER, 
+                    .numberVal = 1,
+                },
+                {
+
+                    .type = OPERATOR, 
+                    .opType = PLUS,
+                },
+                {
+
+                    .type = NUMBER, 
+                    .numberVal = 1,
+                },
+            }
         }
     },
-    {
-        (uint64_t)1,
-        {
-            .eval = doFunctionEvaluationB
-        }
-    }
 };
 
 
 
 int main(){
-    functions_test[0].second.eval({}, {});
-     functions_test[1].second.eval({}, {});
+    
+    /*
     string input = "";
     getline(cin, input);
     
     vector<token> tokens = getTokensFromInputString(input);
     debug_printTokens("input tokens are: ", tokens);
+    */
 
+    vector<token> tokens = functions_test[0].second.functionAsNormalInfixNotation;
     vector<token> output = shuntingYard(tokens);
 
     debug_printTokens("final output stack now is: ", output);
