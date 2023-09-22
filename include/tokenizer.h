@@ -23,6 +23,7 @@ enum operatorType {
     DIVIDE,
     PARENTHESE_LEFT, // => (
     PARENTHESE_RIGHT, // =>  )
+    TO_POWER_OF,
 };
 
 const vector<string> operatorTypeToString = {
@@ -32,7 +33,8 @@ const vector<string> operatorTypeToString = {
     "MULTIPLY",
     "DIVIDE",
     "PARENTHESE_LEFT",
-    "PARENTHESE_RIGHT"
+    "PARENTHESE_RIGHT",
+    "TO_POWER_OF"
 };
 
 class token {
@@ -45,5 +47,5 @@ public:
 vector<token> getTokensFromInputString(const string input);
 
 //define DEBUG_PRINTS if debug output is needed from debug_printTokens function
-//#define DEBUG_PRINTS
+#define DEBUG_PRINTS
 void debug_printTokens(const string extraMsg, const vector<token> tokens);

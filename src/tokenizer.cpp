@@ -1,9 +1,18 @@
 #include "tokenizer.h"
 
+bool nextIsOperator(const string input, const int position, const string operatorStringToMatch){
+    string substringFromPosition = input.substr(position, operatorStringToMatch.size());
+    //if strings are equal .compare returns 0, 
+    return substringFromPosition.compare(operatorStringToMatch) == 0;
+}
+
+
+
 vector<token> getTokensFromInputString(const string input) {
     vector<token> tokens;
+    const string powerOperator = "POWER";
     const regex numberRegex("[0-9]");
-    const regex operatorRegex("[\\+|\\-|\\*|\\/|(|)]");
+    const regex operatorRegex("[\\+|\\-|\\*|\\/|(|)|P|]");
     smatch matchNumber;
     smatch matchOperator;
     for (int i = 0; i < input.size(); i++) {
@@ -45,9 +54,17 @@ vector<token> getTokensFromInputString(const string input) {
             {
                 newToken.opType = PARENTHESE_LEFT;
             }
-             else if (string_char == ")")
+            else if (string_char == ")")
             {
                 newToken.opType = PARENTHESE_RIGHT;
+            }
+            else if (string_char == "P")
+            {
+                if(nextIsOperator(input, i, powerOperator))
+                {
+                    newToken.opType = TO_POWER_OF;
+                    i += powerOperator.size() - 1;
+                }
             }
             tokens.push_back(newToken);
         }
