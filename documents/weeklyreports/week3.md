@@ -15,4 +15,6 @@ No big challenges were encountered during this week other than of limited time t
 I got sidetracked when I started implementing POWER(X, Y) function and started thinking about solving user defined functions which consumed some time. Although I gained more insight how I could do them, the time spent probably prevented me from having enough time to fully implement the POWER function.  
 
 ## Goals for next week:
-- 
+- Implement POWER(X, Y), SQUARE_ROOT(X) functions
+- Implement user defined functions
+- Add Performance testing
