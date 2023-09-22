@@ -88,5 +88,58 @@ TEST(shuntingYard_popTokensBeforeLeftParenthesis_tests, functionMovesTokensFromS
      checkTokensMatch(operators, expectedOperators);
 }
 
+TEST(shuntingYard_popTokensBeforeLeftParenthesis_tests, functionMovesTokensFromSourceToTargetCorrectlyWhenThereAreMultipleLeftParenthesis){
+    vector<token> output;
+    vector<token> operators = {
+        {
+            .type = OPERATOR,
+            .opType = PARENTHESE_LEFT
+        },
+        {
+           
+            .type = OPERATOR,
+            .opType = MULTIPLY
+            
+        },
+        {
+            .type = OPERATOR,
+            .opType = PARENTHESE_LEFT
+        },
+        {
+            .type = OPERATOR,
+            .opType = PLUS
+        },
+        {
+            .type = OPERATOR,
+            .opType = MINUS
+        },
+    };
+
+    popTokensBeforeLeftParenthesis(output, operators);
+
+    vector<token> expectedOutput = {
+        {
+            .type = OPERATOR,
+            .opType = MINUS
+        },
+        {
+            .type = OPERATOR,
+            .opType = PLUS
+        },
+    };
+    checkTokensMatch(output, expectedOutput);
+
+    vector<token> expectedOperators = {
+        {
+            .type = OPERATOR,
+            .opType = PARENTHESE_LEFT
+        },
+        {
+            .type = OPERATOR,
+            .opType = MULTIPLY
+        },
+    };
+     checkTokensMatch(operators, expectedOperators);
+}
 
 
