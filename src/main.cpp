@@ -2,10 +2,10 @@
 
 int main(){
     
-    string input = "";
-    getline(cin, input);
+    string input = "POWER(2,2)";
+  //  getline(cin, input);
     
-    vector<token> tokens = getTokensFromInputString(input);
+    vector<token> tokens = getTokensFromInputString_v2(input);
     debug_printTokens("input tokens are: ", tokens);
     
     vector<token> output = shuntingYard(tokens);

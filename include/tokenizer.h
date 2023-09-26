@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <regex>
+#include <map>
 using namespace std;
 
 
@@ -12,9 +13,12 @@ enum tokenType {
 };
 
 const vector<string> tokenTypeToString = {
+    "NONE_TOKEN",
     "NUMBER",
     "OPERATOR",
 };
+
+
 
 enum operatorType {
     NONE,
@@ -25,6 +29,17 @@ enum operatorType {
     PARENTHESE_LEFT, // => (
     PARENTHESE_RIGHT, // =>  )
     TO_POWER_OF,
+};
+
+const map<const operatorType, const string> operatorToInputString = {
+    {NONE, ""},
+    {PLUS, "+"},
+    {MINUS, "-"},
+    {MULTIPLY, "*"},
+    {DIVIDE, "/"},
+    {PARENTHESE_LEFT, "("},
+    {PARENTHESE_RIGHT, ")"},
+    {TO_POWER_OF, "POWER"}
 };
 
 const vector<string> operatorTypeToString = {
