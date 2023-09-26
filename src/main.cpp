@@ -2,8 +2,8 @@
 
 int main(){
     
-    string input = "POWER(2,2)";
-  //  getline(cin, input);
+    string input = "";
+    getline(cin, input);
     
     vector<token> tokens = getTokensFromInputString_v2(input);
     debug_printTokens("input tokens are: ", tokens);

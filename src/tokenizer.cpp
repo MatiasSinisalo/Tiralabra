@@ -126,37 +126,16 @@ operatorType findExpectedOpType(const char c){
 
 //advances currentPosInString until an entire operatorToken is found and returns an token containing the operator
 operatorType extractOperatorToken(const string input, int &currentPosInString){
-    int sizeOfExpectedOperatorTokenString = 0;
     operatorType expectedOpType = NONE;
-   
-    while (currentPosInString < input.size()){
-        
-
-        const char c = input.at(currentPosInString);
-        if(sizeOfExpectedOperatorTokenString == 0){
-            expectedOpType = findExpectedOpType(c);
-        }
-        else{
-            //check that current char matches the expected operator char
-            const string comparisonString = operatorToInputString.find(expectedOpType)->second;
-            if (sizeOfExpectedOperatorTokenString == comparisonString.size())
-            {
-                currentPosInString++;
-                return expectedOpType;
-            }
-            else if (sizeOfExpectedOperatorTokenString > comparisonString.size()) {
-                return operatorType::NONE;
-            }
-            if(c != comparisonString.at(sizeOfExpectedOperatorTokenString - 1))
-            {
-                return operatorType::NONE;
-            }
-           
-            currentPosInString++;
-        }
-        sizeOfExpectedOperatorTokenString++;
-       
+    const char c = input.at(currentPosInString);
+    expectedOpType = findExpectedOpType(c);
+    
+    string expectedFollowingOperatorString = operatorToInputString.at(expectedOpType);
+    if (nextIsOperator(input, currentPosInString, expectedFollowingOperatorString)) {
+        currentPosInString += expectedFollowingOperatorString.size();
+        return expectedOpType;
     }
+
     return expectedOpType;
 };
 
