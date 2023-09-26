@@ -80,7 +80,7 @@ vector<token> getTokensFromInputString(const string input) {
 
 //returns expected tokenType for the char at the current location
 tokenType extractExpectedTokenType(const string input, const int currentPosInString){
-    cout << currentPosInString << "\n";
+    
     const char c = input.at(currentPosInString);
     switch (c)
     {
@@ -132,7 +132,6 @@ operatorType extractOperatorToken(const string input, int &currentPosInString){
     while (currentPosInString < input.size()){
         
 
-        cout << currentPosInString << "\n";
         const char c = input.at(currentPosInString);
         if(sizeOfExpectedOperatorTokenString == 0){
             expectedOpType = findExpectedOpType(c);
@@ -165,7 +164,7 @@ operatorType extractOperatorToken(const string input, int &currentPosInString){
 token extractNumberToken(const string input, int &currentPosInString){
     string numberString = "";
     while (currentPosInString < input.size()) {
-        cout << currentPosInString << "\n";
+        
         const char c = input.at(currentPosInString);
         switch (c)
         {
@@ -216,7 +215,7 @@ vector<token> getTokensFromInputString_v2(const string input){
     token nextToken = {};
     int currentPosInString = 0; 
     while (currentPosInString < input.size()){
-        cout << currentPosInString << "\n";
+       
         switch (nextToken.type)
         {
         case NONE_TOKEN:
