@@ -73,6 +73,46 @@ vector<token> getTokensFromInputString(const string input) {
     return tokens;
 }
 
+//advances currentPosInString until a start of a token is found and returns the type of the token
+tokenType findNextTokenStart(const string input, int &currentPosInString){
+
+}
+//advances currentPosInString until an entire operatorToken is found and returns an token containing the operator
+token extractOperatorToken(const string input, int &currentPosInString){
+
+}
+//advances currentPosInString until a number is found and returns and token containing the number
+token extractNumberToken(const string input, int &currentPosInString){
+
+}
+
+vector<token> getTokensFromInputString_v2(const string input){
+    vector<token> tokens;
+    const string powerOperator = "POWER";
+
+    token nextToken;
+    int currentPosInString;
+    for (int currentPosInString = 0; currentPosInString < input.size(); currentPosInString++) {
+        switch (nextToken.type)
+        {
+        case NONE_TOKEN:
+            nextToken.type = findNextTokenStart(input, currentPosInString);
+            break;
+        case OPERATOR:
+            nextToken = extractOperatorToken(input, currentPosInString);
+            break;
+        case NUMBER:
+            nextToken = extractNumberToken(input, currentPosInString);
+            break;
+        default:
+            break;
+        }
+    }
+}
+
+
+
+
 void debug_printTokens(const string extraMsg, const vector<token> tokens) {
     #ifdef DEBUG_PRINTS
         cout << extraMsg << "\n";
