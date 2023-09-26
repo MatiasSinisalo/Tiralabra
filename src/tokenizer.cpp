@@ -194,17 +194,13 @@ vector<token> getTokensFromInputString_v2(const string input){
     token nextToken = {};
     int currentPosInString = 0; 
     while (currentPosInString < input.size()){
-       
+        if (nextToken.type == NONE_TOKEN)
+        {
+            nextToken.type = extractExpectedTokenType(input, currentPosInString);
+        }
+
         switch (nextToken.type)
         {
-        case NONE_TOKEN:
-            nextToken.type = extractExpectedTokenType(input, currentPosInString);
-            
-            if(nextToken.type == tokenType::NONE_TOKEN){
-                currentPosInString++;
-                continue;
-            }
-            break;
         case OPERATOR:
             nextToken.opType = extractOperatorToken(input, currentPosInString);
             tokens.push_back(nextToken);
