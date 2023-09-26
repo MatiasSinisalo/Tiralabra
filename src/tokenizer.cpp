@@ -124,7 +124,34 @@ operatorType findExpectedOpType(const char c){
     }
 }
 
-//advances currentPosInString until an entire operatorToken is found and returns an token containing the operator
+string extractNumberString(const string input, const int startIndex) {
+    string numberString = "";
+    for (int i = startIndex; i < input.size(); i++) {
+        const char c = input.at(i);
+        if (c == '0' ||
+             c == '1' ||
+             c == '2' ||
+             c == '3' ||
+             c == '4' ||
+             c == '5' ||
+             c == '6' ||
+             c == '7' ||
+             c == '8' ||
+             c == '9'
+            ) {
+            numberString.push_back(c);
+        }
+        else {
+            //this is the end of a number so break;
+            break;
+        }
+    }
+    return numberString;
+}
+
+//returns an token containing an operator
+//currentPosInString will be incremented by lenght of the found token. 
+//      currentPosInString += tokenString.size()
 operatorType extractOperatorToken(const string input, int &currentPosInString){
     operatorType expectedOpType = NONE;
     const char c = input.at(currentPosInString);
@@ -139,51 +166,22 @@ operatorType extractOperatorToken(const string input, int &currentPosInString){
     return expectedOpType;
 };
 
-//advances currentPosInString until a number is found and returns and token containing the number
+//returns an token containing a number value
+//currentPosInString will be incremented by lenght of the found number. 
+//      currentPosInString += number.size()
 token extractNumberToken(const string input, int &currentPosInString){
-    string numberString = "";
-    while (currentPosInString < input.size()) {
-        
-        const char c = input.at(currentPosInString);
-        switch (c)
-        {
-        case '0':
-        case '1':
-        case '2':
-        case '3':
-        case '4':
-        case '5':
-        case '6':
-        case '7':
-        case '8':
-        case '9':
-            numberString.push_back(c);
-            break;
-        default:
-            //we encountered something else than a number
-            token numberToken = {
-                .type = NUMBER,
-                .opType = NONE,
-                .numberVal = stoi(numberString)
-            };
-            return numberToken;
-            break;
-        }
-        
-        currentPosInString++;
-        if (currentPosInString >= input.size())
-        {
-            token numberToken = {
-                .type = NUMBER,
-                .opType = NONE,
-                .numberVal = stoi(numberString)
-            };
-            return numberToken;
-        }
 
-    }
-  
-    return {};
+    string numberString = extractNumberString(input, currentPosInString);
+
+    currentPosInString += numberString.size();
+
+    token numberToken = {
+               .type = NUMBER,
+               .opType = NONE,
+               .numberVal = stoi(numberString)
+    };
+
+    return numberToken;
 };
 
 //TODO: Control flow of this function is quite tricky, it should be refactored to be more straight forward
