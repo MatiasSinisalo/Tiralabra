@@ -28,21 +28,11 @@ bool beforeIsLeftAssociative(vector<token>& output, vector<token>& operators) {
 bool beforeIsHigherPrecedence(vector<token>& output, vector<token>& operators, const token compareTo) {
     if (operators.size() > 0) {
         token operatorBefore = operators.back();
-        if(operatorBefore.opType == MULTIPLY || operatorBefore.opType == DIVIDE || operatorBefore.functionType == TO_POWER_OF){
+        if(operatorBefore.opType == MULTIPLY || operatorBefore.opType == DIVIDE){
             if(compareTo.opType == MINUS || compareTo.opType == PLUS){
                 return true;
             }
         }
-
-        //example:
-        //in case of POWER(2,3)/2, the calculator should evaluate the POWER(2,3) before the /2,
-        //since the value of POWER(2,3) would not be known
-        //same for POWER(2,3)*2
-        if (operatorBefore.functionType == TO_POWER_OF) {
-            if (compareTo.opType == MULTIPLY || compareTo.opType == DIVIDE) {
-                return true;
-            }
-        };
         return false;
     }
     return false;
@@ -64,9 +54,6 @@ bool beforeIsSamePrecedence(const vector<token>& output, const vector<token>& op
             return true;
         }
         else if(beforeToken.opType == DIVIDE && compareTo.opType == MULTIPLY){
-            return true;
-        }
-        else if (beforeToken.functionType == TO_POWER_OF && compareTo.functionType == TO_POWER_OF) {
             return true;
         }
         return false;
@@ -96,6 +83,13 @@ void popTokensBeforeLeftParenthesis(vector<token> &target, vector<token> &source
         target.push_back(source[i]);
     }
     source.erase(source.begin()+ stoppingIndex, source.end());
+
+    //in case of FUNCTION(A, B), the program should push FUNCTION to target to maintain the order of operations correctly
+    if (source.size() > 0 && source.back().type == FUNCTION) {
+        token tokenToMove = source.back();
+        target.push_back(tokenToMove);
+        source.pop_back();
+    }
 }
 
 //currently only supports +, -, * and /
@@ -133,7 +127,7 @@ vector<token> shuntingYard(const vector<token> tokens) {
             switch (t.functionType)
             {
             case TO_POWER_OF:
-                followCountingRules(output, operators, t);
+                operators.push_back(t);
                 break;
             default:
                 break;
