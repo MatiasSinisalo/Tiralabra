@@ -25,22 +25,22 @@ token interpretFromRPN(const vector<token> tokensInRPN){
             case PLUS:
                 evaluatedToken.numberVal = secondToken.numberVal + firstToken.numberVal;
                 helperStack.push_back(evaluatedToken);
-               
                 break;
             case MINUS:
                 evaluatedToken.numberVal = secondToken.numberVal - firstToken.numberVal;
                 helperStack.push_back(evaluatedToken);
-               
                 break;
             case MULTIPLY:
                 evaluatedToken.numberVal = secondToken.numberVal * firstToken.numberVal;
                 helperStack.push_back(evaluatedToken);
-               
                 break;
             case DIVIDE:
                 evaluatedToken.numberVal = secondToken.numberVal / firstToken.numberVal;
                 helperStack.push_back(evaluatedToken);
-               
+                break;
+            case TO_POWER_OF:
+                evaluatedToken.numberVal = pow(secondToken.numberVal, firstToken.numberVal);
+                helperStack.push_back(evaluatedToken);
                 break;
             default:
                 break;
