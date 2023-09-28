@@ -27,7 +27,7 @@ token extractNonNumberToken(const string input, int & currentPosInString, const 
 
 
 tokenType findExpectedTokenType(const char c){
-    for(std::map<const tokenType, const vector<const string>>::const_iterator it = tokenToInputString.begin(); it != tokenToInputString.end(); ++it){
+    for(std::map<const tokenType, const vector<string>>::const_iterator it = tokenToInputString.begin(); it != tokenToInputString.end(); ++it){
         for (const string& s : it->second) {
             if (c == s.at(0)) {
                 return it->first;
