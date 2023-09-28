@@ -9,6 +9,7 @@ bool beforeIsLeftAssociative(vector<token>& output, vector<token>& operators) {
         case MINUS: //minus is only left associative
         case PLUS: //plus is both left and right associative so it must also be handled
         case DIVIDE: //divide is left associative
+        case TO_POWER_OF:
             return true;
             break;
 
@@ -23,11 +24,21 @@ bool beforeIsLeftAssociative(vector<token>& output, vector<token>& operators) {
 bool beforeIsHigherPrecedence(vector<token>& output, vector<token>& operators, const token compareTo) {
     if (operators.size() > 0) {
         token operatorBefore = operators.back();
-        if(operatorBefore.opType == MULTIPLY || operatorBefore.opType == DIVIDE){
+        if(operatorBefore.opType == MULTIPLY || operatorBefore.opType == DIVIDE || operatorBefore.opType == TO_POWER_OF){
             if(compareTo.opType == MINUS || compareTo.opType == PLUS){
                 return true;
             }
         }
+
+        //example:
+        //in case of POWER(2,3)/2, the calculator should evaluate the POWER(2,3) before the /2,
+        //since the value of POWER(2,3) would not be known
+        //same for POWER(2,3)*2
+        if (operatorBefore.opType == TO_POWER_OF) {
+            if (compareTo.opType == MULTIPLY || compareTo.opType == DIVIDE) {
+                return true;
+            }
+        };
         return false;
     }
     return false;
@@ -49,6 +60,9 @@ bool beforeIsSamePrecedence(const vector<token>& output, const vector<token>& op
             return true;
         }
         else if(beforeToken.opType == DIVIDE && compareTo.opType == MULTIPLY){
+            return true;
+        }
+        else if (beforeToken.opType == TO_POWER_OF && compareTo.opType == TO_POWER_OF) {
             return true;
         }
         return false;
@@ -98,6 +112,7 @@ vector<token> shuntingYard(const vector<token> tokens) {
                 case MINUS:
                 case MULTIPLY:
                 case DIVIDE:
+                case TO_POWER_OF:
                     followCountingRules(output, operators, t);
                     break;
                 case PARENTHESE_LEFT:
