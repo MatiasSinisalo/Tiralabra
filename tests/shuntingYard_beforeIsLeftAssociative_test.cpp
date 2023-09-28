@@ -10,7 +10,7 @@ using namespace std;
 
 TEST(shuntingYardTests_beforeIsLeftAssociative, detectsThatPlusIsLeftAsscociative){
     vector<token> output = {};
-    vector<token> operators = {{.type = OPERATOR, .opType = PLUS}};
+    vector<token> operators = {{.type = OP_PLUS}};
 
     bool isLeftAssociative = beforeIsLeftAssociative(output, operators);
     EXPECT_EQ(isLeftAssociative, true);
@@ -18,7 +18,7 @@ TEST(shuntingYardTests_beforeIsLeftAssociative, detectsThatPlusIsLeftAsscociativ
 
 TEST(shuntingYardTests_beforeIsLeftAssociative, detectsThatMinusIsLeftAsscociative){
     vector<token> output = {};
-    vector<token> operators = {{.type = OPERATOR, .opType = MINUS}};
+    vector<token> operators = {{.type = OP_MINUS}};
 
     bool isLeftAssociative = beforeIsLeftAssociative(output, operators);
     EXPECT_EQ(isLeftAssociative, true);
@@ -26,7 +26,7 @@ TEST(shuntingYardTests_beforeIsLeftAssociative, detectsThatMinusIsLeftAsscociati
 
 TEST(shuntingYardTests_beforeIsLeftAssociative, detectsThatMultiplyIsLeftAsscociative){
     vector<token> output = {};
-    vector<token> operators = {{.type = OPERATOR, .opType = MULTIPLY}};
+    vector<token> operators = {{.type = OP_MULTIPLY}};
 
     bool isLeftAssociative = beforeIsLeftAssociative(output, operators);
     EXPECT_EQ(isLeftAssociative, true);
@@ -34,7 +34,7 @@ TEST(shuntingYardTests_beforeIsLeftAssociative, detectsThatMultiplyIsLeftAsscoci
 
 TEST(shuntingYardTests_beforeIsLeftAssociative, detectsThatDivideIsLeftAsscociative){
     vector<token> output = {};
-    vector<token> operators = {{.type = OPERATOR, .opType = DIVIDE}};
+    vector<token> operators = {{.type = OP_DIVIDE}};
 
     bool isLeftAssociative = beforeIsLeftAssociative(output, operators);
     EXPECT_EQ(isLeftAssociative, true);
