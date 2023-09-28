@@ -8,44 +8,6 @@ bool nextIsTokenString(const string input, const int position, const string oper
 
 
 
-
-//returns expected tokenType for the char at the current location
-tokenType extractExpectedTokenType(const string input, const int currentPosInString){
-    
-    const char c = input.at(currentPosInString);
-    switch (c)
-    {
-    case '0':
-    case '1':
-    case '2':
-    case '3':
-    case '4':
-    case '5':
-    case '6':
-    case '7':
-    case '8':
-    case '9':
-        return tokenType::NUMBER;
-        break;
-    case '+':
-    case '-':
-    case '/':
-    case '*':
-    case '(':
-    case ')':
-        return tokenType::OPERATOR;
-        break;
-    case 'P':
-        return tokenType::FUNCTION;
-        break;
-    default:
-        break;
-    }
-    
-    return tokenType::NONE_TOKEN;
-};
-
-
 //TODO: findExpectedOpType and  findExpectedFuncType look like they can be collapsed to a single function
 tokenType findExpectedTokenType(const char c){
     for(std::map<const tokenType, const std::string>::const_iterator it = tokenToInputString.begin(); it != tokenToInputString.end(); ++it){
@@ -101,22 +63,6 @@ token extractToken(const string input, int &currentPosInString, const tokenType 
     return {};
 };
 
-//returns an token containing an function
-//currentPosInString will be incremented by lenght of the found token. 
-//      currentPosInString += tokenString.size()
-functionType extractFunctionToken(const string input, int& currentPosInString) {
-    functionType expectedOpType = NONE_FUNCTION;
-    const char c = input.at(currentPosInString);
-    expectedOpType = findExpectedFuncType(c);
-
-    string expectedFollowingOperatorString = functionToInputString.at(expectedOpType);
-    if (nextIsTokenString(input, currentPosInString, expectedFollowingOperatorString)) {
-        currentPosInString += expectedFollowingOperatorString.size();
-        return expectedOpType;
-    }
-
-    return expectedOpType;
-};
 
 //returns an token containing a number value
 //currentPosInString will be incremented by lenght of the found number. 
