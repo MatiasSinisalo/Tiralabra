@@ -27,7 +27,6 @@ tokenType extractExpectedTokenType(const string input, const int currentPosInStr
     case '9':
         return tokenType::NUMBER;
         break;
-    case 'P':
     case '+':
     case '-':
     case '/':
@@ -35,6 +34,9 @@ tokenType extractExpectedTokenType(const string input, const int currentPosInStr
     case '(':
     case ')':
         return tokenType::OPERATOR;
+        break;
+    case 'P':
+        return tokenType::FUNCTION;
         break;
     default:
         break;
@@ -160,11 +162,17 @@ vector<token> getTokensFromInputString(const string input){
             tokens.push_back(nextToken);
             nextToken = {};
             break;
+        case FUNCTION:
+            nextToken.functionType = extractFunctionToken(input, currentPosInString);
+            tokens.push_back(nextToken);
+            nextToken = {};
+            break;
         case NUMBER:
             nextToken = extractNumberToken(input, currentPosInString);
             tokens.push_back(nextToken);
             nextToken = {};
             break;
+      
         default:
             currentPosInString++;
             break;
