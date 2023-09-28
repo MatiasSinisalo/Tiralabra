@@ -3,15 +3,13 @@
 bool beforeIsLeftAssociative(vector<token>& output, vector<token>& operators) {
     if (operators.size() > 0) {
         token operatorBefore = operators.back();
-        if (operatorBefore.functionType == TO_POWER_OF) {
-            return true;
-        }
-        switch (operatorBefore.opType)
+        switch (operatorBefore.type)
         {
-        case MULTIPLY: // multiplty is left and right
-        case MINUS: //minus is only left associative
-        case PLUS: //plus is both left and right associative so it must also be handled
-        case DIVIDE: //divide is left associative
+      
+        case OP_MINUS: //minus is only left associative
+        case OP_PLUS: //plus is both left and right associative so it must also be handled
+        case OP_DIVIDE: //divide is left associative
+        case OP_MULTIPLY: // multiplty is left and right
             return true;
             break;
 
@@ -28,8 +26,8 @@ bool beforeIsLeftAssociative(vector<token>& output, vector<token>& operators) {
 bool beforeIsHigherPrecedence(vector<token>& output, vector<token>& operators, const token compareTo) {
     if (operators.size() > 0) {
         token operatorBefore = operators.back();
-        if(operatorBefore.opType == MULTIPLY || operatorBefore.opType == DIVIDE){
-            if(compareTo.opType == MINUS || compareTo.opType == PLUS){
+        if(operatorBefore.type == OP_MULTIPLY || operatorBefore.type == OP_DIVIDE){
+            if(compareTo.type == OP_MINUS || compareTo.type == OP_PLUS){
                 return true;
             }
         }
@@ -41,19 +39,19 @@ bool beforeIsHigherPrecedence(vector<token>& output, vector<token>& operators, c
 bool beforeIsSamePrecedence(const vector<token>& output, const vector<token>& operators, const token compareTo){
     if(operators.size() > 0){
         const token beforeToken = operators.back();
-        if(beforeToken.opType == compareTo.opType){
+        if(beforeToken.type == compareTo.type){
             return true;
         }
-        else if(beforeToken.opType == MINUS && compareTo.opType == PLUS){
+        else if(beforeToken.type == OP_MINUS && compareTo.type == OP_PLUS){
             return true;
         }
-        else if(beforeToken.opType == PLUS && compareTo.opType == MINUS){
+        else if(beforeToken.type == OP_PLUS && compareTo.type == OP_MINUS){
             return true;
         }
-        else if(beforeToken.opType == MULTIPLY && compareTo.opType == DIVIDE){
+        else if(beforeToken.type == OP_MULTIPLY && compareTo.type == OP_DIVIDE){
             return true;
         }
-        else if(beforeToken.opType == DIVIDE && compareTo.opType == MULTIPLY){
+        else if(beforeToken.type == OP_DIVIDE && compareTo.type == OP_MULTIPLY){
             return true;
         }
         return false;
@@ -74,18 +72,18 @@ void followCountingRules(vector<token>& output, vector<token>& operators, const 
 void popTokensBeforeLeftParenthesis(vector<token> &target, vector<token> &source){
     int stoppingIndex = 0;
     for (int i = source.size() - 1; i >= 0; i--) {
-        if(source[i].type == OPERATOR){
-            if(source[i].opType == PARENTHESE_LEFT){
-                stoppingIndex = i;
-                break;
-            }
+       
+        if(source[i].type == PARENTHESE_LEFT){
+            stoppingIndex = i;
+            break;
         }
+        
         target.push_back(source[i]);
     }
     source.erase(source.begin()+ stoppingIndex, source.end());
 
     //in case of FUNCTION(A, B), the program should push FUNCTION to target to maintain the order of operations correctly
-    if (source.size() > 0 && source.back().type == FUNCTION) {
+    if (source.size() > 0 && source.back().type == FUNC_POWER) {
         token tokenToMove = source.back();
         target.push_back(tokenToMove);
         source.pop_back();
