@@ -37,19 +37,20 @@ const vector<string> tokenTypeToString = {
     "FUNC_POWER"
 };
 
-const map<const tokenType, const string> tokenToInputString = {
-    {NONE, ""},
-    {NUMBER, ""},
+const map<const tokenType, const vector<const string>> tokenToInputString = {
+    {NONE, {}},
+    
+    {NUMBER, {"0", "1", "2",  "3", "4", "5", "6", "7", "8", "9"}},
 
-    {OP_PLUS, "+"},
-    {OP_MINUS, "-"},
-    {OP_MULTIPLY, "*"},
-    {OP_DIVIDE, "/"},
+    {OP_PLUS, {"+"}},
+    {OP_MINUS, {"-"}},
+    {OP_MULTIPLY, {"*"}},
+    {OP_DIVIDE, {"/"}},
     
-    {PARENTHESE_LEFT, "("},
-    {PARENTHESE_RIGHT, ")"},
+    {PARENTHESE_LEFT, {"("}},
+    {PARENTHESE_RIGHT, {")"}},
     
-    {FUNC_POWER, "POWER"}
+    {FUNC_POWER, {"POWER"}}
 };
 
 class token {

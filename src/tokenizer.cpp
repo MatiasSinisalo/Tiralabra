@@ -1,23 +1,40 @@
 #include "tokenizer.h"
 
-bool nextIsTokenString(const string input, const int position, const string operatorStringToMatch){
-    string substringFromPosition = input.substr(position, operatorStringToMatch.size());
-    //if strings are equal .compare returns 0, 
-    return substringFromPosition.compare(operatorStringToMatch) == 0;
+
+//returns a token that is not a number
+//currentPosInString will be incremented by lenght of the found token. 
+//      currentPosInString += tokenString.size()
+//return token of tokenType::NONE if token is not found
+token extractNonNumberToken(const string input, int & currentPosInString, const tokenType expectedTokenType) {
+    if (expectedTokenType == NUMBER) {
+        cout << "ERROR IN TOKEN PHASE \n";
+        return { .type = NONE };
+    }
+
+    for (const string& operatorStringToMatch : tokenToInputString.at(expectedTokenType)){
+        string substringFromPosition = input.substr(currentPosInString, operatorStringToMatch.size());
+        //if strings are equal .compare returns 0, 
+        if (substringFromPosition.compare(operatorStringToMatch) == 0) {
+            currentPosInString += operatorStringToMatch.size();
+                return { .type = expectedTokenType };
+        }
+    }
+
+    return { .type = NONE };
 }
 
 
 
-//TODO: findExpectedOpType and  findExpectedFuncType look like they can be collapsed to a single function
+
 tokenType findExpectedTokenType(const char c){
-    for(std::map<const tokenType, const std::string>::const_iterator it = tokenToInputString.begin(); it != tokenToInputString.end(); ++it){
-        if(it->first != NONE && c == it->second.at(0)){
-            return it->first; 
+    for(std::map<const tokenType, const vector<const string>>::const_iterator it = tokenToInputString.begin(); it != tokenToInputString.end(); ++it){
+        for (const string& s : it->second) {
+            if (c == s.at(0)) {
+                return it->first;
+            }
         }
     }
 }
-
-
 
 string extractNumberString(const string input, const int startIndex) {
     string numberString = "";
@@ -44,17 +61,35 @@ string extractNumberString(const string input, const int startIndex) {
     return numberString;
 }
 
+//returns an token containing a number value
+//currentPosInString will be incremented by lenght of the found number. 
+//      currentPosInString += number.size()
+//return token of tokenType::NONE if number is not found
+token extractNumberToken(const string input, int& currentPosInString) {
 
+    string numberString = extractNumberString(input, currentPosInString);
+
+    if (numberString.size() > 0)
+    {
+        currentPosInString += numberString.size();
+        token numberToken = {
+                   .type = NUMBER,
+                   .numberVal = stoi(numberString)
+        };
+        return numberToken;
+    }
+    else {
+        return { .type = NONE };
+    }
+};
 
 //Returns token if the input string contains a string of expectedTokenType
 //Modifies currentPosInString to the next char after the expectedToken if string of expectedTokenType is found successfully.
 //If function fails it returns token of tokenType::NONE and does not modify currentPosInString 
 token extractToken(const string input, int &currentPosInString, const tokenType expectedTokenType){  
-    string expectedFollowingOperatorString = tokenToInputString.at(expectedTokenType);
     
-    if (expectedTokenType != NUMBER && nextIsTokenString(input, currentPosInString, expectedFollowingOperatorString)) {
-        currentPosInString += expectedFollowingOperatorString.size();
-        return { .type = expectedTokenType };
+    if (expectedTokenType != NUMBER){
+        return extractNonNumberToken(input, currentPosInString, expectedTokenType);
     }
     else if(expectedTokenType == NUMBER){
         return extractNumberToken(input, currentPosInString);
@@ -64,23 +99,7 @@ token extractToken(const string input, int &currentPosInString, const tokenType 
 };
 
 
-//returns an token containing a number value
-//currentPosInString will be incremented by lenght of the found number. 
-//      currentPosInString += number.size()
-token extractNumberToken(const string input, int &currentPosInString){
 
-    string numberString = extractNumberString(input, currentPosInString);
-
-    
-    currentPosInString += numberString.size();
-
-    token numberToken = {
-               .type = NUMBER,
-               .numberVal = stoi(numberString)
-    };
-
-    return numberToken;
-};
 
 //TODO: Control flow of this function is quite tricky, it should be refactored to be more straight forward
 vector<token> getTokensFromInputString(const string input){
