@@ -11,56 +11,56 @@ using namespace std;
 TEST(shuntingYardTests_shuntingYard, producesExpectedOutputFor1Plus1Minus2){
     vector<token> input = {
         {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 1,
         },
         {
-            .type = OPERATOR,
-            .opType = PLUS,
+            
+            .type = OP_PLUS,
             .numberVal = 0,
         },
         {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 1,
         },
         {
-            .type = OPERATOR,
-            .opType = MINUS,
+           
+            .type = OP_MINUS,
             .numberVal = 0,
         },
         {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 2,
         },
     };
 
     vector<token> expected_output = {
         {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 1,
         },
         {
-            .type = NUMBER,
-            .opType = NONE,
+            
+           .type = NUMBER,
             .numberVal = 1,
         },
         {
-            .type = OPERATOR,
-            .opType = PLUS,
+            
+            .type = OP_PLUS,
             .numberVal = 0,
         },
         {
-            .type = NUMBER,
-            .opType = NONE,
+            
+           .type = NUMBER,
             .numberVal = 2,
         },
         {
-            .type = OPERATOR,
-            .opType = MINUS,
+            
+            .type = OP_MINUS,
             .numberVal = 0,
         },
     };
@@ -73,76 +73,76 @@ TEST(shuntingYardTests_shuntingYard, producesExpectedOutputFor1Plus1Minus2){
 TEST(shuntingYardTests_shuntingYard, producesExpectedOutputForOnePlus2Plus3Times4){
     vector<token> input = {
         {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 1,
         },
         {
-            .type = OPERATOR,
-            .opType = PLUS,
+            
+            .type = OP_PLUS,
             .numberVal = 0,
         },
         {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 2,
         },
         {
-            .type = OPERATOR,
-            .opType = PLUS,
+            
+            .type = OP_PLUS,
             .numberVal = 0,
         },
         {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 3,
         },
         {
-            .type = OPERATOR,
-            .opType = MULTIPLY,
+            
+            .type = OP_MULTIPLY,
             .numberVal = 0,
         },
         {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 4,
         },
     };
 
     vector<token> expected_output = {
         {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 1,
         },
         {
-            .type = NUMBER,
-            .opType = NONE,
+            
+           .type = NUMBER,
             .numberVal = 2,
         },
         {
-            .type = OPERATOR,
-            .opType = PLUS,
+            
+            .type = OP_PLUS,
             .numberVal = 0,
         },
        {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 3,
         },
         {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 4,
         },
         {
-            .type = OPERATOR,
-            .opType = MULTIPLY,
+            
+            .type = OP_MULTIPLY,
             .numberVal = 0,
         },
         {
-            .type = OPERATOR,
-            .opType = PLUS,
+            
+            .type = OP_PLUS,
             .numberVal = 0,
         },
     };
@@ -155,76 +155,76 @@ TEST(shuntingYardTests_shuntingYard, producesExpectedOutputForOnePlus2Plus3Times
 TEST(shuntingYardTests_shuntingYard, producesExpectedOutputForOnePlusFourDividedByTwoMultipliedByFour){
     vector<token> input = {
         {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 1,
         },
         {
-            .type = OPERATOR,
-            .opType = PLUS,
+            
+            .type = OP_PLUS,
             .numberVal = 0,
         },
         {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 4,
         },
         {
-            .type = OPERATOR,
-            .opType = DIVIDE,
+            
+            .type = OP_DIVIDE,
             .numberVal = 0,
         },
         {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 2,
         },
         {
-            .type = OPERATOR,
-            .opType = MULTIPLY,
+            
+            .type = OP_MULTIPLY,
             .numberVal = 0,
         },
         {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 4,
         },
     };
 
     vector<token> expected_output = {
         {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 1,
         },
         {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 4,
         },
         {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 2,
         },
         {
-            .type = OPERATOR,
-            .opType = DIVIDE,
+            
+            .type = OP_DIVIDE,
             .numberVal = 0,
         },
         {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 4,
         },
         {
-            .type = OPERATOR,
-            .opType = MULTIPLY,
+            
+            .type = OP_MULTIPLY,
             .numberVal = 0,
         },
         {
-            .type = OPERATOR,
-            .opType = PLUS,
+            
+            .type = OP_PLUS,
             .numberVal = 0,
         },
     };
@@ -237,66 +237,66 @@ TEST(shuntingYardTests_shuntingYard, producesExpectedOutputForOnePlusFourDivided
 TEST(shuntingYardTests_shuntingYard, producesExpectedOutputForPARENTHESE_LEFT_OnePlusOne_PARENTHESE_RIGHTMultipliedByTwo){
     vector<token> input = {
         {
-            .type = OPERATOR,
-            .opType = PARENTHESE_LEFT,
+            
+            .type  = PARENTHESE_LEFT,
             .numberVal = 1,
         },
         {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 1,
         },
         {
-            .type = OPERATOR,
-            .opType = PLUS,
+            
+            .type = OP_PLUS,
             .numberVal = 0,
         },
         {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 1,
         },
         {
-            .type = OPERATOR,
-            .opType = PARENTHESE_RIGHT,
+            
+            .type  = PARENTHESE_RIGHT,
             .numberVal = 1,
         },
         {
-            .type = OPERATOR,
-            .opType = MULTIPLY,
+            
+            .type = OP_MULTIPLY,
             .numberVal = 0,
         },
         {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 2,
         },
     };
 
     vector<token> expected_output = {
         {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 1,
         },
         {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 1,
         },
           {
-            .type = OPERATOR,
-            .opType = PLUS,
+            
+            .type = OP_PLUS,
             .numberVal = 0,
         },
         {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 2,
         },
         {
-            .type = OPERATOR,
-            .opType = MULTIPLY,
+            
+            .type = OP_MULTIPLY,
             .numberVal = 0,
         },
         
@@ -312,126 +312,126 @@ TEST(shuntingYardTests_shuntingYard, producesExpectedOutputForPARENTHESE_LEFT_On
 TEST(shuntingYardTests_shuntingYard, producesExpectedOutputForMultipleParentheses){
     vector<token> input = {
         {
-            .type = OPERATOR,
-            .opType = PARENTHESE_LEFT,
+            
+            .type  = PARENTHESE_LEFT,
             .numberVal = 1,
         },
         {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 9,
         },
         {
-            .type = OPERATOR,
-            .opType = PLUS,
+            
+            .type = OP_PLUS,
             .numberVal = 0,
         },
         {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 3,
         },
         {
-            .type = OPERATOR,
-            .opType = PARENTHESE_RIGHT,
+            
+            .type  = PARENTHESE_RIGHT,
             .numberVal = 1,
         },
         {
-            .type = OPERATOR,
-            .opType = DIVIDE,
+            
+            .type = OP_DIVIDE,
             .numberVal = 0,
         },
         {
-            .type = OPERATOR,
-            .opType = PARENTHESE_LEFT,
+            
+            .type  = PARENTHESE_LEFT,
             .numberVal = 1,
         },
         {
-            .type = OPERATOR,
-            .opType = PARENTHESE_LEFT,
+            
+            .type  = PARENTHESE_LEFT,
             .numberVal = 1,
         },
         {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 1,
         },
          {
-            .type = OPERATOR,
-            .opType = PLUS,
+            
+            .type = OP_PLUS,
             .numberVal = 0,
         },
          {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 1,
         },
         {
-            .type = OPERATOR,
-            .opType = PARENTHESE_RIGHT,
+            
+            .type  = PARENTHESE_RIGHT,
             .numberVal = 1,
         },
         {
-            .type = OPERATOR,
-            .opType = MULTIPLY,
+            
+            .type = OP_MULTIPLY,
             .numberVal = 0,
         },
         {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 2,
         },
         {
-            .type = OPERATOR,
-            .opType = PARENTHESE_RIGHT,
+            
+            .type  = PARENTHESE_RIGHT,
             .numberVal = 1,
         },
     };
 
     vector<token> expected_output = {
         {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 9,
         },
         {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 3,
         },
          {
-            .type = OPERATOR,
-            .opType = PLUS,
+            
+            .type = OP_PLUS,
             .numberVal = 0,
         },
         {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 1,
         },
          {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 1,
         },
          {
-            .type = OPERATOR,
-            .opType = PLUS,
+            
+            .type = OP_PLUS,
             .numberVal = 0,
         },
         {
+            
             .type = NUMBER,
-            .opType = NONE,
             .numberVal = 2,
         },
         {
-            .type = OPERATOR,
-            .opType = MULTIPLY,
+            
+            .type = OP_MULTIPLY,
             .numberVal = 0,
         },
         {
-            .type = OPERATOR,
-            .opType = DIVIDE,
+            
+            .type = OP_DIVIDE,
             .numberVal = 0,
         },
     };
