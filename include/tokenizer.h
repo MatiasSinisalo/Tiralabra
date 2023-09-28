@@ -7,70 +7,51 @@ using namespace std;
 
 
 enum tokenType {
-    NONE_TOKEN,
+    NONE,
+    
     NUMBER,
-    OPERATOR,
-    FUNCTION
+    
+    OP_PLUS,
+    OP_MINUS,
+    OP_MULTIPLY,
+    OP_DIVIDE,
+
+    PARENTHESE_LEFT,
+    PARENTHESE_RIGHT,
+    
+    FUNC_POWER,
 };
 
 const vector<string> tokenTypeToString = {
     "NONE_TOKEN",
     "NUMBER",
-    "OPERATOR",
-    "FUNCTION",
-};
-
-enum operatorType {
-    NONE,
-    PLUS,
-    MINUS,
-    MULTIPLY,
-    DIVIDE,
-    PARENTHESE_LEFT, // => (
-    PARENTHESE_RIGHT, // =>  )
-};
-
-const map<const operatorType, const string> operatorToInputString = {
-    {NONE, ""},
-    {PLUS, "+"},
-    {MINUS, "-"},
-    {MULTIPLY, "*"},
-    {DIVIDE, "/"},
-    {PARENTHESE_LEFT, "("},
-    {PARENTHESE_RIGHT, ")"},
-};
-
-const vector<string> operatorTypeToString = {
-    "NONE",
     "PLUS",
     "MINUS",
     "MULTIPLY",
     "DIVIDE",
     "PARENTHESE_LEFT",
     "PARENTHESE_RIGHT",
+    "TO_POWER_OF"
 };
 
-enum functionType {
-    NONE_FUNCTION,
-    TO_POWER_OF,
+const map<const tokenType, const string> tokenToInputString = {
+    {NONE, ""},
+    {NUMBER, ""},
+
+    {OP_PLUS, "+"},
+    {OP_MINUS, "-"},
+    {OP_MULTIPLY, "*"},
+    {OP_DIVIDE, "/"},
+    
+    {PARENTHESE_LEFT, "("},
+    {PARENTHESE_RIGHT, ")"},
+    
+    {FUNC_POWER, "POWER"}
 };
 
-const map<const functionType, const string> functionToInputString = {
-    {NONE_FUNCTION, ""},
-    {TO_POWER_OF, "POWER"}
-};
-
-const vector<string> functionTypeToString = {
-    "NONE_FUNCTION",
-    "POWER"
-};
-
-//TODO: this class is super easy to use incorrectly, refactor needed
 class token {
 public:
     tokenType type;
-    operatorType opType;
-    functionType functionType;
     int numberVal;
 };
 
