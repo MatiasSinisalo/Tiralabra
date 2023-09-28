@@ -42,7 +42,7 @@ token interpretFromRPN(const vector<token> tokensInRPN){
                 break;
             }
         }
-        else if (tokensInRPN[i].functionType == FUNCTION) {
+        else if (tokensInRPN[i].type == FUNCTION) {
             token firstToken = helperStack[helperStack.size() - 1];
             helperStack.pop_back();
 
@@ -53,7 +53,7 @@ token interpretFromRPN(const vector<token> tokensInRPN){
             token evaluatedToken;
             evaluatedToken.type = NUMBER;
             evaluatedToken.opType = NONE;
-            switch (tokensInRPN[i].opType == TO_POWER_OF)
+            switch (tokensInRPN[i].functionType == TO_POWER_OF)
             {
             case TO_POWER_OF:
                 evaluatedToken.numberVal = pow(secondToken.numberVal, firstToken.numberVal);
