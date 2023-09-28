@@ -61,7 +61,6 @@ public:
 };
 
 vector<token> getTokensFromInputString(const string input);
-vector<token> getTokensFromInputString_v2(const string input);
 //define DEBUG_PRINTS if debug output is needed from debug_printTokens function
 #define DEBUG_PRINTS
 void debug_printTokens(const string extraMsg, const vector<token> tokens);
