@@ -38,6 +38,23 @@ token interpretFromRPN(const vector<token> tokensInRPN){
                 evaluatedToken.numberVal = secondToken.numberVal / firstToken.numberVal;
                 helperStack.push_back(evaluatedToken);
                 break;
+            default:
+                break;
+            }
+        }
+        else if (tokensInRPN[i].functionType == FUNCTION) {
+            token firstToken = helperStack[helperStack.size() - 1];
+            helperStack.pop_back();
+
+            token secondToken = helperStack[helperStack.size() - 1];
+            helperStack.pop_back();
+
+
+            token evaluatedToken;
+            evaluatedToken.type = NUMBER;
+            evaluatedToken.opType = NONE;
+            switch (tokensInRPN[i].opType == TO_POWER_OF)
+            {
             case TO_POWER_OF:
                 evaluatedToken.numberVal = pow(secondToken.numberVal, firstToken.numberVal);
                 helperStack.push_back(evaluatedToken);

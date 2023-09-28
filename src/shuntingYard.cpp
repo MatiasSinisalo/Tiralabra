@@ -3,13 +3,15 @@
 bool beforeIsLeftAssociative(vector<token>& output, vector<token>& operators) {
     if (operators.size() > 0) {
         token operatorBefore = operators.back();
+        if (operatorBefore.functionType == TO_POWER_OF) {
+            return true;
+        }
         switch (operatorBefore.opType)
         {
         case MULTIPLY: // multiplty is left and right
         case MINUS: //minus is only left associative
         case PLUS: //plus is both left and right associative so it must also be handled
         case DIVIDE: //divide is left associative
-        case TO_POWER_OF:
             return true;
             break;
 
@@ -17,6 +19,8 @@ bool beforeIsLeftAssociative(vector<token>& output, vector<token>& operators) {
             return false;
             break;
         }
+
+       
     }
     return false;
 }
@@ -24,7 +28,7 @@ bool beforeIsLeftAssociative(vector<token>& output, vector<token>& operators) {
 bool beforeIsHigherPrecedence(vector<token>& output, vector<token>& operators, const token compareTo) {
     if (operators.size() > 0) {
         token operatorBefore = operators.back();
-        if(operatorBefore.opType == MULTIPLY || operatorBefore.opType == DIVIDE || operatorBefore.opType == TO_POWER_OF){
+        if(operatorBefore.opType == MULTIPLY || operatorBefore.opType == DIVIDE || operatorBefore.functionType == TO_POWER_OF){
             if(compareTo.opType == MINUS || compareTo.opType == PLUS){
                 return true;
             }
@@ -34,7 +38,7 @@ bool beforeIsHigherPrecedence(vector<token>& output, vector<token>& operators, c
         //in case of POWER(2,3)/2, the calculator should evaluate the POWER(2,3) before the /2,
         //since the value of POWER(2,3) would not be known
         //same for POWER(2,3)*2
-        if (operatorBefore.opType == TO_POWER_OF) {
+        if (operatorBefore.functionType == TO_POWER_OF) {
             if (compareTo.opType == MULTIPLY || compareTo.opType == DIVIDE) {
                 return true;
             }
@@ -62,7 +66,7 @@ bool beforeIsSamePrecedence(const vector<token>& output, const vector<token>& op
         else if(beforeToken.opType == DIVIDE && compareTo.opType == MULTIPLY){
             return true;
         }
-        else if (beforeToken.opType == TO_POWER_OF && compareTo.opType == TO_POWER_OF) {
+        else if (beforeToken.functionType == TO_POWER_OF && compareTo.functionType == TO_POWER_OF) {
             return true;
         }
         return false;
@@ -112,7 +116,6 @@ vector<token> shuntingYard(const vector<token> tokens) {
                 case MINUS:
                 case MULTIPLY:
                 case DIVIDE:
-                case TO_POWER_OF:
                     followCountingRules(output, operators, t);
                     break;
                 case PARENTHESE_LEFT:
@@ -126,6 +129,15 @@ vector<token> shuntingYard(const vector<token> tokens) {
                     break;
             }
             break;
+        case FUNCTION:
+            switch (t.functionType)
+            {
+            case TO_POWER_OF:
+                followCountingRules(output, operators, t);
+                break;
+            default:
+                break;
+            }
         default:
             break;
         }
