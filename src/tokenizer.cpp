@@ -45,9 +45,7 @@ tokenType extractExpectedTokenType(const string input, const int currentPosInStr
     return tokenType::NONE_TOKEN;
 };
 
-operatorType extractSingleCharTokens(){
-    return {};
-}
+
 //TODO: findExpectedOpType and  findExpectedFuncType look like they can be collapsed to a single function
 tokenType findExpectedTokenType(const char c){
     for(std::map<const tokenType, const std::string>::const_iterator it = tokenToInputString.begin(); it != tokenToInputString.end(); ++it){
@@ -84,21 +82,23 @@ string extractNumberString(const string input, const int startIndex) {
     return numberString;
 }
 
-//returns an token containing an operator
-//currentPosInString will be incremented by lenght of the found token. 
-//      currentPosInString += tokenString.size()
-operatorType extractOperatorToken(const string input, int &currentPosInString){
-    operatorType expectedOpType = NONE;
-    const char c = input.at(currentPosInString);
-    expectedOpType = findExpectedOpType(c);
+
+
+//Returns token if the input string contains a string of expectedTokenType
+//Modifies currentPosInString to the next char after the expectedToken if string of expectedTokenType is found successfully.
+//If function fails it returns token of tokenType::NONE and does not modify currentPosInString 
+token extractToken(const string input, int &currentPosInString, const tokenType expectedTokenType){  
+    string expectedFollowingOperatorString = tokenToInputString.at(expectedTokenType);
     
-    string expectedFollowingOperatorString = operatorToInputString.at(expectedOpType);
-    if (nextIsTokenString(input, currentPosInString, expectedFollowingOperatorString)) {
+    if (expectedTokenType != NUMBER && nextIsTokenString(input, currentPosInString, expectedFollowingOperatorString)) {
         currentPosInString += expectedFollowingOperatorString.size();
-        return expectedOpType;
+        return { .type = expectedTokenType };
+    }
+    else if(expectedTokenType == NUMBER){
+        return extractNumberToken(input, currentPosInString);
     }
 
-    return expectedOpType;
+    return {};
 };
 
 //returns an token containing an function
@@ -125,11 +125,11 @@ token extractNumberToken(const string input, int &currentPosInString){
 
     string numberString = extractNumberString(input, currentPosInString);
 
+    
     currentPosInString += numberString.size();
 
     token numberToken = {
                .type = NUMBER,
-               .opType = NONE,
                .numberVal = stoi(numberString)
     };
 
@@ -144,32 +144,15 @@ vector<token> getTokensFromInputString(const string input){
     token nextToken = {};
     int currentPosInString = 0; 
     while (currentPosInString < input.size()){
-        if (nextToken.type == NONE)
-        {
-            nextToken.type = extractExpectedTokenType(input, currentPosInString);
-        }
+        tokenType expectedTokenType = NONE;
+        expectedTokenType = findExpectedTokenType(input.at(currentPosInString));
+        
 
-        switch (nextToken.type)
-        {
-        case OPERATOR:
-            nextToken.opType = extractOperatorToken(input, currentPosInString);
-            tokens.push_back(nextToken);
-            nextToken = {};
-            break;
-        case FUNCTION:
-            nextToken.functionType = extractFunctionToken(input, currentPosInString);
-            tokens.push_back(nextToken);
-            nextToken = {};
-            break;
-        case NUMBER:
-            nextToken = extractNumberToken(input, currentPosInString);
-            tokens.push_back(nextToken);
-            nextToken = {};
-            break;
-      
-        default:
-            currentPosInString++;
-            break;
+        nextToken = extractToken(input, currentPosInString, nextToken.type);
+
+        if (nextToken.type == NONE) {
+            cout << "INCORRECT INPUT!";
+            return {};
         }
         
     }
