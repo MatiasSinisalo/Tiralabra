@@ -13,16 +13,16 @@ TEST(shuntingYard_popTokensBeforeLeftParenthesis_tests, functionMovesTokensFromS
     vector<token> output;
     vector<token> operators = {
         {
-            .type = OPERATOR,
-            .opType = PARENTHESE_LEFT
+            
+            .type = PARENTHESE_LEFT
         },
         {
-            .type = OPERATOR,
-            .opType = PLUS
+           
+            .type = OP_PLUS
         },
         {
-            .type = OPERATOR,
-            .opType = MINUS
+         
+            .type = OP_MINUS
         },
     };
 
@@ -30,12 +30,12 @@ TEST(shuntingYard_popTokensBeforeLeftParenthesis_tests, functionMovesTokensFromS
 
     vector<token> expectedOutput = {
         {
-            .type = OPERATOR,
-            .opType = MINUS
+          
+            .type = OP_MINUS
         },
         {
-            .type = OPERATOR,
-            .opType = PLUS
+           
+            .type = OP_PLUS
         },
     };
     ASSERT_EQ(operators.size(), 0);
@@ -47,21 +47,21 @@ TEST(shuntingYard_popTokensBeforeLeftParenthesis_tests, functionMovesTokensFromS
     vector<token> operators = {
         {
            
-            .type = OPERATOR,
-            .opType = MULTIPLY
+            
+            .type =OP_MULTIPLY
             
         },
         {
-            .type = OPERATOR,
-            .opType = PARENTHESE_LEFT
+            
+            .type = PARENTHESE_LEFT
         },
         {
-            .type = OPERATOR,
-            .opType = PLUS
+           
+            .type = OP_PLUS
         },
         {
-            .type = OPERATOR,
-            .opType = MINUS
+          
+            .type = OP_MINUS
         },
     };
 
@@ -69,20 +69,20 @@ TEST(shuntingYard_popTokensBeforeLeftParenthesis_tests, functionMovesTokensFromS
 
     vector<token> expectedOutput = {
         {
-            .type = OPERATOR,
-            .opType = MINUS
+          
+            .type = OP_MINUS
         },
         {
-            .type = OPERATOR,
-            .opType = PLUS
+            
+            .type = OP_PLUS
         },
     };
     checkTokensMatch(output, expectedOutput);
 
     vector<token> expectedOperators = {
         {
-            .type = OPERATOR,
-            .opType = MULTIPLY
+           
+            .type =OP_MULTIPLY
         },
     };
      checkTokensMatch(operators, expectedOperators);
@@ -92,26 +92,26 @@ TEST(shuntingYard_popTokensBeforeLeftParenthesis_tests, functionMovesTokensFromS
     vector<token> output;
     vector<token> operators = {
         {
-            .type = OPERATOR,
-            .opType = PARENTHESE_LEFT
+            
+            .type = PARENTHESE_LEFT
         },
         {
            
-            .type = OPERATOR,
-            .opType = MULTIPLY
+           
+            .type =OP_MULTIPLY
             
         },
         {
-            .type = OPERATOR,
-            .opType = PARENTHESE_LEFT
+           
+            .type = PARENTHESE_LEFT
         },
         {
-            .type = OPERATOR,
-            .opType = PLUS
+           
+            .type = OP_PLUS
         },
         {
-            .type = OPERATOR,
-            .opType = MINUS
+           
+            .type = OP_MINUS
         },
     };
 
@@ -119,24 +119,24 @@ TEST(shuntingYard_popTokensBeforeLeftParenthesis_tests, functionMovesTokensFromS
 
     vector<token> expectedOutput = {
         {
-            .type = OPERATOR,
-            .opType = MINUS
+            
+            .type = OP_MINUS
         },
         {
-            .type = OPERATOR,
-            .opType = PLUS
+           
+            .type = OP_PLUS
         },
     };
     checkTokensMatch(output, expectedOutput);
 
     vector<token> expectedOperators = {
         {
-            .type = OPERATOR,
-            .opType = PARENTHESE_LEFT
+           
+            .type = PARENTHESE_LEFT
         },
         {
-            .type = OPERATOR,
-            .opType = MULTIPLY
+          
+            .type =OP_MULTIPLY
         },
     };
      checkTokensMatch(operators, expectedOperators);
