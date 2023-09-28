@@ -49,21 +49,15 @@ operatorType extractSingleCharTokens(){
     return {};
 }
 //TODO: findExpectedOpType and  findExpectedFuncType look like they can be collapsed to a single function
-operatorType findExpectedOpType(const char c){
-    for(std::map<const operatorType, const std::string>::const_iterator it = operatorToInputString.begin(); it != operatorToInputString.end(); ++it){
+tokenType findExpectedTokenType(const char c){
+    for(std::map<const tokenType, const std::string>::const_iterator it = tokenToInputString.begin(); it != tokenToInputString.end(); ++it){
         if(it->first != NONE && c == it->second.at(0)){
             return it->first; 
         }
     }
 }
 
-functionType findExpectedFuncType(const char c) {
-    for (std::map<const functionType, const std::string>::const_iterator it = functionToInputString.begin(); it != functionToInputString.end(); ++it) {
-        if (it->first != NONE && c == it->second.at(0)) {
-            return it->first;
-        }
-    }
-}
+
 
 string extractNumberString(const string input, const int startIndex) {
     string numberString = "";
@@ -150,7 +144,7 @@ vector<token> getTokensFromInputString(const string input){
     token nextToken = {};
     int currentPosInString = 0; 
     while (currentPosInString < input.size()){
-        if (nextToken.type == NONE_TOKEN)
+        if (nextToken.type == NONE)
         {
             nextToken.type = extractExpectedTokenType(input, currentPosInString);
         }
