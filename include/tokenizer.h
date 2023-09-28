@@ -23,15 +23,18 @@ enum tokenType {
 };
 
 const vector<string> tokenTypeToString = {
-    "NONE_TOKEN",
+    "NONE",
     "NUMBER",
-    "PLUS",
-    "MINUS",
-    "MULTIPLY",
-    "DIVIDE",
+
+    "OP_PLUS",
+    "OP_MINUS",
+    "OP_MULTIPLY",
+    "OP_DIVIDE",
+    
     "PARENTHESE_LEFT",
     "PARENTHESE_RIGHT",
-    "TO_POWER_OF"
+    
+    "FUNC_POWER"
 };
 
 const map<const tokenType, const string> tokenToInputString = {

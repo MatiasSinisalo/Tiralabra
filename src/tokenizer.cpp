@@ -190,7 +190,7 @@ void debug_printTokens(const string extraMsg, const vector<token> tokens) {
         cout << extraMsg << "\n";
         cout << "[";
         for (const token& t : tokens) {
-            cout << tokenTypeToString[t.type] << " " << operatorTypeToString[t.opType] << " " << t.numberVal << ", ";
+            cout << tokenTypeToString[t.type];
         }
         cout << "]\n";
     #endif
