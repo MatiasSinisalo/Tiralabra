@@ -5,7 +5,7 @@ int main(){
     string input = "";
     getline(cin, input);
     
-    vector<token> tokens = getTokensFromInputString_v2(input);
+    vector<token> tokens = getTokensFromInputString(input);
     debug_printTokens("input tokens are: ", tokens);
     
     vector<token> output = shuntingYard(tokens);
