@@ -106,19 +106,21 @@ vector<token> getTokensFromInputString(const string input){
     vector<token> tokens;
     const string powerOperator = "POWER";
 
-    token nextToken = {};
+   
     int currentPosInString = 0; 
     while (currentPosInString < input.size()){
         tokenType expectedTokenType = NONE;
         expectedTokenType = findExpectedTokenType(input.at(currentPosInString));
         
 
-        nextToken = extractToken(input, currentPosInString, expectedTokenType);
+        token nextToken = extractToken(input, currentPosInString, expectedTokenType);
 
         if (nextToken.type == NONE) {
             cout << "INCORRECT INPUT!";
             return {};
         }
+
+        tokens.push_back(nextToken);
         
     }
     return tokens;
