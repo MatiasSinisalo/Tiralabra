@@ -20,8 +20,6 @@ const vector<string> tokenTypeToString = {
     "FUNCTION",
 };
 
-
-
 enum operatorType {
     NONE,
     PLUS,
@@ -30,7 +28,6 @@ enum operatorType {
     DIVIDE,
     PARENTHESE_LEFT, // => (
     PARENTHESE_RIGHT, // =>  )
-    TO_POWER_OF,
 };
 
 const map<const operatorType, const string> operatorToInputString = {
@@ -41,7 +38,6 @@ const map<const operatorType, const string> operatorToInputString = {
     {DIVIDE, "/"},
     {PARENTHESE_LEFT, "("},
     {PARENTHESE_RIGHT, ")"},
-    {TO_POWER_OF, "POWER"}
 };
 
 const vector<string> operatorTypeToString = {
@@ -52,13 +48,29 @@ const vector<string> operatorTypeToString = {
     "DIVIDE",
     "PARENTHESE_LEFT",
     "PARENTHESE_RIGHT",
-    "TO_POWER_OF"
 };
 
+enum functionType {
+    NONE_FUNCTION,
+    TO_POWER_OF,
+};
+
+const map<const functionType, const string> functionToInputString = {
+    {NONE_FUNCTION, ""},
+    {TO_POWER_OF, "POWER"}
+};
+
+const vector<string> functionTypeToString = {
+    "NONE_FUNCTION",
+    "POWER"
+};
+
+//TODO: this class is super easy to use incorrectly, refactor needed
 class token {
 public:
     tokenType type;
     operatorType opType;
+    functionType functionType;
     int numberVal;
 };
 
