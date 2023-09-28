@@ -101,37 +101,26 @@ vector<token> shuntingYard(const vector<token> tokens) {
         case NUMBER:
             output.push_back(t);
             break;
-        case OPERATOR:
-            switch (t.opType)
-            {
-                case PLUS:
-                case MINUS:
-                case MULTIPLY:
-                case DIVIDE:
-                    followCountingRules(output, operators, t);
-                    break;
-                case PARENTHESE_LEFT:
-                    operators.push_back(t);
-                    break;
-                //the operators that are inside the parentheses should be pushed all to output.
-                case PARENTHESE_RIGHT: 
-                    popTokensBeforeLeftParenthesis(output, operators);
-                    break;
-                default:
-                    break;
-            }
+        case OP_PLUS:
+        case OP_MINUS:
+        case OP_MULTIPLY:
+        case OP_DIVIDE:
+            followCountingRules(output, operators, t);
             break;
-        case FUNCTION:
-            switch (t.functionType)
-            {
-            case TO_POWER_OF:
-                operators.push_back(t);
-                break;
-            default:
-                break;
-            }
+        case PARENTHESE_LEFT:
+            operators.push_back(t);
+            break;
+        //the operators that are inside the parentheses should be pushed all to output.
+        case PARENTHESE_RIGHT: 
+            popTokensBeforeLeftParenthesis(output, operators);
+            break;
+        case FUNC_POWER:
+            operators.push_back(t);
+            break;
         default:
             break;
+           
+       
         }
 
         debug_printTokens("output stack now is: ", output);
