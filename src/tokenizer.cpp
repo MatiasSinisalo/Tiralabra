@@ -113,7 +113,7 @@ vector<token> getTokensFromInputString(const string input){
         expectedTokenType = findExpectedTokenType(input.at(currentPosInString));
         
 
-        nextToken = extractToken(input, currentPosInString, nextToken.type);
+        nextToken = extractToken(input, currentPosInString, expectedTokenType);
 
         if (nextToken.type == NONE) {
             cout << "INCORRECT INPUT!";
