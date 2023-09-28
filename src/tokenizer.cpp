@@ -1,6 +1,6 @@
 #include "tokenizer.h"
 
-bool nextIsOperator(const string input, const int position, const string operatorStringToMatch){
+bool nextIsTokenString(const string input, const int position, const string operatorStringToMatch){
     string substringFromPosition = input.substr(position, operatorStringToMatch.size());
     //if strings are equal .compare returns 0, 
     return substringFromPosition.compare(operatorStringToMatch) == 0;
@@ -46,11 +46,19 @@ tokenType extractExpectedTokenType(const string input, const int currentPosInStr
 operatorType extractSingleCharTokens(){
     return {};
 }
-
+//TODO: findExpectedOpType and  findExpectedFuncType look like they can be collapsed to a single function
 operatorType findExpectedOpType(const char c){
     for(std::map<const operatorType, const std::string>::const_iterator it = operatorToInputString.begin(); it != operatorToInputString.end(); ++it){
         if(it->first != NONE && c == it->second.at(0)){
             return it->first; 
+        }
+    }
+}
+
+functionType findExpectedFuncType(const char c) {
+    for (std::map<const functionType, const std::string>::const_iterator it = functionToInputString.begin(); it != functionToInputString.end(); ++it) {
+        if (it->first != NONE && c == it->second.at(0)) {
+            return it->first;
         }
     }
 }
@@ -89,7 +97,24 @@ operatorType extractOperatorToken(const string input, int &currentPosInString){
     expectedOpType = findExpectedOpType(c);
     
     string expectedFollowingOperatorString = operatorToInputString.at(expectedOpType);
-    if (nextIsOperator(input, currentPosInString, expectedFollowingOperatorString)) {
+    if (nextIsTokenString(input, currentPosInString, expectedFollowingOperatorString)) {
+        currentPosInString += expectedFollowingOperatorString.size();
+        return expectedOpType;
+    }
+
+    return expectedOpType;
+};
+
+//returns an token containing an function
+//currentPosInString will be incremented by lenght of the found token. 
+//      currentPosInString += tokenString.size()
+functionType extractFunctionToken(const string input, int& currentPosInString) {
+    functionType expectedOpType = NONE_FUNCTION;
+    const char c = input.at(currentPosInString);
+    expectedOpType = findExpectedFuncType(c);
+
+    string expectedFollowingOperatorString = functionToInputString.at(expectedOpType);
+    if (nextIsTokenString(input, currentPosInString, expectedFollowingOperatorString)) {
         currentPosInString += expectedFollowingOperatorString.size();
         return expectedOpType;
     }
