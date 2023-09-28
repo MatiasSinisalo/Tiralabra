@@ -9,11 +9,9 @@ using namespace std;
 
 TEST(shuntingYardTests_isHigherPrecedence, returnsTrueForMultiplyPlus){
     vector<token> output = {};
-    vector<token> operators = {{.type = OPERATOR, .opType = MULTIPLY}};
+    vector<token> operators = {{.type = OP_MULTIPLY}};
     token newToken = {
-        .type = OPERATOR,
-        .opType = PLUS,
-        .numberVal = 0
+        .type = OP_PLUS
     };
     bool isHigherPrecedence = beforeIsHigherPrecedence(output, operators, newToken);
     EXPECT_EQ(isHigherPrecedence, true);
@@ -21,11 +19,9 @@ TEST(shuntingYardTests_isHigherPrecedence, returnsTrueForMultiplyPlus){
 
 TEST(shuntingYardTests_isHigherPrecedence, returnsTrueForDividePlus){
     vector<token> output = {};
-    vector<token> operators = {{.type = OPERATOR, .opType = DIVIDE}};
+    vector<token> operators = {{.type = OP_DIVIDE}};
     token newToken = {
-        .type = OPERATOR,
-        .opType = PLUS,
-        .numberVal = 0
+        .type = OP_PLUS
     };
     bool isHigherPrecedence = beforeIsHigherPrecedence(output, operators, newToken);
     EXPECT_EQ(isHigherPrecedence, true);
@@ -33,11 +29,9 @@ TEST(shuntingYardTests_isHigherPrecedence, returnsTrueForDividePlus){
 
 TEST(shuntingYardTests_isHigherPrecedence, returnsTrueForDivideMinus){
     vector<token> output = {};
-    vector<token> operators = {{.type = OPERATOR, .opType = DIVIDE}};
+    vector<token> operators = {{.type = OP_DIVIDE}};
     token newToken = {
-        .type = OPERATOR,
-        .opType = MINUS,
-        .numberVal = 0
+       .type = OP_MINUS
     };
     bool isHigherPrecedence = beforeIsHigherPrecedence(output, operators, newToken);
     EXPECT_EQ(isHigherPrecedence, true);
@@ -45,11 +39,9 @@ TEST(shuntingYardTests_isHigherPrecedence, returnsTrueForDivideMinus){
 
 TEST(shuntingYardTests_isHigherPrecedence, returnsFalseForPlusDivide){
     vector<token> output = {};
-    vector<token> operators = {{.type = OPERATOR, .opType = PLUS}};
+    vector<token> operators = {{.type = OP_PLUS}};
     token newToken = {
-            .type = OPERATOR,
-            .opType = DIVIDE,
-            .numberVal = 0
+            .type = OP_DIVIDE
     };
     bool isHigherPrecedence = beforeIsHigherPrecedence(output, operators, newToken);
     EXPECT_EQ(isHigherPrecedence, false);
@@ -57,11 +49,9 @@ TEST(shuntingYardTests_isHigherPrecedence, returnsFalseForPlusDivide){
 
 TEST(shuntingYardTests_isHigherPrecedence, returnsFalseForMinusDivide){
     vector<token> output = {};
-    vector<token> operators = {{.type = OPERATOR, .opType = MINUS}};
+    vector<token> operators = {{.type = OP_MINUS}};
     token newToken = {
-            .type = OPERATOR,
-            .opType = DIVIDE,
-            .numberVal = 0
+            .type = OP_DIVIDE
     };
     bool isHigherPrecedence = beforeIsHigherPrecedence(output, operators, newToken);
     EXPECT_EQ(isHigherPrecedence, false);
@@ -70,11 +60,9 @@ TEST(shuntingYardTests_isHigherPrecedence, returnsFalseForMinusDivide){
 
 TEST(shuntingYardTests_isHigherPrecedence, returnsFalseForDivideMultiply){
     vector<token> output = {};
-    vector<token> operators = {{.type = OPERATOR, .opType = DIVIDE}};
+    vector<token> operators = {{.type = OP_DIVIDE}};
     token newToken = {
-            .type = OPERATOR,
-            .opType = MULTIPLY,
-            .numberVal = 0
+            .type = OP_MULTIPLY
     };
     bool isHigherPrecedence = beforeIsHigherPrecedence(output, operators, newToken);
     EXPECT_EQ(isHigherPrecedence, false);
@@ -82,11 +70,9 @@ TEST(shuntingYardTests_isHigherPrecedence, returnsFalseForDivideMultiply){
 
 TEST(shuntingYardTests_isHigherPrecedence, returnsFalseForMultiplyDivide){
     vector<token> output = {};
-    vector<token> operators = {{.type = OPERATOR, .opType = MULTIPLY}};
+    vector<token> operators = {{.type = OP_MULTIPLY}};
     token newToken = {
-            .type = OPERATOR,
-            .opType = DIVIDE,
-            .numberVal = 0
+           .type = OP_DIVIDE
     };
     bool isHigherPrecedence = beforeIsHigherPrecedence(output, operators, newToken);
     EXPECT_EQ(isHigherPrecedence, false);
@@ -94,11 +80,9 @@ TEST(shuntingYardTests_isHigherPrecedence, returnsFalseForMultiplyDivide){
 
 TEST(shuntingYardTests_isHigherPrecedence, returnsFalseForPlusMultiply){
     vector<token> output = {};
-    vector<token> operators = {{.type = OPERATOR, .opType = PLUS}};
+    vector<token> operators = {{.type = OP_PLUS}};
     token newToken = {
-            .type = OPERATOR,
-            .opType = MULTIPLY,
-            .numberVal = 0
+            .type = OP_MULTIPLY
     };
     bool isHigherPrecedence = beforeIsHigherPrecedence(output, operators, newToken);
     EXPECT_EQ(isHigherPrecedence, false);
@@ -106,11 +90,9 @@ TEST(shuntingYardTests_isHigherPrecedence, returnsFalseForPlusMultiply){
 
 TEST(shuntingYardTests_isHigherPrecedence, returnsFalseForMinusMultiply){
     vector<token> output = {};
-    vector<token> operators = {{.type = OPERATOR, .opType = MINUS}};
+    vector<token> operators = {{.type = OP_MINUS}};
     token newToken = {
-            .type = OPERATOR,
-            .opType = MULTIPLY,
-            .numberVal = 0
+           .type = OP_MULTIPLY
     };
     bool isHigherPrecedence = beforeIsHigherPrecedence(output, operators, newToken);
     EXPECT_EQ(isHigherPrecedence, false);
