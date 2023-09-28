@@ -10,12 +10,14 @@ enum tokenType {
     NONE_TOKEN,
     NUMBER,
     OPERATOR,
+    FUNCTION
 };
 
 const vector<string> tokenTypeToString = {
     "NONE_TOKEN",
     "NUMBER",
     "OPERATOR",
+    "FUNCTION",
 };
 
 
