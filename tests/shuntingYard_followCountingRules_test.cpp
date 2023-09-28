@@ -16,14 +16,14 @@ TEST(shuntingYardTests_followCountingRules, PlusPlusCausesPlusToEnterOutput){
     vector<token> operators = {};
 
 
-    followCountingRules(output, operators, {.type = OPERATOR, .opType = PLUS, .numberVal = 0});
+    followCountingRules(output, operators, {.type = OP_PLUS});
     EXPECT_EQ(output.size(), 0);
-    checkFirstTokenIsCorrectOperator(operators, PLUS, 1);
+    checkFirstTokenIsCorrectOperator(operators, OP_PLUS, 1);
 
     
-    followCountingRules(output, operators, {.type = OPERATOR, .opType = PLUS, .numberVal = 0});
-    checkFirstTokenIsCorrectOperator(output, PLUS, 1);
-    checkFirstTokenIsCorrectOperator(operators, PLUS, 1);
+    followCountingRules(output, operators, { .type = OP_PLUS });
+    checkFirstTokenIsCorrectOperator(output, OP_PLUS, 1);
+    checkFirstTokenIsCorrectOperator(operators, OP_PLUS, 1);
 }
 
 
@@ -33,13 +33,13 @@ TEST(shuntingYardTests_followCountingRules, PlusMinusCausesPlusToEnterOutput){
     vector<token> operators = {};
 
 
-    followCountingRules(output, operators, {.type = OPERATOR, .opType = PLUS, .numberVal = 0});
+    followCountingRules(output, operators, { .type = OP_PLUS });
     EXPECT_EQ(output.size(), 0);
-    checkFirstTokenIsCorrectOperator(operators, PLUS, 1);
+    checkFirstTokenIsCorrectOperator(operators, OP_PLUS, 1);
     
-    followCountingRules(output, operators, {.type = OPERATOR, .opType = MINUS, .numberVal = 0});
-    checkFirstTokenIsCorrectOperator(output, PLUS, 1);
-    checkFirstTokenIsCorrectOperator(operators, MINUS, 1);
+    followCountingRules(output, operators, { .type = OP_MINUS });
+    checkFirstTokenIsCorrectOperator(output, OP_PLUS, 1);
+    checkFirstTokenIsCorrectOperator(operators, OP_MINUS, 1);
 }
 
 TEST(shuntingYardTests_followCountingRules, plusMultiplyStaysOnOperators){
@@ -47,14 +47,14 @@ TEST(shuntingYardTests_followCountingRules, plusMultiplyStaysOnOperators){
     vector<token> operators = {};
 
 
-    followCountingRules(output, operators, {.type = OPERATOR, .opType = PLUS, .numberVal = 0});
+    followCountingRules(output, operators, { .type = OP_PLUS });
     EXPECT_EQ(output.size(), 0);
-    checkFirstTokenIsCorrectOperator(operators, PLUS, 1);
+    checkFirstTokenIsCorrectOperator(operators, OP_PLUS, 1);
     
-    followCountingRules(output, operators, {.type = OPERATOR, .opType = MULTIPLY, .numberVal = 0});
+    followCountingRules(output, operators, { .type = OP_MULTIPLY });
     EXPECT_EQ(output.size(), 0);
     
-    checkOperatorsAreCorrect(operators, {PLUS, MULTIPLY});
+    checkOperatorsAreCorrect(operators, {OP_PLUS, OP_MULTIPLY});
 }
 
 TEST(shuntingYardTests_followCountingRules, multiplyPlusCausesMultiplyToEnterOutput){
@@ -62,11 +62,11 @@ TEST(shuntingYardTests_followCountingRules, multiplyPlusCausesMultiplyToEnterOut
     vector<token> operators = {};
 
 
-    followCountingRules(output, operators, {.type = OPERATOR, .opType = MULTIPLY, .numberVal = 0});
+    followCountingRules(output, operators, { .type = OP_MULTIPLY });
     EXPECT_EQ(output.size(), 0);
-    checkFirstTokenIsCorrectOperator(operators, MULTIPLY, 1);
+    checkFirstTokenIsCorrectOperator(operators, OP_MULTIPLY, 1);
     
-    followCountingRules(output, operators, {.type = OPERATOR, .opType = PLUS, .numberVal = 0});
-    checkOperatorsAreCorrect(output, {MULTIPLY});
-    checkOperatorsAreCorrect(operators, {PLUS});
+    followCountingRules(output, operators, { .type = OP_PLUS });
+    checkOperatorsAreCorrect(output, {OP_MULTIPLY});
+    checkOperatorsAreCorrect(operators, {OP_PLUS});
 }
