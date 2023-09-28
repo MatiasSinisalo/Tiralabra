@@ -12,11 +12,9 @@ using namespace std;
 
 TEST(shuntingYardTests_isSamePrecedence, returnsTrueForPlusPlus){
     vector<token> output = {};
-    vector<token> operators = {{.type = OPERATOR, .opType = PLUS}};
+    vector<token> operators = {{.type = OP_PLUS}};
     token newToken = {
-            .type = OPERATOR,
-            .opType = PLUS,
-            .numberVal = 0
+            .type = OP_PLUS,
     };
     bool isSamePrecedence = beforeIsSamePrecedence(output, operators, newToken);
     EXPECT_EQ(isSamePrecedence, true);
@@ -24,11 +22,9 @@ TEST(shuntingYardTests_isSamePrecedence, returnsTrueForPlusPlus){
 
 TEST(shuntingYardTests_isSamePrecedence, returnsTrueForMinusPlus){
     vector<token> output = {};
-    vector<token> operators = {{.type = OPERATOR, .opType = MINUS}};
+    vector<token> operators = {{.type = OP_MINUS}};
     token newToken = {
-            .type = OPERATOR,
-            .opType = PLUS,
-            .numberVal = 0
+           .type = OP_MINUS
     };
     bool isSamePrecedence = beforeIsSamePrecedence(output, operators, newToken);
     EXPECT_EQ(isSamePrecedence, true);
@@ -36,11 +32,9 @@ TEST(shuntingYardTests_isSamePrecedence, returnsTrueForMinusPlus){
 
 TEST(shuntingYardTests_isSamePrecedence, returnsTrueForPlusMinus){
     vector<token> output = {};
-    vector<token> operators = {{.type = OPERATOR, .opType = PLUS}};
+    vector<token> operators = {{.type = OP_PLUS}};
     token newToken = {
-            .type = OPERATOR,
-            .opType = MINUS,
-            .numberVal = 0
+            .type = OP_MINUS
     };
     bool isSamePrecedence = beforeIsSamePrecedence(output, operators, newToken);
     EXPECT_EQ(isSamePrecedence, true);
@@ -49,11 +43,9 @@ TEST(shuntingYardTests_isSamePrecedence, returnsTrueForPlusMinus){
 
 TEST(shuntingYardTests_isSamePrecedence, returnsTrueForMultiplyMultiply){
     vector<token> output = {};
-    vector<token> operators = {{.type = OPERATOR, .opType = MULTIPLY}};
+    vector<token> operators = {{.type = OP_MULTIPLY}};
     token newToken = {
-            .type = OPERATOR,
-            .opType = MULTIPLY,
-            .numberVal = 0
+            .type = OP_MULTIPLY
     };
     bool isSamePrecedence = beforeIsSamePrecedence(output, operators, newToken);
     EXPECT_EQ(isSamePrecedence, true);
@@ -61,11 +53,9 @@ TEST(shuntingYardTests_isSamePrecedence, returnsTrueForMultiplyMultiply){
 
 TEST(shuntingYardTests_isSamePrecedence, returnsTrueForMultiplyDivide){
     vector<token> output = {};
-    vector<token> operators = {{.type = OPERATOR, .opType = MULTIPLY}};
+    vector<token> operators = {{.type = OP_MULTIPLY}};
     token newToken = {
-            .type = OPERATOR,
-            .opType = DIVIDE,
-            .numberVal = 0
+            .type = OP_DIVIDE
     };
     bool isSamePrecedence = beforeIsSamePrecedence(output, operators, newToken);
     EXPECT_EQ(isSamePrecedence, true);
@@ -73,11 +63,9 @@ TEST(shuntingYardTests_isSamePrecedence, returnsTrueForMultiplyDivide){
 
 TEST(shuntingYardTests_isSamePrecedence, returnsTrueForDivideMultiply){
     vector<token> output = {};
-    vector<token> operators = {{.type = OPERATOR, .opType = DIVIDE}};
+    vector<token> operators = {{.type = OP_DIVIDE}};
     token newToken = {
-            .type = OPERATOR,
-            .opType = MULTIPLY,
-            .numberVal = 0
+           .type = OP_MULTIPLY
     };
     bool isSamePrecedence = beforeIsSamePrecedence(output, operators, newToken);
     EXPECT_EQ(isSamePrecedence, true);
@@ -85,11 +73,9 @@ TEST(shuntingYardTests_isSamePrecedence, returnsTrueForDivideMultiply){
 
 TEST(shuntingYardTests_isSamePrecedence, returnsTrueForDivideDivide){
     vector<token> output = {};
-    vector<token> operators = {{.type = OPERATOR, .opType = DIVIDE}};
+    vector<token> operators = {{.type = OP_DIVIDE}};
     token newToken = {
-            .type = OPERATOR,
-            .opType = DIVIDE,
-            .numberVal = 0
+           .type = OP_DIVIDE
     };
     bool isSamePrecedence = beforeIsSamePrecedence(output, operators, newToken);
     EXPECT_EQ(isSamePrecedence, true);
@@ -97,11 +83,9 @@ TEST(shuntingYardTests_isSamePrecedence, returnsTrueForDivideDivide){
 
 TEST(shuntingYardTests_isSamePrecedence, returnsFalseForMultiplyPlus){
     vector<token> output = {};
-    vector<token> operators = {{.type = OPERATOR, .opType = MULTIPLY}};
+    vector<token> operators = {{.type = OP_MULTIPLY}};
     token newToken = {
-            .type = OPERATOR,
-            .opType = PLUS,
-            .numberVal = 0
+           .type = OP_PLUS
     };
     bool isSamePrecedence = beforeIsSamePrecedence(output, operators, newToken);
     EXPECT_EQ(isSamePrecedence, false);
@@ -109,11 +93,9 @@ TEST(shuntingYardTests_isSamePrecedence, returnsFalseForMultiplyPlus){
 
 TEST(shuntingYardTests_isSamePrecedence, returnsFalseForMultiplyMinus){
     vector<token> output = {};
-    vector<token> operators = {{.type = OPERATOR, .opType = MULTIPLY}};
+    vector<token> operators = {{.type = OP_MULTIPLY}};
     token newToken = {
-            .type = OPERATOR,
-            .opType = MINUS,
-            .numberVal = 0
+           .type = OP_MINUS
     };
     bool isSamePrecedence = beforeIsSamePrecedence(output, operators, newToken);
     EXPECT_EQ(isSamePrecedence, false);
