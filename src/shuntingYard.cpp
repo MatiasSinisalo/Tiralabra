@@ -69,6 +69,8 @@ void followCountingRules(vector<token>& output, vector<token>& operators, const 
     operators.push_back(newToken);
 }
 
+
+
 void popTokensBeforeLeftParenthesis(vector<token> &target, vector<token> &source){
     int stoppingIndex = 0;
     for (int i = source.size() - 1; i >= 0; i--) {
@@ -88,6 +90,25 @@ void popTokensBeforeLeftParenthesis(vector<token> &target, vector<token> &source
         target.push_back(tokenToMove);
         source.pop_back();
     }
+}
+
+void popTokensFromFunctionArg(vector<token>& target, vector<token>& source) {
+    int stoppingIndex = 0;
+    for (int i = source.size() - 1; i >= 0; i--) {
+
+        if (source[i].type == PARENTHESE_LEFT) {
+            stoppingIndex = i;
+            break;
+        }
+
+        target.push_back(source[i]);
+    }
+
+    //in FUNCTION(A+B,
+    //the stopping index will be at (
+    //but only A+B should be ereased so use stoppingIndex + 1
+    int endOfFunctionArg = stoppingIndex + 1;
+    source.erase(source.begin() + endOfFunctionArg, source.end());
 }
 
 //currently only supports +, -, * and /
@@ -116,6 +137,11 @@ vector<token> shuntingYard(const vector<token> tokens) {
             break;
         case FUNC_POWER:
             operators.push_back(t);
+            break;
+        //comma operator appears in functions: POWER(A+B, C), 
+        //so in order to maintain the correct calculation order treat comma like the right parenthesis
+        case COMMA:
+            popTokensFromFunctionArg(output, operators);
             break;
         default:
             break;
