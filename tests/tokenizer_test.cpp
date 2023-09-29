@@ -176,3 +176,14 @@ TEST(tokenizerTests, tokenizerDetectsNumbersAndOperators){
 	
 };
 
+TEST(tokenizerTests_extractNonNumberToken, extractNonNumberTokenReturnsTokenOfTypeNONEIfExpectedTokenIsNumber){
+	int pos = 0;
+	token returnVal = extractNonNumberToken("", pos, NUMBER);
+	EXPECT_EQ(returnVal.type, NONE);
+}
+
+TEST(tokenizerTests_extractNonNumberToken, extractNonNumberTokenReturnsTokenOfTypeNONEIfExpectedTokenIsNotFound){
+	int pos = 0;
+	token returnVal = extractNonNumberToken("+", pos, OP_MINUS);
+	EXPECT_EQ(returnVal.type, NONE);
+}
