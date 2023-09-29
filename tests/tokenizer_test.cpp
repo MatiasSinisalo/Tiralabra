@@ -98,6 +98,40 @@ TEST(tokenizerTests, tokenizerDetectsLeftParenthesesOperator){
 	EXPECT_EQ(tokens[0].numberVal, expectedToken.numberVal);
 };
 
+TEST(tokenizerTests, tokenizerDetectsPOWERFunction){
+	string input = "POWER";
+	vector<token> tokens = getTokensFromInputString(input);
+	EXPECT_EQ(tokens.size(), 1);
+
+	token expectedToken = {
+		 
+		.type = FUNC_POWER,
+		.numberVal = 0
+	};
+
+	EXPECT_EQ(tokens[0].type, expectedToken.type);
+	EXPECT_EQ(tokens[0].type, expectedToken.type);
+	EXPECT_EQ(tokens[0].numberVal, expectedToken.numberVal);
+};
+
+TEST(tokenizerTests, tokenizerDetectsComma){
+	string input = ",";
+	vector<token> tokens = getTokensFromInputString(input);
+	EXPECT_EQ(tokens.size(), 1);
+
+	token expectedToken = {
+		 
+		.type = COMMA,
+		.numberVal = 0
+	};
+
+	EXPECT_EQ(tokens[0].type, expectedToken.type);
+	EXPECT_EQ(tokens[0].type, expectedToken.type);
+	EXPECT_EQ(tokens[0].numberVal, expectedToken.numberVal);
+};
+
+
+
 TEST(tokenizerTests, tokenizerDetectsRightParenthesesOperator){
 	string input = ")";
 	vector<token> tokens = getTokensFromInputString(input);
