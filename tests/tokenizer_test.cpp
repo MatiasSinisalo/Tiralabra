@@ -1,20 +1,49 @@
 #include <gtest/gtest.h>
 #include "tokenizer.h"
-TEST(tokenizerTests, tokenizerDetectsNumbers) {
-	string input = "1";
-	vector<token> tokens = getTokensFromInputString(input);
-	EXPECT_EQ(tokens.size(), 1);
+#include "testUtilities.h"
+TEST(tokenizerTests, tokenizerDetectsSingleNumbers) {
+	vector<string> inputs = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
 
-	token expectedToken = {
-		 
-		.type = NUMBER,
-		.numberVal = 1
+	for(string &s : inputs){
+		vector<token> tokens = getTokensFromInputString(s);
+		EXPECT_EQ(tokens.size(), 1);
+
+		token expectedToken = {
+			
+			.type = NUMBER,
+			.numberVal = stoi(s)
+		};
+
+		EXPECT_EQ(tokens[0].type, expectedToken.type) << "test failed for " << s << "\n";
+		EXPECT_EQ(tokens[0].type, expectedToken.type) << "test failed for " << s << "\n";
+		EXPECT_EQ(tokens[0].numberVal, expectedToken.numberVal) << "test failed for " << s << "\n";
+	}
+};
+
+TEST(tokenizerTests, tokenizerDetectsMultiDigitNumbers) {
+	string input = "100+50";
+	
+
+	vector<token> tokens = getTokensFromInputString(input);
+	
+	vector<token> expectedTokens = {
+		{
+			.type = NUMBER,
+			.numberVal = 100,
+		},
+		{
+			.type = OP_PLUS,
+		},
+		{
+			.type = NUMBER,
+			.numberVal = 50,
+		},
 	};
 
-	EXPECT_EQ(tokens[0].type, expectedToken.type);
-	EXPECT_EQ(tokens[0].type, expectedToken.type);
-	EXPECT_EQ(tokens[0].numberVal, expectedToken.numberVal);
+	
+	checkTokensMatch(tokens, expectedTokens);
 };
+
 
 TEST(tokenizerTests, tokenizerDetectsPlusOperator){
 	string input = "+";
