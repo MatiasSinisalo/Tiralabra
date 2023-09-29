@@ -115,3 +115,26 @@ TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForTwoMinusFourDivide
 
     testInterpreterFor(tokens, {  .type = NUMBER, .numberVal = 0});
 }
+
+
+TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultFor2ToPowerOf3){
+    vector<token> tokens = {
+        {
+             
+            .type = NUMBER,
+            .numberVal = 2
+        },
+        {
+             
+            .type = NUMBER,
+            .numberVal = 3
+        },
+        {
+             
+            .type = FUNC_POWER,
+            .numberVal = 0
+        }
+    };
+
+    testInterpreterFor(tokens, {  .type = NUMBER, .numberVal = 8});
+}
