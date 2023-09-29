@@ -440,3 +440,130 @@ TEST(shuntingYardTests_shuntingYard, producesExpectedOutputForMultipleParenthese
 
     checkTokensMatch(output, expected_output);
 }
+
+TEST(shuntingYardTests_shuntingYard, producesExpectedOutputFOR2ToPowerOF3){
+    vector<token> input = {
+        {
+            
+            .type = FUNC_POWER,
+        },
+        {
+            
+            .type = PARENTHESE_LEFT,
+           
+        },
+        {
+            
+            .type = NUMBER,
+            .numberVal = 2,
+        },
+        {
+           
+            .type = COMMA,
+            
+        },
+        {
+            
+            .type = NUMBER,
+            .numberVal = 3,
+        },
+        {
+            .type = PARENTHESE_RIGHT
+        }
+    };
+
+    vector<token> expected_output = {
+        {
+            
+            .type = NUMBER,
+            .numberVal = 2,
+        },
+        {
+            
+            .type = NUMBER,
+            .numberVal = 3,
+        },
+        {
+            
+            .type = FUNC_POWER,
+        },
+    };
+    
+    vector<token> output = shuntingYard(input);
+
+    checkTokensMatch(output, expected_output);
+}
+
+TEST(shuntingYardTests_shuntingYard, producesExpectedOutputFor_PARENTHESIS_LEFT_1PLUS1__PARENTHESIS_RIGHT_ToPowerOf3){
+    vector<token> input = {
+        {
+            
+            .type = FUNC_POWER,
+            
+        },
+        {
+            
+            .type = PARENTHESE_LEFT,
+          
+        },
+        {
+            
+            .type = NUMBER,
+            .numberVal = 1,
+        },
+        {
+            
+            .type = OP_PLUS,
+        },
+        {
+            
+            .type = NUMBER,
+            .numberVal = 1,
+        },
+        {
+           
+            .type = COMMA,
+          
+        },
+        {
+            
+            .type = NUMBER,
+            .numberVal = 3,
+        },
+        {
+            .type = PARENTHESE_RIGHT
+        }
+    };
+
+    vector<token> expected_output = {
+        {
+            
+            .type = NUMBER,
+            .numberVal = 1,
+        },
+        {
+            
+            .type = NUMBER,
+            .numberVal = 1,
+        },
+        {
+            
+            .type = OP_PLUS,
+        
+        },
+        {
+            
+            .type = NUMBER,
+            .numberVal = 3,
+        },
+        {
+            
+            .type = FUNC_POWER,
+           
+        },
+    };
+    
+    vector<token> output = shuntingYard(input);
+
+    checkTokensMatch(output, expected_output);
+}
