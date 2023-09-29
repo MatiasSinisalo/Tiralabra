@@ -24,7 +24,7 @@ TEST(shuntingYardTests_isSamePrecedence, returnsTrueForMinusPlus){
     vector<token> output = {};
     vector<token> operators = {{.type = OP_MINUS}};
     token newToken = {
-           .type = OP_MINUS
+           .type = OP_PLUS
     };
     bool isSamePrecedence = beforeIsSamePrecedence(output, operators, newToken);
     EXPECT_EQ(isSamePrecedence, true);
