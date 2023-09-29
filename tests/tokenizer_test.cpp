@@ -187,3 +187,10 @@ TEST(tokenizerTests_extractNonNumberToken, extractNonNumberTokenReturnsTokenOfTy
 	token returnVal = extractNonNumberToken("+", pos, OP_MINUS);
 	EXPECT_EQ(returnVal.type, NONE);
 }
+
+
+TEST(tokenizerTests_findExpectedTokenType, returnsTokenOfTypeNONEIfNoExpectedTokenIsFound){
+	const char c = 'b';
+	tokenType returnVal = findExpectedTokenType(c);
+	EXPECT_EQ(returnVal, NONE);
+}

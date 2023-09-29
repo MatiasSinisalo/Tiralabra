@@ -34,6 +34,7 @@ tokenType findExpectedTokenType(const char c){
             }
         }
     }
+    return NONE;
 }
 
 string extractNumberString(const string input, const int startIndex) {
