@@ -189,6 +189,13 @@ TEST(tokenizerTests_extractNonNumberToken, extractNonNumberTokenReturnsTokenOfTy
 }
 
 
+TEST(tokenizerTests_extractNumberToken, extractNumberTokenReturnsTokenOfTypeNONEIfNumberIsNotFound){
+	int pos = 0;
+	token returnValue = extractNumberToken("POWER", pos);
+	EXPECT_EQ(returnValue.type, NONE);
+}
+
+
 TEST(tokenizerTests_findExpectedTokenType, returnsTokenOfTypeNONEIfNoExpectedTokenIsFound){
 	const char c = 'b';
 	tokenType returnVal = findExpectedTokenType(c);
