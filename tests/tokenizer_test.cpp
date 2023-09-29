@@ -148,6 +148,19 @@ TEST(tokenizerTests, tokenizerDetectsRightParenthesesOperator){
 	EXPECT_EQ(tokens[0].numberVal, expectedToken.numberVal);
 };
 
+TEST(tokenizerTests, tokenizerReturnsEmptyTokenListForIncorrectInput){
+	string input = "ThisIsAnUnkownTokenThatWillNeverExist";
+	vector<token> tokens = getTokensFromInputString(input);
+	EXPECT_EQ(tokens.size(), 0);
+};
+
+TEST(tokenizerTests, tokenizerReturnsEmptyTokenListForIncorrectInput_2){
+	string input = "1+ThisIsAnUnkownTokenThatWillNeverExist+5";
+	vector<token> tokens = getTokensFromInputString(input);
+	EXPECT_EQ(tokens.size(), 0);
+};
+
+
 TEST(tokenizerTests, tokenizerDetectsNumbersAndOperators){
 	string input = "1+2-3*4/5";
 	vector<token> tokens = getTokensFromInputString(input);
