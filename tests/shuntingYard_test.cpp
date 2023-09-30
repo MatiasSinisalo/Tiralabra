@@ -567,3 +567,78 @@ TEST(shuntingYardTests_shuntingYard, producesExpectedOutputFor_PARENTHESIS_LEFT_
 
     checkTokensMatch(output, expected_output);
 }
+
+
+TEST(shuntingYardTests_shuntingYard, producesExpectedOutputFor_SquareRootOf_2_toPowerOf_3){
+    vector<token> input = {
+        {
+            
+            .type = FUNC_SQRT,
+            
+        },
+        {
+            
+            .type = PARENTHESE_LEFT,
+          
+        },
+        {
+            
+            .type = FUNC_POWER,
+        },
+        {
+            
+            .type = PARENTHESE_LEFT,
+          
+        },
+        {
+            
+            .type = NUMBER,
+            .numberVal = 2,
+        },
+        {
+           
+            .type = COMMA,
+          
+        },
+        {
+            
+            .type = NUMBER,
+            .numberVal = 3,
+        },
+        {
+            .type = PARENTHESE_RIGHT
+        },
+        {
+            
+            .type = PARENTHESE_RIGHT,
+          
+        },
+    };
+
+    vector<token> expected_output = {
+        {
+            
+            .type = NUMBER,
+            .numberVal = 2,
+        },
+        {
+            
+            .type = NUMBER,
+            .numberVal = 3,
+        },
+        {
+            
+            .type = FUNC_POWER,
+        
+        },
+        {
+            
+            .type = FUNC_SQRT,
+           
+        },
+    };
+    
+    vector<token> output = shuntingYard(input);
+
+    checkTokensMatch(output, expected_output);
+}
