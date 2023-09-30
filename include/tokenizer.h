@@ -38,7 +38,7 @@ const vector<string> tokenTypeToString = {
     "PARENTHESE_RIGHT",
     
     "FUNC_POWER",
-    "FUNC_SQRT"
+    "FUNC_SQRT",
 
     "COMMA"
 };
