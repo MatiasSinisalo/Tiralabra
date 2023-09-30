@@ -20,6 +20,7 @@ enum tokenType {
     PARENTHESE_RIGHT,
     
     FUNC_POWER,
+    FUNC_SQRT,
 
     COMMA,
 };
@@ -37,6 +38,8 @@ const vector<string> tokenTypeToString = {
     "PARENTHESE_RIGHT",
     
     "FUNC_POWER",
+    "FUNC_SQRT"
+
     "COMMA"
 };
 
@@ -54,6 +57,7 @@ const map<const tokenType, const vector<string>> tokenToInputString = {
     {PARENTHESE_RIGHT, {")"}},
     
     {FUNC_POWER, {"POWER"}},
+    {FUNC_SQRT, {"SQRT"}},
     
     {COMMA, {","}}
 };
