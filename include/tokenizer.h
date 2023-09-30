@@ -25,6 +25,34 @@ enum tokenType {
     COMMA,
 };
 
+enum tokenFamily {
+    NONE_FAMILY,
+    NUMBERS,
+    OPERATORS,
+    FUNCTIONS,
+    STRUCTURES,
+};
+
+
+const vector<tokenFamily> tokenTypeToTokenFamily = {
+    NONE_FAMILY, //NONE
+   
+    NUMBERS, //Number
+
+    OPERATORS, // +
+    OPERATORS, // -
+    OPERATORS, // *
+    OPERATORS, // /
+
+    STRUCTURES, // (
+    STRUCTURES, // )
+
+    FUNCTIONS, // POWER
+    FUNCTIONS, // SQRT
+
+    STRUCTURES // ,
+};
+
 const vector<string> tokenTypeToString = {
     "NONE",
     "NUMBER",

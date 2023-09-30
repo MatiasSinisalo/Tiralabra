@@ -102,9 +102,10 @@ token interpretFromRPN(const vector<token> tokensInRPN){
       
     }
 
-    if(helperStack.size() > 1){
-        cout << "SOMETHING WAS INCORRECT??\n";
+    if(helperStack.size() > 1 || helperStack.size() == 0){
+        cout << "interpreter encountered an error\n";
         debug_printTokens("token stack should be size 1 but it is: ", helperStack);
+        return {};
     }
 
     return helperStack[0];

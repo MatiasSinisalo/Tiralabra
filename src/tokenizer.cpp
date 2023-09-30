@@ -102,6 +102,24 @@ token extractToken(const string input, int &currentPosInString, const tokenType 
 
 
 
+bool validTokensSoFar(const vector<token> tokens) {
+    if (tokens.size() >= 2) {
+        token topToken = tokens[tokens.size() - 1];
+        token secondToken = tokens[tokens.size() - 2];
+        //Number should be before an operator
+        if (tokenTypeToTokenFamily[topToken.type] == OPERATORS) {
+            if (tokenTypeToTokenFamily[secondToken.type] != NUMBERS) {
+                cout << "expected an operator after number!\n";
+                return false;
+            }
+        }
+    }
+
+
+
+}
+
+
 //TODO: Control flow of this function is quite tricky, it should be refactored to be more straight forward
 vector<token> getTokensFromInputString(const string input){
     vector<token> tokens;
@@ -122,7 +140,11 @@ vector<token> getTokensFromInputString(const string input){
         }
 
         tokens.push_back(nextToken);
-        
+
+        if (!validTokensSoFar(tokens)){
+            cout << "error found when tokenizing character at: " << currentPosInString << "\n";
+            return {};
+        }
     }
     return tokens;
 }
