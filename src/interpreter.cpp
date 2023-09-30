@@ -81,6 +81,20 @@ token interpretFromRPN(const vector<token> tokensInRPN){
             helperStack.push_back(evaluatedToken);
             break;
         }
+        case FUNC_SQRT:
+        {
+            token evaluatedToken;
+            evaluatedToken.type = NUMBER;
+
+            token firstToken = helperStack[helperStack.size() - 1];
+            helperStack.pop_back();
+            
+            float firstTokenValueToFloat = float(firstToken.numberVal);
+            float sqrtResult = sqrt(firstTokenValueToFloat);
+            evaluatedToken.numberVal = sqrtResult;
+            helperStack.push_back(evaluatedToken);
+            break;
+        }
         default:
             break;
         }
