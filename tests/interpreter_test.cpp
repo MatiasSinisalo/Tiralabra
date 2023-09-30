@@ -138,3 +138,20 @@ TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultFor2ToPowerOf3){
 
     testInterpreterFor(tokens, {  .type = NUMBER, .numberVal = 8});
 }
+
+TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForSQRT16){
+    vector<token> tokens = {
+        {
+             
+            .type = NUMBER,
+            .numberVal = 16
+        },
+        {
+             
+            .type = FUNC_SQRT,
+            .numberVal = 0
+        }
+    };
+
+    testInterpreterFor(tokens, {  .type = NUMBER, .numberVal = 4});
+}
