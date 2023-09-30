@@ -143,6 +143,22 @@ TEST(tokenizerTests, tokenizerDetectsPOWERFunction){
 	EXPECT_EQ(tokens[0].numberVal, expectedToken.numberVal);
 };
 
+TEST(tokenizerTests, tokenizerDetectsSQRTFunction){
+	string input = "SQRT";
+	vector<token> tokens = getTokensFromInputString(input);
+	EXPECT_EQ(tokens.size(), 1);
+
+	token expectedToken = {
+		 
+		.type = FUNC_SQRT,
+		.numberVal = 0
+	};
+
+	EXPECT_EQ(tokens[0].type, expectedToken.type);
+	EXPECT_EQ(tokens[0].type, expectedToken.type);
+	EXPECT_EQ(tokens[0].numberVal, expectedToken.numberVal);
+};
+
 TEST(tokenizerTests, tokenizerDetectsComma){
 	string input = ",";
 	vector<token> tokens = getTokensFromInputString(input);
