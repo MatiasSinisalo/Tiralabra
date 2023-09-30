@@ -113,10 +113,43 @@ bool validTokensSoFar(const vector<token> tokens) {
                 return false;
             }
         }
+
+        //Left parenthesis should always be after operator
+        if (tokenTypeToTokenFamily[secondToken.type] == FUNCTIONS) {
+            if (topToken.type != PARENTHESE_LEFT) {
+                cout << "expected '(' after function!\n";
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+bool validParenthesis(const vector<token> tokens) {
+    vector<token> helper;
+
+    for (token t : tokens) {
+        if (t.type == PARENTHESE_LEFT || t.type == PARENTHESE_RIGHT) {
+            helper.push_back(t);
+        }
+
+        if (helper.size() >= 2) {
+            token topToken = helper[helper.size() - 1];
+            token secondToken = helper[helper.size() - 2];
+
+            if (secondToken.type == PARENTHESE_LEFT && topToken.type == PARENTHESE_RIGHT) {
+                helper.pop_back();
+                helper.pop_back();
+            }
+        }
     }
 
+    if (helper.size() > 0) {
+        cout << "parenthese did not close correctly. \n";
+        return false;
+    }
 
-
+    return true;
 }
 
 
@@ -135,7 +168,7 @@ vector<token> getTokensFromInputString(const string input){
         token nextToken = extractToken(input, currentPosInString, expectedTokenType);
 
         if (nextToken.type == NONE) {
-            cout << "INCORRECT INPUT!";
+            cout << "INCORRECT INPUT!\n";
             return {};
         }
 
@@ -146,6 +179,11 @@ vector<token> getTokensFromInputString(const string input){
             return {};
         }
     }
+
+    if (!validParenthesis(tokens)) {
+        return {};
+    }
+
     return tokens;
 }
 
