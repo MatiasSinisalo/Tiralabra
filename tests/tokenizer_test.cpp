@@ -111,20 +111,21 @@ TEST(tokenizerTests, tokenizerDetectsDivideOperator){
 	EXPECT_EQ(tokens[0].numberVal, expectedToken.numberVal);
 };
 
-TEST(tokenizerTests, tokenizerDetectsLeftParenthesesOperator){
-	string input = "(";
+TEST(tokenizerTests, tokenizerDetectsParentheses){
+	string input = "()";
 	vector<token> tokens = getTokensFromInputString(input);
-	EXPECT_EQ(tokens.size(), 1);
+	
 
-	token expectedToken = {
-		 
-		.type = PARENTHESE_LEFT,
-		.numberVal = 0
+	vector<token> expectedTokens = {
+		 {
+			.type = PARENTHESE_LEFT,
+		 },
+		 {
+			.type = PARENTHESE_RIGHT,
+		 }
 	};
 
-	EXPECT_EQ(tokens[0].type, expectedToken.type);
-	EXPECT_EQ(tokens[0].type, expectedToken.type);
-	EXPECT_EQ(tokens[0].numberVal, expectedToken.numberVal);
+	checkTokensMatch(tokens, expectedTokens);
 };
 
 TEST(tokenizerTests, tokenizerDetectsPOWERFunction){
@@ -167,24 +168,6 @@ TEST(tokenizerTests, tokenizerDetectsComma){
 	token expectedToken = {
 		 
 		.type = COMMA,
-		.numberVal = 0
-	};
-
-	EXPECT_EQ(tokens[0].type, expectedToken.type);
-	EXPECT_EQ(tokens[0].type, expectedToken.type);
-	EXPECT_EQ(tokens[0].numberVal, expectedToken.numberVal);
-};
-
-
-
-TEST(tokenizerTests, tokenizerDetectsRightParenthesesOperator){
-	string input = ")";
-	vector<token> tokens = getTokensFromInputString(input);
-	EXPECT_EQ(tokens.size(), 1);
-
-	token expectedToken = {
-		 
-		.type = PARENTHESE_RIGHT,
 		.numberVal = 0
 	};
 
