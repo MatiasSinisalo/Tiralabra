@@ -105,7 +105,7 @@ token extractToken(const string input, int &currentPosInString, const tokenType 
 //TODO: Control flow of this function is quite tricky, it should be refactored to be more straight forward
 vector<token> getTokensFromInputString(const string input){
     vector<token> tokens;
-    const string powerOperator = "POWER";
+   
 
    
     int currentPosInString = 0; 
