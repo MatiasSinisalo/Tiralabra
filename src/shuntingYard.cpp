@@ -120,6 +120,7 @@ vector<token> shuntingYard(const vector<token> tokens) {
         switch (t.type)
         {
         case NUMBER:
+        case VARIABLE:
             output.push_back(t);
             break;
         case OP_PLUS:
