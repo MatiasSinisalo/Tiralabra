@@ -90,6 +90,25 @@ token extractNumberToken(const string input, int& currentPosInString) {
     }
 };
 
+
+token extractVariableToken(const string input, int &currentPosInString, const tokenData& data){
+
+    
+    for (const string& operatorStringToMatch : data.tokenToInputString.at(VARIABLE)) {
+        string substringFromPosition = input.substr(currentPosInString, operatorStringToMatch.size());
+        //if strings are equal .compare returns 0, 
+        if (substringFromPosition.compare(operatorStringToMatch) == 0) {
+            currentPosInString += operatorStringToMatch.size();
+            
+            //we have found the string matching the variable so lets get its id and return the variable token
+            int variableID = data.variableStringToID.at(substringFromPosition);
+            return { .type = VARIABLE, .value = variableID };
+        }
+    }
+
+    return { .type = NONE };
+}
+
 //Returns token if the input string contains a string of expectedTokenType
 //Modifies currentPosInString to the next char after the expectedToken if string of expectedTokenType is found successfully.
 //If function fails it returns token of tokenType::NONE and does not modify currentPosInString 
@@ -97,13 +116,17 @@ token extractToken(
     const string input, 
     int &currentPosInString, 
     const tokenType expectedTokenType, 
-    const map<const tokenType, vector<string>>& tokenToInputString){
+    const tokenData &data){
     
-    if (expectedTokenType != NUMBER){
-        return extractNonNumberToken(input, currentPosInString, expectedTokenType, tokenToInputString);
-    }
-    else if(expectedTokenType == NUMBER){
+   
+    if(expectedTokenType == NUMBER){
         return extractNumberToken(input, currentPosInString);
+    }
+    else if (expectedTokenType == VARIABLE) {
+        return extractVariableToken(input, currentPosInString, data);
+    }
+    else{
+        return extractNonNumberToken(input, currentPosInString, expectedTokenType, data.tokenToInputString);
     }
 
     return {};
@@ -180,14 +203,14 @@ string extractVariableString(int& currentPosInString, const string input) {
 
 void createVariable(tokenData& data, int &currentPosInString, const string input) {
     //extract tokens from input so that we are at the symbols which define the string of the variable
-    token createVariableFuncToken = extractToken(input, currentPosInString, FUNC_SET_VARIABLE, data.tokenToInputString);
-    token leftParenthesis = extractToken(input, currentPosInString, PARENTHESE_LEFT, data.tokenToInputString);
+    token createVariableFuncToken = extractToken(input, currentPosInString, FUNC_SET_VARIABLE, data);
+    token leftParenthesis = extractToken(input, currentPosInString, PARENTHESE_LEFT, data);
     
     //extract the chars that define the variable
     string variableString = extractVariableString(currentPosInString, input);
 
     //extract the comma token
-    token commaToken = extractToken(input, currentPosInString, COMMA, data.tokenToInputString);
+    token commaToken = extractToken(input, currentPosInString, COMMA, data);
 
     //extract the number to be assigned to the variable at the start
     token variableStartValue = extractNumberToken(input, currentPosInString);
@@ -217,8 +240,8 @@ vector<token> getTokensFromInputString(const string input, tokenData &data){
         }
         //extract a token normally
         else {
-            token nextToken = extractToken(input, currentPosInString, expectedTokenType, data.tokenToInputString);
-        
+            token nextToken = extractToken(input, currentPosInString, expectedTokenType, data);
+            
             if (nextToken.type == NONE) {
                 cout << "INCORRECT INPUT!\n";
                 return {};
