@@ -22,6 +22,7 @@ enum tokenType {
     
     FUNC_POWER,
     FUNC_SQRT,
+    FUNC_SET_VARIABLE,
 
     COMMA,
 };
@@ -52,6 +53,7 @@ const vector<tokenFamily> tokenTypeToTokenFamily = {
 
     FUNCTIONS, // POWER
     FUNCTIONS, // SQRT
+    FUNCTIONS, //SET_VARIABLE
 
     STRUCTURES // ,
 };
@@ -72,6 +74,7 @@ const vector<string> tokenTypeToString = {
     
     "FUNC_POWER",
     "FUNC_SQRT",
+    "FUNC_SET_VARIABLE",
 
     "COMMA"
 };
@@ -103,12 +106,13 @@ public:
 
         {FUNC_POWER, {"POWER"}},
         {FUNC_SQRT, {"SQRT"}},
+        {FUNC_SET_VARIABLE, {"SET_VARIABLE"}},
 
         {COMMA, {","}}
     };
 
     //once variable is defined the tokens defining the variable are stored here
-    map<string, vector<token>> variableStringToExpression;
+    map<int, vector<token>> variableStringToExpression;
 };
 
 vector<token> getTokensFromInputString(const string input, tokenData &data);

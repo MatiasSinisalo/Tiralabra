@@ -19,6 +19,7 @@ void runCalculator(const string input, tokenData &data) {
 
 int main(){
     tokenData tokensData = {};
+
     while (true) {
         string input = "";
         getline(cin, input);

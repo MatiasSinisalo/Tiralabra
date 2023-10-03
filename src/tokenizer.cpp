@@ -81,7 +81,7 @@ token extractNumberToken(const string input, int& currentPosInString) {
         currentPosInString += numberString.size();
         token numberToken = {
                    .type = NUMBER,
-                   .numberVal = stoi(numberString)
+                   .value = stoi(numberString)
         };
         return numberToken;
     }
