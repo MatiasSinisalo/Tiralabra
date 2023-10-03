@@ -9,7 +9,7 @@ void runCalculator(const string input, tokenData &data) {
 
     debug_printTokens("final output stack now is: ", output);
 
-    token finalResult = interpretFromRPN(output);
+    token finalResult = interpretFromRPN(output, data);
     if (finalResult.type == NUMBER) {
         cout << "the answer is: " << "\n";
         cout << finalResult.value << "\n";

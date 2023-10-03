@@ -1,6 +1,6 @@
 #include "interpreter.h"
 
-token interpretFromRPN(const vector<token> tokensInRPN){
+token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
     vector<token> helperStack;
     //this loop does not go though the operators like they would be in a stack...
     //should go in reverse order of the vector.
@@ -11,6 +11,12 @@ token interpretFromRPN(const vector<token> tokensInRPN){
         case NUMBER:
             helperStack.push_back(tokensInRPN[i]);
             break;
+        case VARIABLE:
+        {
+            token variableToken = data.variableExpressions.at(tokensInRPN[i].value)[0];
+            helperStack.push_back(variableToken);
+            break;
+        }
         case OP_PLUS:
         {
             token evaluatedToken;
