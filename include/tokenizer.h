@@ -81,7 +81,7 @@ const vector<string> tokenTypeToString = {
 class token {
 public:
     tokenType type;
-    int numberVal;
+    int value;
 };
 
 

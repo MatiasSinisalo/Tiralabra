@@ -21,7 +21,7 @@ token interpretFromRPN(const vector<token> tokensInRPN){
             token secondToken = helperStack[helperStack.size() - 1];
             helperStack.pop_back();
 
-            evaluatedToken.numberVal = secondToken.numberVal + firstToken.numberVal;
+            evaluatedToken.value = secondToken.value + firstToken.value;
             helperStack.push_back(evaluatedToken);
             break;
         }
@@ -35,7 +35,7 @@ token interpretFromRPN(const vector<token> tokensInRPN){
             token secondToken = helperStack[helperStack.size() - 1];
             helperStack.pop_back();
 
-            evaluatedToken.numberVal = secondToken.numberVal - firstToken.numberVal;
+            evaluatedToken.value = secondToken.value - firstToken.value;
             helperStack.push_back(evaluatedToken);
             break;
         }
@@ -49,7 +49,7 @@ token interpretFromRPN(const vector<token> tokensInRPN){
             token secondToken = helperStack[helperStack.size() - 1];
             helperStack.pop_back();
 
-            evaluatedToken.numberVal = secondToken.numberVal * firstToken.numberVal;
+            evaluatedToken.value = secondToken.value * firstToken.value;
             helperStack.push_back(evaluatedToken);
             break;
         }
@@ -63,7 +63,7 @@ token interpretFromRPN(const vector<token> tokensInRPN){
             token secondToken = helperStack[helperStack.size() - 1];
             helperStack.pop_back();
 
-            evaluatedToken.numberVal = secondToken.numberVal / firstToken.numberVal;
+            evaluatedToken.value = secondToken.value / firstToken.value;
             helperStack.push_back(evaluatedToken);
             break;
         }
@@ -77,7 +77,7 @@ token interpretFromRPN(const vector<token> tokensInRPN){
             token secondToken = helperStack[helperStack.size() - 1];
             helperStack.pop_back();
 
-            evaluatedToken.numberVal = pow(secondToken.numberVal, firstToken.numberVal);
+            evaluatedToken.value = pow(secondToken.value, firstToken.value);
             helperStack.push_back(evaluatedToken);
             break;
         }
@@ -89,9 +89,9 @@ token interpretFromRPN(const vector<token> tokensInRPN){
             token firstToken = helperStack[helperStack.size() - 1];
             helperStack.pop_back();
             
-            float firstTokenValueToFloat = float(firstToken.numberVal);
+            float firstTokenValueToFloat = float(firstToken.value);
             float sqrtResult = sqrt(firstTokenValueToFloat);
-            evaluatedToken.numberVal = sqrtResult;
+            evaluatedToken.value = sqrtResult;
             helperStack.push_back(evaluatedToken);
             break;
         }

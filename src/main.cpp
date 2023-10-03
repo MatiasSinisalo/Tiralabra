@@ -12,7 +12,7 @@ void runCalculator(const string input, tokenData &data) {
     token finalResult = interpretFromRPN(output);
     if (finalResult.type == NUMBER) {
         cout << "the answer is: " << "\n";
-        cout << finalResult.numberVal << "\n";
+        cout << finalResult.value << "\n";
     }
 }
 

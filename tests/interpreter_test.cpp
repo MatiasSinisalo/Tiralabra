@@ -5,7 +5,7 @@
 void testInterpreterFor(vector<token> tokens, token expectedOutput){
     token output = interpretFromRPN(tokens);
     ASSERT_EQ(output.type, expectedOutput.type);
-    ASSERT_EQ(output.numberVal, expectedOutput.numberVal);
+    ASSERT_EQ(output.value, expectedOutput.value);
 }
 
 TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForOnePlusOne){

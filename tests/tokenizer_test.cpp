@@ -16,7 +16,7 @@ TEST(tokenizerTests, tokenizerDetectsSingleNumbers) {
 
 		EXPECT_EQ(tokens[0].type, expectedToken.type) << "test failed for " << s << "\n";
 		EXPECT_EQ(tokens[0].type, expectedToken.type) << "test failed for " << s << "\n";
-		EXPECT_EQ(tokens[0].numberVal, expectedToken.numberVal) << "test failed for " << s << "\n";
+		EXPECT_EQ(tokens[0].value, expectedToken.value) << "test failed for " << s << "\n";
 	}
 };
 
@@ -58,7 +58,7 @@ TEST(tokenizerTests, tokenizerDetectsPlusOperator){
 
 	EXPECT_EQ(tokens[0].type, expectedToken.type);
 	EXPECT_EQ(tokens[0].type, expectedToken.type);
-	EXPECT_EQ(tokens[0].numberVal, expectedToken.numberVal);
+	EXPECT_EQ(tokens[0].value, expectedToken.value);
 };
 
 
@@ -75,7 +75,7 @@ TEST(tokenizerTests, tokenizerDetectsMinusOperator){
 
 	EXPECT_EQ(tokens[0].type, expectedToken.type);
 	EXPECT_EQ(tokens[0].type, expectedToken.type);
-	EXPECT_EQ(tokens[0].numberVal, expectedToken.numberVal);
+	EXPECT_EQ(tokens[0].value, expectedToken.value);
 };
 
 
@@ -92,7 +92,7 @@ TEST(tokenizerTests, tokenizerDetectsMultiplyOperator){
 
 	EXPECT_EQ(tokens[0].type, expectedToken.type);
 	EXPECT_EQ(tokens[0].type, expectedToken.type);
-	EXPECT_EQ(tokens[0].numberVal, expectedToken.numberVal);
+	EXPECT_EQ(tokens[0].value, expectedToken.value);
 };
 
 TEST(tokenizerTests, tokenizerDetectsDivideOperator){
@@ -108,7 +108,7 @@ TEST(tokenizerTests, tokenizerDetectsDivideOperator){
 
 	EXPECT_EQ(tokens[0].type, expectedToken.type);
 	EXPECT_EQ(tokens[0].type, expectedToken.type);
-	EXPECT_EQ(tokens[0].numberVal, expectedToken.numberVal);
+	EXPECT_EQ(tokens[0].value, expectedToken.value);
 };
 
 TEST(tokenizerTests, tokenizerDetectsParentheses){
@@ -171,7 +171,7 @@ TEST(tokenizerTests, tokenizerDetectsPOWERFunction){
 
 	EXPECT_EQ(tokens[0].type, expectedToken.type);
 	EXPECT_EQ(tokens[0].type, expectedToken.type);
-	EXPECT_EQ(tokens[0].numberVal, expectedToken.numberVal);
+	EXPECT_EQ(tokens[0].value, expectedToken.value);
 };
 
 TEST(tokenizerTests, tokenizerDetectsSQRTFunction){
@@ -187,7 +187,7 @@ TEST(tokenizerTests, tokenizerDetectsSQRTFunction){
 
 	EXPECT_EQ(tokens[0].type, expectedToken.type);
 	EXPECT_EQ(tokens[0].type, expectedToken.type);
-	EXPECT_EQ(tokens[0].numberVal, expectedToken.numberVal);
+	EXPECT_EQ(tokens[0].value, expectedToken.value);
 };
 
 TEST(tokenizerTests, tokenizerDetectsComma){
@@ -203,7 +203,7 @@ TEST(tokenizerTests, tokenizerDetectsComma){
 
 	EXPECT_EQ(tokens[0].type, expectedToken.type);
 	EXPECT_EQ(tokens[0].type, expectedToken.type);
-	EXPECT_EQ(tokens[0].numberVal, expectedToken.numberVal);
+	EXPECT_EQ(tokens[0].value, expectedToken.value);
 };
 
 TEST(tokenizerTests, tokenizerReturnsEmptyTokenListForIncorrectInput){
@@ -276,7 +276,7 @@ TEST(tokenizerTests, tokenizerDetectsNumbersAndOperators){
 	for(int i = 0; i < tokens.size(); i++){
 		EXPECT_EQ(tokens[i].type, expectedTokens[i].type);
 		EXPECT_EQ(tokens[i].type, expectedTokens[i].type);
-		EXPECT_EQ(tokens[i].numberVal, expectedTokens[i].numberVal);
+		EXPECT_EQ(tokens[i].value, expectedTokens[i].value);
 	}
 	
 };

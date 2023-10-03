@@ -9,7 +9,7 @@ void checkOperatorsAreCorrect(vector<token> tokens, vector<tokenType> expectedOp
     EXPECT_EQ(tokens.size(), expectedOperators.size());
     for(int i = 0; i < tokens.size(); i++){
         EXPECT_EQ(tokens[i].type, expectedOperators[i]);
-        EXPECT_EQ(tokens[i].numberVal, 0);
+        EXPECT_EQ(tokens[i].value, 0);
     }
 }
 
@@ -17,6 +17,6 @@ void checkTokensMatch(vector<token> tokensA, vector<token> tokensB){
     EXPECT_EQ(tokensA.size(), tokensB.size());
     for(int i = 0; i < tokensA.size(); i++){
         EXPECT_EQ(tokensA[i].type, tokensB[i].type);
-        EXPECT_EQ(tokensA[i].numberVal, tokensB[i].numberVal);
+        EXPECT_EQ(tokensA[i].value, tokensB[i].value);
     }
 }
