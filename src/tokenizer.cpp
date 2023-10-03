@@ -164,13 +164,17 @@ bool validParenthesis(const vector<token> tokens) {
 
 string extractVariableString(int& currentPosInString, const string input) {
     string variableString = "";
-    for (currentPosInString < input.size(); currentPosInString++;) {
-        if (input[currentPosInString] == ',') {
+
+    int i = currentPosInString - 1;
+    for (i < input.size(); i++;) {
+        if (input[i] == ',') {
             break;
         }
 
-        variableString.push_back(input[currentPosInString]);
+        variableString.push_back(input[i]);
+       
     };
+    currentPosInString = i;
     return variableString;
 }
 

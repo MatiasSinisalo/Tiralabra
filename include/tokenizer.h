@@ -90,6 +90,7 @@ public:
 
 class tokenData {
 public:
+    //Currently all inputStrings must start with a unique character
     map<const tokenType, vector<string>> tokenToInputString = {
         {NONE, {}},
 
@@ -106,7 +107,7 @@ public:
 
         {FUNC_POWER, {"POWER"}},
         {FUNC_SQRT, {"SQRT"}},
-        {FUNC_SET_VARIABLE, {"SET_VARIABLE"}},
+        {FUNC_SET_VARIABLE, {"VARIABLE"}},
 
         {COMMA, {","}}
     };
