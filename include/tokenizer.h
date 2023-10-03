@@ -112,7 +112,9 @@ public:
     };
 
     //once variable is defined the tokens defining the variable are stored here
-    map<int, vector<token>> variableStringToExpression;
+    map<string, int> variableStringToID;
+    map<int, vector<token>> variableExpressions;
+
 };
 
 vector<token> getTokensFromInputString(const string input, tokenData &data);
