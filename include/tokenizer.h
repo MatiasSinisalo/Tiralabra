@@ -10,7 +10,8 @@ enum tokenType {
     NONE,
     
     NUMBER,
-    
+    VARIABLE,
+
     OP_PLUS,
     OP_MINUS,
     OP_MULTIPLY,
@@ -28,6 +29,7 @@ enum tokenType {
 enum tokenFamily {
     NONE_FAMILY,
     NUMBERS,
+    VARIABLES,
     OPERATORS,
     FUNCTIONS,
     STRUCTURES,
@@ -38,6 +40,7 @@ const vector<tokenFamily> tokenTypeToTokenFamily = {
     NONE_FAMILY, //NONE
    
     NUMBERS, //Number
+    VARIABLES, //VARIABLE
 
     OPERATORS, // +
     OPERATORS, // -
@@ -55,7 +58,9 @@ const vector<tokenFamily> tokenTypeToTokenFamily = {
 
 const vector<string> tokenTypeToString = {
     "NONE",
+    
     "NUMBER",
+    "VARIABLE",
 
     "OP_PLUS",
     "OP_MINUS",
@@ -71,10 +76,11 @@ const vector<string> tokenTypeToString = {
     "COMMA"
 };
 
-const map<const tokenType, const vector<string>> tokenToInputString = {
+const map<const tokenType, vector<string>> tokenToInputString = {
     {NONE, {}},
     
     {NUMBER, {"0", "1", "2",  "3", "4", "5", "6", "7", "8", "9"}},
+    {VARIABLE, {}}, // variable inputStrings are at the start empty, since there are no variables to start with
 
     {OP_PLUS, {"+"}},
     {OP_MINUS, {"-"}},
@@ -95,6 +101,8 @@ public:
     tokenType type;
     int numberVal;
 };
+
+
 
 vector<token> getTokensFromInputString(const string input);
 token extractNonNumberToken(const string input, int & currentPosInString, const tokenType expectedTokenType);
