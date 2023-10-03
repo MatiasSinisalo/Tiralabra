@@ -1,8 +1,8 @@
 #include "main.h"
 
 
-void runCalculator(const string input) {
-    vector<token> tokens = getTokensFromInputString(input);
+void runCalculator(const string input, tokenData &data) {
+    vector<token> tokens = getTokensFromInputString(input, data);
     debug_printTokens("input tokens are: ", tokens);
 
     vector<token> output = shuntingYard(tokens);
@@ -18,12 +18,12 @@ void runCalculator(const string input) {
 
 
 int main(){
-    
+    tokenData tokensData = {};
     while (true) {
         string input = "";
         getline(cin, input);
 
-        runCalculator(input);
+        runCalculator(input, tokensData);
     }
     return 0;
 }

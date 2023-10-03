@@ -5,7 +5,11 @@
 //currentPosInString will be incremented by lenght of the found token. 
 //      currentPosInString += tokenString.size()
 //return token of tokenType::NONE if token is not found
-token extractNonNumberToken(const string input, int & currentPosInString, const tokenType expectedTokenType) {
+token extractNonNumberToken(
+        const string input, 
+        int & currentPosInString, 
+        const tokenType expectedTokenType, 
+        const std::map<const tokenType, vector<string>> &tokenToInputString) {
     if (expectedTokenType == NUMBER) {
         cout << "ERROR IN TOKEN PHASE \n";
         return { .type = NONE };
@@ -26,7 +30,9 @@ token extractNonNumberToken(const string input, int & currentPosInString, const 
 
 
 
-tokenType findExpectedTokenType(const char c){
+tokenType findExpectedTokenType(
+    const char c, 
+    const map<const tokenType, vector<string>> &tokenToInputString){
     for(std::map<const tokenType, vector<string>>::const_iterator it = tokenToInputString.begin(); it != tokenToInputString.end(); ++it){
         for (const string& s : it->second) {
             if (c == s.at(0)) {
@@ -87,10 +93,14 @@ token extractNumberToken(const string input, int& currentPosInString) {
 //Returns token if the input string contains a string of expectedTokenType
 //Modifies currentPosInString to the next char after the expectedToken if string of expectedTokenType is found successfully.
 //If function fails it returns token of tokenType::NONE and does not modify currentPosInString 
-token extractToken(const string input, int &currentPosInString, const tokenType expectedTokenType){  
+token extractToken(
+    const string input, 
+    int &currentPosInString, 
+    const tokenType expectedTokenType, 
+    const map<const tokenType, vector<string>>& tokenToInputString){
     
     if (expectedTokenType != NUMBER){
-        return extractNonNumberToken(input, currentPosInString, expectedTokenType);
+        return extractNonNumberToken(input, currentPosInString, expectedTokenType, tokenToInputString);
     }
     else if(expectedTokenType == NUMBER){
         return extractNumberToken(input, currentPosInString);
@@ -154,7 +164,7 @@ bool validParenthesis(const vector<token> tokens) {
 
 
 //TODO: Control flow of this function is quite tricky, it should be refactored to be more straight forward
-vector<token> getTokensFromInputString(const string input){
+vector<token> getTokensFromInputString(const string input, tokenData &data){
     vector<token> tokens;
    
 
@@ -162,10 +172,10 @@ vector<token> getTokensFromInputString(const string input){
     int currentPosInString = 0; 
     while (currentPosInString < input.size()){
         tokenType expectedTokenType = NONE;
-        expectedTokenType = findExpectedTokenType(input.at(currentPosInString));
+        expectedTokenType = findExpectedTokenType(input.at(currentPosInString), data.tokenToInputString);
         
 
-        token nextToken = extractToken(input, currentPosInString, expectedTokenType);
+        token nextToken = extractToken(input, currentPosInString, expectedTokenType, data.tokenToInputString);
 
         if (nextToken.type == NONE) {
             cout << "INCORRECT INPUT!\n";
