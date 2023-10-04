@@ -101,6 +101,25 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
             helperStack.push_back(evaluatedToken);
             break;
         }
+        case FUNC_SET_VARIABLE:
+        {
+           
+
+            //this should be a number by the time we execute SET_VARIABLE
+            token firstToken = helperStack[helperStack.size() - 1];
+            helperStack.pop_back();
+
+            //this is the token for the variable
+            token secondToken = helperStack[helperStack.size() - 1];
+            helperStack.pop_back();
+
+            //assign the variable value to be firstToken
+            data.variableExpressions.at(secondToken.value) = { firstToken };
+
+            token variableValue = data.variableExpressions.at(secondToken.value)[0];
+            helperStack.push_back(variableValue);
+            break;
+        }
         default:
             break;
         }
