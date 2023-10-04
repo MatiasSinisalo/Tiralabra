@@ -201,7 +201,7 @@ string extractVariableString(int& currentPosInString, const string input) {
     return variableString;
 }
 
-void createVariable(tokenData& data, int &currentPosInString, const string input) {
+vector<token> extractNewVariableTokens(tokenData& data, int &currentPosInString, const string input) {
     //extract tokens from input so that we are at the symbols which define the string of the variable
     token createVariableFuncToken = extractToken(input, currentPosInString, FUNC_SET_VARIABLE, data);
     token leftParenthesis = extractToken(input, currentPosInString, PARENTHESE_LEFT, data);
@@ -209,18 +209,21 @@ void createVariable(tokenData& data, int &currentPosInString, const string input
     //extract the chars that define the variable
     string variableString = extractVariableString(currentPosInString, input);
 
-    //extract the comma token
-    token commaToken = extractToken(input, currentPosInString, COMMA, data);
-
-    //extract the number to be assigned to the variable at the start
-    token variableStartValue = extractNumberToken(input, currentPosInString);
-
-    //finally modify tokenData so that the user can use the variable in the future
+    //finally modify tokenData so that the program can use it in the future
+    int tokenID = data.tokenToInputString[VARIABLE].size() + 1;
     data.tokenToInputString[VARIABLE].push_back(variableString);
-    data.variableStringToID.insert({ variableString, data.tokenToInputString[VARIABLE].size() });
-    data.variableExpressions.insert({ (int)data.tokenToInputString[VARIABLE].size(), {variableStartValue} });
+    data.variableStringToID.insert({ variableString, tokenID });
+    data.variableExpressions.insert({ tokenID, {} });
+    token variableToken = { .type = VARIABLE, .value = tokenID };
+    
+    //returns the tokens that were extracted
+    return { createVariableFuncToken, leftParenthesis, variableToken };
+}
 
-
+void moveTokens(vector<token> &target, const vector<token> &src) {
+    for (token t : src) {
+        target.push_back(t);
+    }
 }
 
 //TODO: Control flow of this function is quite tricky, it should be refactored to be more straight forward
@@ -236,7 +239,8 @@ vector<token> getTokensFromInputString(const string input, tokenData &data){
         
         //if we have a token of SET_VARIABLE then we want to start keeping track of that variable for the future
         if (expectedTokenType == FUNC_SET_VARIABLE) {
-            createVariable(data, currentPosInString, input);
+            vector<token> tokensFromSetVariable = extractNewVariableTokens(data, currentPosInString, input);
+            moveTokens(tokens, tokensFromSetVariable);
         }
         //extract a token normally
         else {
