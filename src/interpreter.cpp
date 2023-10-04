@@ -6,15 +6,11 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
 
         switch (tokensInRPN[i].type)
         {
+
         case NUMBER:
+        case VARIABLE:
             helperStack.push_back(tokensInRPN[i]);
             break;
-        case VARIABLE:
-        {
-            token variableToken = data.variableExpressions.at(tokensInRPN[i].value)[0];
-            helperStack.push_back(variableToken);
-            break;
-        }
         case OP_PLUS:
         {
             token evaluatedToken;
