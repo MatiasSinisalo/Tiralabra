@@ -141,7 +141,7 @@ bool validTokensSoFar(const vector<token> tokens) {
         token secondToken = tokens[tokens.size() - 2];
         //Number should be before an operator
         if (tokenTypeToTokenFamily[topToken.type] == OPERATORS) {
-            if (tokenTypeToTokenFamily[secondToken.type] != NUMBERS) {
+            if (tokenTypeToTokenFamily[secondToken.type] != NUMBERS && tokenTypeToTokenFamily[secondToken.type] != VARIABLES) {
                 cout << "expected an operator after number!\n";
                 return false;
             }
