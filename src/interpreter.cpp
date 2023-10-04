@@ -2,8 +2,6 @@
 
 token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
     vector<token> helperStack;
-    //this loop does not go though the operators like they would be in a stack...
-    //should go in reverse order of the vector.
     for(int i = 0; i< tokensInRPN.size(); i++){
 
         switch (tokensInRPN[i].type)
