@@ -213,7 +213,7 @@ vector<token> extractNewVariableTokens(tokenData& data, int &currentPosInString,
     int tokenID = data.tokenToInputString[VARIABLE].size() + 1;
     data.tokenToInputString[VARIABLE].push_back(variableString);
     data.variableStringToID.insert({ variableString, tokenID });
-    data.variableExpressions.insert({ tokenID, {} });
+    data.variableExpressions.insert({ tokenID, {{.type = NUMBER, .value = 0}} });
     token variableToken = { .type = VARIABLE, .value = tokenID };
     
     //returns the tokens that were extracted
