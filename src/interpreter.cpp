@@ -1,5 +1,29 @@
 #include "interpreter.h"
 
+
+token getVariableValue(const token variableToken, const tokenData& data) {
+    token variableValue = data.variableExpressions.at(variableToken.value)[0];
+    return variableValue;
+}
+
+
+token popTokenAsValue(vector<token> &src, const tokenData &data) {
+    token token = src[src.size() - 1];
+    src.pop_back();
+
+    switch (token.type)
+    {
+    case NUMBER:
+        return token;
+        break;
+    case VARIABLE:
+        return getVariableValue(token, data);
+    default:
+        break;
+    }
+}
+
+
 token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
     vector<token> helperStack;
     for(int i = 0; i< tokensInRPN.size(); i++){
@@ -16,10 +40,8 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
             token evaluatedToken;
             evaluatedToken.type = NUMBER;
 
-            token firstToken = helperStack[helperStack.size() - 1];
-            helperStack.pop_back();
-            token secondToken = helperStack[helperStack.size() - 1];
-            helperStack.pop_back();
+            token firstToken = popTokenAsValue(helperStack, data);
+            token secondToken = popTokenAsValue(helperStack, data);
 
             evaluatedToken.value = secondToken.value + firstToken.value;
             helperStack.push_back(evaluatedToken);
@@ -30,10 +52,8 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
             token evaluatedToken;
             evaluatedToken.type = NUMBER;
 
-            token firstToken = helperStack[helperStack.size() - 1];
-            helperStack.pop_back();
-            token secondToken = helperStack[helperStack.size() - 1];
-            helperStack.pop_back();
+            token firstToken = popTokenAsValue(helperStack, data);
+            token secondToken = popTokenAsValue(helperStack, data);
 
             evaluatedToken.value = secondToken.value - firstToken.value;
             helperStack.push_back(evaluatedToken);
@@ -44,10 +64,8 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
             token evaluatedToken;
             evaluatedToken.type = NUMBER;
 
-            token firstToken = helperStack[helperStack.size() - 1];
-            helperStack.pop_back();
-            token secondToken = helperStack[helperStack.size() - 1];
-            helperStack.pop_back();
+            token firstToken = popTokenAsValue(helperStack, data);
+            token secondToken = popTokenAsValue(helperStack, data);
 
             evaluatedToken.value = secondToken.value * firstToken.value;
             helperStack.push_back(evaluatedToken);
@@ -58,10 +76,8 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
             token evaluatedToken;
             evaluatedToken.type = NUMBER;
 
-            token firstToken = helperStack[helperStack.size() - 1];
-            helperStack.pop_back();
-            token secondToken = helperStack[helperStack.size() - 1];
-            helperStack.pop_back();
+            token firstToken = popTokenAsValue(helperStack, data);
+            token secondToken = popTokenAsValue(helperStack, data);
 
             evaluatedToken.value = secondToken.value / firstToken.value;
             helperStack.push_back(evaluatedToken);
@@ -72,10 +88,8 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
             token evaluatedToken;
             evaluatedToken.type = NUMBER;
 
-            token firstToken = helperStack[helperStack.size() - 1];
-            helperStack.pop_back();
-            token secondToken = helperStack[helperStack.size() - 1];
-            helperStack.pop_back();
+            token firstToken = popTokenAsValue(helperStack, data);
+            token secondToken = popTokenAsValue(helperStack, data);
 
             evaluatedToken.value = pow(secondToken.value, firstToken.value);
             helperStack.push_back(evaluatedToken);
@@ -86,8 +100,7 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
             token evaluatedToken;
             evaluatedToken.type = NUMBER;
 
-            token firstToken = helperStack[helperStack.size() - 1];
-            helperStack.pop_back();
+            token firstToken = popTokenAsValue(helperStack, data);
             
             float firstTokenValueToFloat = float(firstToken.value);
             float sqrtResult = sqrt(firstTokenValueToFloat);
@@ -97,21 +110,15 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
         }
         case FUNC_SET_VARIABLE:
         {
-           
-
-            //this should be a number by the time we execute SET_VARIABLE
-            token firstToken = helperStack[helperStack.size() - 1];
-            helperStack.pop_back();
-
-            //this is the token for the variable
-            token secondToken = helperStack[helperStack.size() - 1];
+            token startingValueToken = popTokenAsValue(helperStack, data);
+    
+            token variableToken = helperStack[helperStack.size() - 1];
             helperStack.pop_back();
 
             //assign the variable value to be firstToken
-            data.variableExpressions.at(secondToken.value) = { firstToken };
+            data.variableExpressions.at(variableToken.value)[0] = startingValueToken;
 
-            token variableValue = data.variableExpressions.at(secondToken.value)[0];
-            helperStack.push_back(variableValue);
+            helperStack.push_back(startingValueToken);
             break;
         }
         default:
@@ -127,5 +134,6 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
         return {};
     }
 
-    return helperStack[0];
+    token finalResult = popTokenAsValue(helperStack, data);
+    return finalResult;
 }
