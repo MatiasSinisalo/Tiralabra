@@ -191,6 +191,51 @@ TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultFor_SetVariable_x_10)
     testInterpreterFor(inputTokens, {  .type = NUMBER, .value = 10}, data);
 }
 
+TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForMultipleSetVariables){
+    tokenData data = {
+
+        .variableStringToID = {{"x", 1}},
+        .variableExpressions = {
+                {1, 
+                    {{.type = NUMBER, .value=0}}
+                }
+            }
+    };
+    
+    vector<token> inputTokens = {
+        {
+            .type = VARIABLE,
+            .value = 1
+        },
+        {
+            .type = NUMBER,
+            .value = 10 
+        },
+        {
+            .type = FUNC_SET_VARIABLE
+        }
+    };
+    testInterpreterFor(inputTokens, {  .type = NUMBER, .value = 10}, data);
+    ASSERT_EQ(data.variableExpressions[1][0].value, 10);
+
+    vector<token> secondInputTokens = {
+        {
+            .type = VARIABLE,
+            .value = 1
+        },
+        {
+            .type = NUMBER,
+            .value = 100 
+        },
+        {
+            .type = FUNC_SET_VARIABLE
+        }
+    };
+    testInterpreterFor(secondInputTokens, {  .type = NUMBER, .value = 10}, data);
+
+    ASSERT_EQ(data.variableExpressions[1][0].value, 100);
+}
+
 TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForDeclaredVariables){
     tokenData data = {
 
