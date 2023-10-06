@@ -302,13 +302,15 @@ TEST(tokenizerTests, tokenizerDetectsNumbersAndOperators){
 
 TEST(tokenizerTests_extractNonNumberToken, extractNonNumberTokenReturnsTokenOfTypeNONEIfExpectedTokenIsNumber) {
 	int pos = 0;
-	token returnVal = extractNonNumberToken("", pos, NUMBER);
+	tokenData data = {};
+	token returnVal = extractNonNumberToken("", pos, NUMBER, data.tokenToInputString);
 	EXPECT_EQ(returnVal.type, NONE);
 };
 
 TEST(tokenizerTests_extractNonNumberToken, extractNonNumberTokenReturnsTokenOfTypeNONEIfExpectedTokenIsNotFound) {
 	int pos = 0;
-	token returnVal = extractNonNumberToken("+", pos, OP_MINUS);
+	tokenData data = {};
+	token returnVal = extractNonNumberToken("+", pos, OP_MINUS, data.tokenToInputString);
 	EXPECT_EQ(returnVal.type, NONE);
 };
 
