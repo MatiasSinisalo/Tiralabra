@@ -124,7 +124,9 @@ token extractNonNumberToken(
         int& currentPosInString,
         const tokenType expectedTokenType,
         const std::map<const tokenType, vector<string>>& tokenToInputString);
-tokenType findExpectedTokenType(const char c);
+tokenType findExpectedTokenType(
+    const char c,
+    const map<const tokenType, vector<string>>& tokenToInputString);
 token extractNumberToken(const string input, int& currentPosInString);
 //define DEBUG_PRINTS if debug output is needed from debug_printTokens function
 //#define DEBUG_PRINTS
