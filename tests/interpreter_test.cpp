@@ -9,6 +9,12 @@ void testInterpreterFor(vector<token> tokens, token expectedOutput){
     ASSERT_EQ(output.value, expectedOutput.value);
 }
 
+void testInterpreterFor(vector<token> tokens, token expectedOutput,  tokenData &data){
+    token output = interpretFromRPN(tokens, data);
+    ASSERT_EQ(output.type, expectedOutput.type);
+    ASSERT_EQ(output.value, expectedOutput.value);
+}
+
 TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForOnePlusOne){
     vector<token> tokens = {
         {
@@ -156,3 +162,61 @@ TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForSQRT16){
 
     testInterpreterFor(tokens, {  .type = NUMBER, .value = 4});
 }
+
+TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultFor_SetVariable_x_10){
+    tokenData data = {
+
+        .variableStringToID = {{"x", 1}},
+        .variableExpressions = {
+                {1, 
+                    {{.type = NUMBER, .value=0}}
+                }
+            }
+    };
+    
+    vector<token> inputTokens = {
+        {
+            .type = VARIABLE,
+            .value = 1
+        },
+        {
+            .type = NUMBER,
+            .value = 10 
+        },
+        {
+            .type = FUNC_SET_VARIABLE
+        }
+    };
+
+    testInterpreterFor(inputTokens, {  .type = NUMBER, .value = 10}, data);
+}
+
+TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForDeclaredVariables){
+    tokenData data = {
+
+        .variableStringToID = {{"x", 1}},
+        .variableExpressions = {
+                {1, 
+                    {{.type = NUMBER, .value=100}}
+                }
+            }
+    };
+    
+    vector<token> inputTokens = {
+        {
+            .type = VARIABLE,
+            .value = 1
+        },
+        {
+            .type = NUMBER,
+            .value = 10 
+        },
+        {
+            .type = OP_PLUS
+        }
+    };
+
+    testInterpreterFor(inputTokens, {  .type = NUMBER, .value = 110}, data);
+}
+
+
