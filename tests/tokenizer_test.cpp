@@ -234,6 +234,24 @@ TEST(tokenizerTests, tokenizerCreatesNewTokenTypeWhenVARIABLEFunctionIsUsed){
 	checkTokensMatch(tokens, expectedTokens);
 };
 
+
+TEST(tokenizerTests, tokenizerDetectsDeclaredVariablesCorrectly){
+	string input = "VARIABLE(x,10)";
+	tokenData data = {};
+	vector<token> tokensA = getTokensFromInputString(input, data);
+
+	string inputB = "x";
+	vector<token> output = getTokensFromInputString(inputB, data);
+	vector<token> expectedTokens = {
+		{
+			.type  = VARIABLE,
+			.value = 1
+		}
+	};
+
+	checkTokensMatch(output, expectedTokens);
+};
+
 TEST(tokenizerTests, tokenizerDetectsComma){
 	string input = ",";
 	tokenData data = {};
