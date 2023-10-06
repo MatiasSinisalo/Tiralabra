@@ -411,10 +411,3 @@ TEST(tokenizerTests_extractNumberToken, extractNumberTokenReturnsTokenOfTypeNONE
 	EXPECT_EQ(returnValue.type, NONE);
 };
 
-
-TEST(tokenizerTests_findExpectedTokenType, returnsTokenOfTypeNONEIfNoExpectedTokenIsFound) {
-	const char c = 'b';
-	tokenData data = {};
-	tokenType returnVal = findExpectedTokenType(c, data.tokenToInputString);
-	EXPECT_EQ(returnVal, NONE);
-};
