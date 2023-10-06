@@ -1,6 +1,24 @@
 #include "tokenizer.h"
 
 
+pair <tokenType, string> verifyStringIsTokenType(
+    const string input,
+    int currentPosInString,
+    const tokenType expectedTokenType,
+    const std::map<const tokenType, vector<string>>& tokenToInputString
+){
+    for (const string& operatorStringToMatch : tokenToInputString.at(expectedTokenType)) {
+        string substringFromPosition = input.substr(currentPosInString, operatorStringToMatch.size());
+        //if strings are equal .compare returns 0, 
+        if (substringFromPosition.compare(operatorStringToMatch) == 0) {
+            return { expectedTokenType,  substringFromPosition };
+        }
+    }
+
+    return { NONE, ""};
+}
+
+
 //returns a token that is not a number
 //currentPosInString will be incremented by lenght of the found token. 
 //      currentPosInString += tokenString.size()
@@ -20,7 +38,7 @@ token extractNonNumberToken(
         //if strings are equal .compare returns 0, 
         if (substringFromPosition.compare(operatorStringToMatch) == 0) {
             currentPosInString += operatorStringToMatch.size();
-                return { .type = expectedTokenType };
+            return { .type = expectedTokenType };
         }
     }
 
@@ -40,6 +58,22 @@ tokenType findExpectedTokenType(
             }
         }
     }
+    return NONE;
+}
+
+tokenType findTokenType(
+    const string input,
+    int currentPosInString,
+    const map<const tokenType, vector<string>>& tokenToInputString){
+
+    for (auto it = tokenToInputString.begin(); it != tokenToInputString.end(); ++it) {
+        tokenType expectedTokenType = it->first;
+        tokenType type = verifyStringIsTokenType(input, currentPosInString, expectedTokenType, tokenToInputString);
+        if (type != NONE) {
+            return type;
+        }
+    }
+    
     return NONE;
 }
 
