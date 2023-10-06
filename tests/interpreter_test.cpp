@@ -231,7 +231,7 @@ TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForMultipleSetVariabl
             .type = FUNC_SET_VARIABLE
         }
     };
-    testInterpreterFor(secondInputTokens, {  .type = NUMBER, .value = 10}, data);
+    testInterpreterFor(secondInputTokens, {  .type = NUMBER, .value = 100}, data);
 
     ASSERT_EQ(data.variableExpressions[1][0].value, 100);
 }
