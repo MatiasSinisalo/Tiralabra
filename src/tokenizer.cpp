@@ -211,7 +211,7 @@ vector<token> extractNewVariableTokens(tokenData& data, int &currentPosInString,
 
     token variableToken = {};
     if(data.variableStringToID.find(variableString) != data.variableStringToID.end()){
-        //variable exists so return a token assigned to the variable
+        //variable exists so return a id assigned to the variable
         int tokenID  = data.variableStringToID.at(variableString);
         variableToken = { .type = VARIABLE, .value = tokenID };
     }
