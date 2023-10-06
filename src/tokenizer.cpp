@@ -33,13 +33,10 @@ token extractNonNumberToken(
         return { .type = NONE };
     }
 
-    for (const string& operatorStringToMatch : tokenToInputString.at(expectedTokenType)){
-        string substringFromPosition = input.substr(currentPosInString, operatorStringToMatch.size());
-        //if strings are equal .compare returns 0, 
-        if (substringFromPosition.compare(operatorStringToMatch) == 0) {
-            currentPosInString += operatorStringToMatch.size();
-            return { .type = expectedTokenType };
-        }
+    pair<tokenType, string> result = verifyStringIsTokenType(input, currentPosInString, expectedTokenType, tokenToInputString);
+    if (result.first != NONE) {
+        currentPosInString += result.second.size();
+        return { .type = result.first };
     }
 
     return { .type = NONE };
@@ -68,7 +65,7 @@ tokenType findTokenType(
 
     for (auto it = tokenToInputString.begin(); it != tokenToInputString.end(); ++it) {
         tokenType expectedTokenType = it->first;
-        tokenType type = verifyStringIsTokenType(input, currentPosInString, expectedTokenType, tokenToInputString);
+        tokenType type = verifyStringIsTokenType(input, currentPosInString, expectedTokenType, tokenToInputString).first;
         if (type != NONE) {
             return type;
         }
