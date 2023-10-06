@@ -232,7 +232,50 @@ TEST(tokenizerTests, tokenizerCreatesNewTokenTypeWhenVARIABLEFunctionIsUsed){
 		}
 	};
 	checkTokensMatch(tokens, expectedTokens);
+
+	ASSERT_EQ(data.variableStringToID.size(), 1);
+	ASSERT_EQ(data.variableStringToID["x"], 1);
+	checkTokensMatch(data.variableExpressions[1], {{.type=NUMBER, .value=0}});
 };
+
+TEST(tokenizerTests, tokenizerDoesNotModifyVariableIfItIsDeclaredMultipleTimes){
+	string input = "VARIABLE(x,10)";
+	tokenData data = {};
+	vector<token> tokens = getTokensFromInputString(input, data);
+	vector<token> expectedTokens = {
+		{
+			.type = FUNC_SET_VARIABLE
+		},
+		{
+			.type = PARENTHESE_LEFT
+		},
+		{
+			.type = VARIABLE,
+			.value = 1
+		},
+		{
+			.type = COMMA
+		},
+		{
+			.type = NUMBER,
+			.value = 10
+		},
+		{
+			.type = PARENTHESE_RIGHT
+		}
+	};
+	checkTokensMatch(tokens, expectedTokens);
+	
+	string SecondInput = "VARIABLE(x,20)";
+	vector<token> tokensAfterDoubleDeclaration = getTokensFromInputString(input, data);
+	expectedTokens[4].value = 20;
+	checkTokensMatch(tokensAfterDoubleDeclaration, expectedTokens);
+	
+	ASSERT_EQ(data.variableStringToID.size(), 1);
+	ASSERT_EQ(data.variableStringToID["x"], 1);
+	checkTokensMatch(data.variableExpressions[1], {{.type=NUMBER, .value=0}});
+};
+
 
 
 TEST(tokenizerTests, tokenizerDetectsDeclaredVariablesCorrectly){
