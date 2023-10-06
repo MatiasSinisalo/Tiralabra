@@ -3,7 +3,8 @@
 #include "interpreter.h"
 
 void testInterpreterFor(vector<token> tokens, token expectedOutput){
-    token output = interpretFromRPN(tokens);
+    tokenData data = {};
+    token output = interpretFromRPN(tokens, data);
     ASSERT_EQ(output.type, expectedOutput.type);
     ASSERT_EQ(output.value, expectedOutput.value);
 }
@@ -13,21 +14,21 @@ TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForOnePlusOne){
         {
              
             .type = NUMBER,
-            .numberVal = 1
+            .value = 1
         },
         {
              
             .type = NUMBER,
-            .numberVal = 1
+            .value = 1
         },
         {
              
             .type = OP_PLUS,
-            .numberVal = 0
+            .value = 0
         }
     };
 
-    testInterpreterFor(tokens, {  .type = NUMBER, .numberVal = 2});
+    testInterpreterFor(tokens, {  .type = NUMBER, .value = 2});
 }
 
 TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForTwoMinusOne){
@@ -35,21 +36,21 @@ TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForTwoMinusOne){
         {
              
             .type = NUMBER,
-            .numberVal = 2
+            .value = 2
         },
         {
              
             .type = NUMBER,
-            .numberVal = 1
+            .value = 1
         },
         {
              
             .type = OP_MINUS,
-            .numberVal = 0
+            .value = 0
         }
     };
 
-    testInterpreterFor(tokens, {  .type = NUMBER, .numberVal = 1});
+    testInterpreterFor(tokens, {  .type = NUMBER, .value = 1});
 }
 
 TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForOnePlusTwoTimesFive){
@@ -57,31 +58,31 @@ TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForOnePlusTwoTimesFiv
         {
              
             .type = NUMBER,
-            .numberVal = 1
+            .value = 1
         },
         {
              
             .type = NUMBER,
-            .numberVal = 2
+            .value = 2
         },
         {
              
             .type = NUMBER,
-            .numberVal = 5
+            .value = 5
         },
         {
              
             .type = OP_MULTIPLY,
-            .numberVal = 0
+            .value = 0
         },
         {
              
             .type = OP_PLUS,
-            .numberVal = 0
+            .value = 0
         }
     };
 
-    testInterpreterFor(tokens, {  .type = NUMBER, .numberVal = 11});
+    testInterpreterFor(tokens, {  .type = NUMBER, .value = 11});
 }
 
 TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForTwoMinusFourDividedBy2){
@@ -89,31 +90,31 @@ TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForTwoMinusFourDivide
         {
              
             .type = NUMBER,
-            .numberVal = 2
+            .value = 2
         },
         {
              
             .type = NUMBER,
-            .numberVal = 4
+            .value = 4
         },
         {
              
             .type = NUMBER,
-            .numberVal = 2
+            .value = 2
         },
         {
              
             .type = OP_DIVIDE,
-            .numberVal = 0
+            .value = 0
         },
         {
              
             .type = OP_MINUS,
-            .numberVal = 0
+            .value = 0
         }
     };
 
-    testInterpreterFor(tokens, {  .type = NUMBER, .numberVal = 0});
+    testInterpreterFor(tokens, {  .type = NUMBER, .value = 0});
 }
 
 
@@ -122,21 +123,21 @@ TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultFor2ToPowerOf3){
         {
              
             .type = NUMBER,
-            .numberVal = 2
+            .value = 2
         },
         {
              
             .type = NUMBER,
-            .numberVal = 3
+            .value = 3
         },
         {
              
             .type = FUNC_POWER,
-            .numberVal = 0
+            .value = 0
         }
     };
 
-    testInterpreterFor(tokens, {  .type = NUMBER, .numberVal = 8});
+    testInterpreterFor(tokens, {  .type = NUMBER, .value = 8});
 }
 
 TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForSQRT16){
@@ -144,14 +145,14 @@ TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForSQRT16){
         {
              
             .type = NUMBER,
-            .numberVal = 16
+            .value = 16
         },
         {
              
             .type = FUNC_SQRT,
-            .numberVal = 0
+            .value = 0
         }
     };
 
-    testInterpreterFor(tokens, {  .type = NUMBER, .numberVal = 4});
+    testInterpreterFor(tokens, {  .type = NUMBER, .value = 4});
 }

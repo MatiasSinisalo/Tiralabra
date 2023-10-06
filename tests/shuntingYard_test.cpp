@@ -13,27 +13,27 @@ TEST(shuntingYardTests_shuntingYard, producesExpectedOutputFor1Plus1Minus2){
         {
             
             .type = NUMBER,
-            .numberVal = 1,
+            .value = 1,
         },
         {
             
             .type = OP_PLUS,
-            .numberVal = 0,
+            .value = 0,
         },
         {
             
             .type = NUMBER,
-            .numberVal = 1,
+            .value = 1,
         },
         {
            
             .type = OP_MINUS,
-            .numberVal = 0,
+            .value = 0,
         },
         {
             
             .type = NUMBER,
-            .numberVal = 2,
+            .value = 2,
         },
     };
 
@@ -41,27 +41,27 @@ TEST(shuntingYardTests_shuntingYard, producesExpectedOutputFor1Plus1Minus2){
         {
             
             .type = NUMBER,
-            .numberVal = 1,
+            .value = 1,
         },
         {
             
            .type = NUMBER,
-            .numberVal = 1,
+            .value = 1,
         },
         {
             
             .type = OP_PLUS,
-            .numberVal = 0,
+            .value = 0,
         },
         {
             
            .type = NUMBER,
-            .numberVal = 2,
+            .value = 2,
         },
         {
             
             .type = OP_MINUS,
-            .numberVal = 0,
+            .value = 0,
         },
     };
     
@@ -75,37 +75,37 @@ TEST(shuntingYardTests_shuntingYard, producesExpectedOutputForOnePlus2Plus3Times
         {
             
             .type = NUMBER,
-            .numberVal = 1,
+            .value = 1,
         },
         {
             
             .type = OP_PLUS,
-            .numberVal = 0,
+            .value = 0,
         },
         {
             
             .type = NUMBER,
-            .numberVal = 2,
+            .value = 2,
         },
         {
             
             .type = OP_PLUS,
-            .numberVal = 0,
+            .value = 0,
         },
         {
             
             .type = NUMBER,
-            .numberVal = 3,
+            .value = 3,
         },
         {
             
             .type = OP_MULTIPLY,
-            .numberVal = 0,
+            .value = 0,
         },
         {
             
             .type = NUMBER,
-            .numberVal = 4,
+            .value = 4,
         },
     };
 
@@ -113,37 +113,37 @@ TEST(shuntingYardTests_shuntingYard, producesExpectedOutputForOnePlus2Plus3Times
         {
             
             .type = NUMBER,
-            .numberVal = 1,
+            .value = 1,
         },
         {
             
            .type = NUMBER,
-            .numberVal = 2,
+            .value = 2,
         },
         {
             
             .type = OP_PLUS,
-            .numberVal = 0,
+            .value = 0,
         },
        {
             
             .type = NUMBER,
-            .numberVal = 3,
+            .value = 3,
         },
         {
             
             .type = NUMBER,
-            .numberVal = 4,
+            .value = 4,
         },
         {
             
             .type = OP_MULTIPLY,
-            .numberVal = 0,
+            .value = 0,
         },
         {
             
             .type = OP_PLUS,
-            .numberVal = 0,
+            .value = 0,
         },
     };
     
@@ -157,37 +157,37 @@ TEST(shuntingYardTests_shuntingYard, producesExpectedOutputForOnePlusFourDivided
         {
             
             .type = NUMBER,
-            .numberVal = 1,
+            .value = 1,
         },
         {
             
             .type = OP_PLUS,
-            .numberVal = 0,
+            .value = 0,
         },
         {
             
             .type = NUMBER,
-            .numberVal = 4,
+            .value = 4,
         },
         {
             
             .type = OP_DIVIDE,
-            .numberVal = 0,
+            .value = 0,
         },
         {
             
             .type = NUMBER,
-            .numberVal = 2,
+            .value = 2,
         },
         {
             
             .type = OP_MULTIPLY,
-            .numberVal = 0,
+            .value = 0,
         },
         {
             
             .type = NUMBER,
-            .numberVal = 4,
+            .value = 4,
         },
     };
 
@@ -195,37 +195,37 @@ TEST(shuntingYardTests_shuntingYard, producesExpectedOutputForOnePlusFourDivided
         {
             
             .type = NUMBER,
-            .numberVal = 1,
+            .value = 1,
         },
         {
             
             .type = NUMBER,
-            .numberVal = 4,
+            .value = 4,
         },
         {
             
             .type = NUMBER,
-            .numberVal = 2,
+            .value = 2,
         },
         {
             
             .type = OP_DIVIDE,
-            .numberVal = 0,
+            .value = 0,
         },
         {
             
             .type = NUMBER,
-            .numberVal = 4,
+            .value = 4,
         },
         {
             
             .type = OP_MULTIPLY,
-            .numberVal = 0,
+            .value = 0,
         },
         {
             
             .type = OP_PLUS,
-            .numberVal = 0,
+            .value = 0,
         },
     };
     
@@ -239,37 +239,37 @@ TEST(shuntingYardTests_shuntingYard, producesExpectedOutputForPARENTHESE_LEFT_On
         {
             
             .type  = PARENTHESE_LEFT,
-            .numberVal = 1,
+            .value = 1,
         },
         {
             
             .type = NUMBER,
-            .numberVal = 1,
+            .value = 1,
         },
         {
             
             .type = OP_PLUS,
-            .numberVal = 0,
+            .value = 0,
         },
         {
             
             .type = NUMBER,
-            .numberVal = 1,
+            .value = 1,
         },
         {
             
             .type  = PARENTHESE_RIGHT,
-            .numberVal = 1,
+            .value = 1,
         },
         {
             
             .type = OP_MULTIPLY,
-            .numberVal = 0,
+            .value = 0,
         },
         {
             
             .type = NUMBER,
-            .numberVal = 2,
+            .value = 2,
         },
     };
 
@@ -277,27 +277,27 @@ TEST(shuntingYardTests_shuntingYard, producesExpectedOutputForPARENTHESE_LEFT_On
         {
             
             .type = NUMBER,
-            .numberVal = 1,
+            .value = 1,
         },
         {
             
             .type = NUMBER,
-            .numberVal = 1,
+            .value = 1,
         },
           {
             
             .type = OP_PLUS,
-            .numberVal = 0,
+            .value = 0,
         },
         {
             
             .type = NUMBER,
-            .numberVal = 2,
+            .value = 2,
         },
         {
             
             .type = OP_MULTIPLY,
-            .numberVal = 0,
+            .value = 0,
         },
         
     };
@@ -314,77 +314,77 @@ TEST(shuntingYardTests_shuntingYard, producesExpectedOutputForMultipleParenthese
         {
             
             .type  = PARENTHESE_LEFT,
-            .numberVal = 1,
+            .value = 1,
         },
         {
             
             .type = NUMBER,
-            .numberVal = 9,
+            .value = 9,
         },
         {
             
             .type = OP_PLUS,
-            .numberVal = 0,
+            .value = 0,
         },
         {
             
             .type = NUMBER,
-            .numberVal = 3,
+            .value = 3,
         },
         {
             
             .type  = PARENTHESE_RIGHT,
-            .numberVal = 1,
+            .value = 1,
         },
         {
             
             .type = OP_DIVIDE,
-            .numberVal = 0,
+            .value = 0,
         },
         {
             
             .type  = PARENTHESE_LEFT,
-            .numberVal = 1,
+            .value = 1,
         },
         {
             
             .type  = PARENTHESE_LEFT,
-            .numberVal = 1,
+            .value = 1,
         },
         {
             
             .type = NUMBER,
-            .numberVal = 1,
+            .value = 1,
         },
          {
             
             .type = OP_PLUS,
-            .numberVal = 0,
+            .value = 0,
         },
          {
             
             .type = NUMBER,
-            .numberVal = 1,
+            .value = 1,
         },
         {
             
             .type  = PARENTHESE_RIGHT,
-            .numberVal = 1,
+            .value = 1,
         },
         {
             
             .type = OP_MULTIPLY,
-            .numberVal = 0,
+            .value = 0,
         },
         {
             
             .type = NUMBER,
-            .numberVal = 2,
+            .value = 2,
         },
         {
             
             .type  = PARENTHESE_RIGHT,
-            .numberVal = 1,
+            .value = 1,
         },
     };
 
@@ -392,47 +392,47 @@ TEST(shuntingYardTests_shuntingYard, producesExpectedOutputForMultipleParenthese
         {
             
             .type = NUMBER,
-            .numberVal = 9,
+            .value = 9,
         },
         {
             
             .type = NUMBER,
-            .numberVal = 3,
+            .value = 3,
         },
          {
             
             .type = OP_PLUS,
-            .numberVal = 0,
+            .value = 0,
         },
         {
             
             .type = NUMBER,
-            .numberVal = 1,
+            .value = 1,
         },
          {
             
             .type = NUMBER,
-            .numberVal = 1,
+            .value = 1,
         },
          {
             
             .type = OP_PLUS,
-            .numberVal = 0,
+            .value = 0,
         },
         {
             
             .type = NUMBER,
-            .numberVal = 2,
+            .value = 2,
         },
         {
             
             .type = OP_MULTIPLY,
-            .numberVal = 0,
+            .value = 0,
         },
         {
             
             .type = OP_DIVIDE,
-            .numberVal = 0,
+            .value = 0,
         },
     };
     
@@ -455,7 +455,7 @@ TEST(shuntingYardTests_shuntingYard, producesExpectedOutputFOR2ToPowerOF3){
         {
             
             .type = NUMBER,
-            .numberVal = 2,
+            .value = 2,
         },
         {
            
@@ -465,7 +465,7 @@ TEST(shuntingYardTests_shuntingYard, producesExpectedOutputFOR2ToPowerOF3){
         {
             
             .type = NUMBER,
-            .numberVal = 3,
+            .value = 3,
         },
         {
             .type = PARENTHESE_RIGHT
@@ -476,12 +476,12 @@ TEST(shuntingYardTests_shuntingYard, producesExpectedOutputFOR2ToPowerOF3){
         {
             
             .type = NUMBER,
-            .numberVal = 2,
+            .value = 2,
         },
         {
             
             .type = NUMBER,
-            .numberVal = 3,
+            .value = 3,
         },
         {
             
@@ -509,7 +509,7 @@ TEST(shuntingYardTests_shuntingYard, producesExpectedOutputFor_PARENTHESIS_LEFT_
         {
             
             .type = NUMBER,
-            .numberVal = 1,
+            .value = 1,
         },
         {
             
@@ -518,7 +518,7 @@ TEST(shuntingYardTests_shuntingYard, producesExpectedOutputFor_PARENTHESIS_LEFT_
         {
             
             .type = NUMBER,
-            .numberVal = 1,
+            .value = 1,
         },
         {
            
@@ -528,7 +528,7 @@ TEST(shuntingYardTests_shuntingYard, producesExpectedOutputFor_PARENTHESIS_LEFT_
         {
             
             .type = NUMBER,
-            .numberVal = 3,
+            .value = 3,
         },
         {
             .type = PARENTHESE_RIGHT
@@ -539,12 +539,12 @@ TEST(shuntingYardTests_shuntingYard, producesExpectedOutputFor_PARENTHESIS_LEFT_
         {
             
             .type = NUMBER,
-            .numberVal = 1,
+            .value = 1,
         },
         {
             
             .type = NUMBER,
-            .numberVal = 1,
+            .value = 1,
         },
         {
             
@@ -554,7 +554,7 @@ TEST(shuntingYardTests_shuntingYard, producesExpectedOutputFor_PARENTHESIS_LEFT_
         {
             
             .type = NUMBER,
-            .numberVal = 3,
+            .value = 3,
         },
         {
             
@@ -593,7 +593,7 @@ TEST(shuntingYardTests_shuntingYard, producesExpectedOutputFor_SquareRootOf_2_to
         {
             
             .type = NUMBER,
-            .numberVal = 2,
+            .value = 2,
         },
         {
            
@@ -603,7 +603,7 @@ TEST(shuntingYardTests_shuntingYard, producesExpectedOutputFor_SquareRootOf_2_to
         {
             
             .type = NUMBER,
-            .numberVal = 3,
+            .value = 3,
         },
         {
             .type = PARENTHESE_RIGHT
@@ -619,12 +619,12 @@ TEST(shuntingYardTests_shuntingYard, producesExpectedOutputFor_SquareRootOf_2_to
         {
             
             .type = NUMBER,
-            .numberVal = 2,
+            .value = 2,
         },
         {
             
             .type = NUMBER,
-            .numberVal = 3,
+            .value = 3,
         },
         {
             

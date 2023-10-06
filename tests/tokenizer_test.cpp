@@ -2,16 +2,18 @@
 #include "tokenizer.h"
 #include "testUtilities.h"
 TEST(tokenizerTests, tokenizerDetectsSingleNumbers) {
+	tokenData data = {};
 	vector<string> inputs = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
 
 	for(string &s : inputs){
-		vector<token> tokens = getTokensFromInputString(s);
+
+		vector<token> tokens = getTokensFromInputString(s, data);
 		EXPECT_EQ(tokens.size(), 1);
 
 		token expectedToken = {
 			
 			.type = NUMBER,
-			.numberVal = stoi(s)
+			.value = stoi(s)
 		};
 
 		EXPECT_EQ(tokens[0].type, expectedToken.type) << "test failed for " << s << "\n";
@@ -21,22 +23,23 @@ TEST(tokenizerTests, tokenizerDetectsSingleNumbers) {
 };
 
 TEST(tokenizerTests, tokenizerDetectsMultiDigitNumbers) {
+	tokenData data = {};
 	string input = "100+50";
 	
 
-	vector<token> tokens = getTokensFromInputString(input);
+	vector<token> tokens = getTokensFromInputString(input, data);
 	
 	vector<token> expectedTokens = {
 		{
 			.type = NUMBER,
-			.numberVal = 100,
+			.value = 100,
 		},
 		{
 			.type = OP_PLUS,
 		},
 		{
 			.type = NUMBER,
-			.numberVal = 50,
+			.value = 50,
 		},
 	};
 
@@ -46,14 +49,15 @@ TEST(tokenizerTests, tokenizerDetectsMultiDigitNumbers) {
 
 
 TEST(tokenizerTests, tokenizerDetectsPlusOperator){
+	tokenData data = {};
 	string input = "+";
-	vector<token> tokens = getTokensFromInputString(input);
+	vector<token> tokens = getTokensFromInputString(input, data);
 	EXPECT_EQ(tokens.size(), 1);
 
 	token expectedToken = {
 		 
 		.type = OP_PLUS,
-		.numberVal = 0
+		.value = 0
 	};
 
 	EXPECT_EQ(tokens[0].type, expectedToken.type);
@@ -63,14 +67,15 @@ TEST(tokenizerTests, tokenizerDetectsPlusOperator){
 
 
 TEST(tokenizerTests, tokenizerDetectsMinusOperator){
+	tokenData data = {};
 	string input = "-";
-	vector<token> tokens = getTokensFromInputString(input);
+	vector<token> tokens = getTokensFromInputString(input, data);
 	EXPECT_EQ(tokens.size(), 1);
 
 	token expectedToken = {
 		 
 		.type = OP_MINUS,
-		.numberVal = 0
+		.value = 0
 	};
 
 	EXPECT_EQ(tokens[0].type, expectedToken.type);
@@ -80,14 +85,15 @@ TEST(tokenizerTests, tokenizerDetectsMinusOperator){
 
 
 TEST(tokenizerTests, tokenizerDetectsMultiplyOperator){
+	tokenData data = {};
 	string input = "*";
-	vector<token> tokens = getTokensFromInputString(input);
+	vector<token> tokens = getTokensFromInputString(input, data);
 	EXPECT_EQ(tokens.size(), 1);
 
 	token expectedToken = {
 		 
 		.type = OP_MULTIPLY,
-		.numberVal = 0
+		.value = 0
 	};
 
 	EXPECT_EQ(tokens[0].type, expectedToken.type);
@@ -97,13 +103,14 @@ TEST(tokenizerTests, tokenizerDetectsMultiplyOperator){
 
 TEST(tokenizerTests, tokenizerDetectsDivideOperator){
 	string input = "/";
-	vector<token> tokens = getTokensFromInputString(input);
+	tokenData data = {};
+	vector<token> tokens = getTokensFromInputString(input, data);
 	EXPECT_EQ(tokens.size(), 1);
 
 	token expectedToken = {
 		 
 		.type = OP_DIVIDE,
-		.numberVal = 0
+		.value = 0
 	};
 
 	EXPECT_EQ(tokens[0].type, expectedToken.type);
@@ -113,7 +120,8 @@ TEST(tokenizerTests, tokenizerDetectsDivideOperator){
 
 TEST(tokenizerTests, tokenizerDetectsParentheses){
 	string input = "()";
-	vector<token> tokens = getTokensFromInputString(input);
+	tokenData data = {};
+	vector<token> tokens = getTokensFromInputString(input, data);
 	
 
 	vector<token> expectedTokens = {
@@ -130,43 +138,49 @@ TEST(tokenizerTests, tokenizerDetectsParentheses){
 
 TEST(tokenizerTests, tokenizerReturnsEmptyTokensForIncorrectParentheses){
 	string input = "((1+1)";
-	vector<token> tokens = getTokensFromInputString(input);
+	tokenData data = {};
+	vector<token> tokens = getTokensFromInputString(input, data);
 	ASSERT_EQ(tokens.size(), 0);
 };
 
 TEST(tokenizerTests, tokenizerReturnsEmptyTokensForIncorrectParentheses_2){
 	string input = ")(1+1)(";
-	vector<token> tokens = getTokensFromInputString(input);
+	tokenData data = {};
+	vector<token> tokens = getTokensFromInputString(input, data);
 	ASSERT_EQ(tokens.size(), 0);
 };
 
 TEST(tokenizerTests, tokenizerReturnsEmptyTokensForIncorrectOperatorAndNumberOrdering){
 	string input = "+1";
-	vector<token> tokens = getTokensFromInputString(input);
+	tokenData data = {};
+	vector<token> tokens = getTokensFromInputString(input, data);
 	ASSERT_EQ(tokens.size(), 0);
 };
 
 TEST(tokenizerTests, tokenizerReturnsEmptyTokensForIncorrectOperatorAndNumberOrdering_2){
 	string input = "1+";
-	vector<token> tokens = getTokensFromInputString(input);
+	tokenData data = {};
+	vector<token> tokens = getTokensFromInputString(input, data);
 	ASSERT_EQ(tokens.size(), 0);
 };
 
 TEST(tokenizerTests, tokenizerReturnsEmptyTokensForIncorrectFunctionSyntax){
 	string input = "POWER1+1";
-	vector<token> tokens = getTokensFromInputString(input);
+	tokenData data = {};
+	vector<token> tokens = getTokensFromInputString(input, data);
 	ASSERT_EQ(tokens.size(), 0);
 };
 
 TEST(tokenizerTests, tokenizerDetectsPOWERFunction){
 	string input = "POWER";
-	vector<token> tokens = getTokensFromInputString(input);
+	tokenData data = {};
+	vector<token> tokens = getTokensFromInputString(input, data);
 	EXPECT_EQ(tokens.size(), 1);
 
 	token expectedToken = {
 		 
 		.type = FUNC_POWER,
-		.numberVal = 0
+		.value = 0
 	};
 
 	EXPECT_EQ(tokens[0].type, expectedToken.type);
@@ -176,13 +190,14 @@ TEST(tokenizerTests, tokenizerDetectsPOWERFunction){
 
 TEST(tokenizerTests, tokenizerDetectsSQRTFunction){
 	string input = "SQRT";
-	vector<token> tokens = getTokensFromInputString(input);
+	tokenData data = {};
+	vector<token> tokens = getTokensFromInputString(input, data);
 	EXPECT_EQ(tokens.size(), 1);
 
 	token expectedToken = {
 		 
 		.type = FUNC_SQRT,
-		.numberVal = 0
+		.value = 0
 	};
 
 	EXPECT_EQ(tokens[0].type, expectedToken.type);
@@ -192,13 +207,14 @@ TEST(tokenizerTests, tokenizerDetectsSQRTFunction){
 
 TEST(tokenizerTests, tokenizerDetectsComma){
 	string input = ",";
-	vector<token> tokens = getTokensFromInputString(input);
+	tokenData data = {};
+	vector<token> tokens = getTokensFromInputString(input, data);
 	EXPECT_EQ(tokens.size(), 1);
 
 	token expectedToken = {
 		 
 		.type = COMMA,
-		.numberVal = 0
+		.value = 0
 	};
 
 	EXPECT_EQ(tokens[0].type, expectedToken.type);
@@ -208,20 +224,23 @@ TEST(tokenizerTests, tokenizerDetectsComma){
 
 TEST(tokenizerTests, tokenizerReturnsEmptyTokenListForIncorrectInput){
 	string input = "ThisIsAnUnkownTokenThatWillNeverExist";
-	vector<token> tokens = getTokensFromInputString(input);
+	tokenData data = {};
+	vector<token> tokens = getTokensFromInputString(input, data);
 	EXPECT_EQ(tokens.size(), 0);
 };
 
 TEST(tokenizerTests, tokenizerReturnsEmptyTokenListForIncorrectInput_2){
 	string input = "1+ThisIsAnUnkownTokenThatWillNeverExist+5";
-	vector<token> tokens = getTokensFromInputString(input);
+	tokenData data = {};
+	vector<token> tokens = getTokensFromInputString(input, data);
 	EXPECT_EQ(tokens.size(), 0);
 };
 
 
 TEST(tokenizerTests, tokenizerDetectsNumbersAndOperators){
 	string input = "1+2-3*4/5";
-	vector<token> tokens = getTokensFromInputString(input);
+	tokenData data = {};
+	vector<token> tokens = getTokensFromInputString(input, data);
 	EXPECT_EQ(tokens.size(), 9);
 
 
@@ -229,47 +248,47 @@ TEST(tokenizerTests, tokenizerDetectsNumbersAndOperators){
 		{
 			 
 			.type = NUMBER,
-			.numberVal = 1
+			.value = 1
 		},
 		{
 			 
 			.type = OP_PLUS,
-			.numberVal = 0
+			.value = 0
 		},
 		{
 			 
 			.type = NUMBER,
-			.numberVal = 2
+			.value = 2
 		},
 		{
 			 
 			.type = OP_MINUS,
-			.numberVal = 0
+			.value = 0
 		},
 		{
 			 
 			.type = NUMBER,
-			.numberVal = 3
+			.value = 3
 		},
 		{
 			 
 			.type = OP_MULTIPLY,
-			.numberVal = 0
+			.value = 0
 		},
 		{
 			 
 			.type = NUMBER,
-			.numberVal = 4
+			.value = 4
 		},
 		{
 			 
 			.type = OP_DIVIDE,
-			.numberVal = 0
+			.value = 0
 		},
 		{
 			 
 			.type = NUMBER,
-			.numberVal = 5
+			.value = 5
 		}
 	};
 	
@@ -281,28 +300,28 @@ TEST(tokenizerTests, tokenizerDetectsNumbersAndOperators){
 	
 };
 
-TEST(tokenizerTests_extractNonNumberToken, extractNonNumberTokenReturnsTokenOfTypeNONEIfExpectedTokenIsNumber){
+TEST(tokenizerTests_extractNonNumberToken, extractNonNumberTokenReturnsTokenOfTypeNONEIfExpectedTokenIsNumber) {
 	int pos = 0;
 	token returnVal = extractNonNumberToken("", pos, NUMBER);
 	EXPECT_EQ(returnVal.type, NONE);
-}
+};
 
-TEST(tokenizerTests_extractNonNumberToken, extractNonNumberTokenReturnsTokenOfTypeNONEIfExpectedTokenIsNotFound){
+TEST(tokenizerTests_extractNonNumberToken, extractNonNumberTokenReturnsTokenOfTypeNONEIfExpectedTokenIsNotFound) {
 	int pos = 0;
 	token returnVal = extractNonNumberToken("+", pos, OP_MINUS);
 	EXPECT_EQ(returnVal.type, NONE);
-}
+};
 
 
-TEST(tokenizerTests_extractNumberToken, extractNumberTokenReturnsTokenOfTypeNONEIfNumberIsNotFound){
+TEST(tokenizerTests_extractNumberToken, extractNumberTokenReturnsTokenOfTypeNONEIfNumberIsNotFound) {
 	int pos = 0;
 	token returnValue = extractNumberToken("POWER", pos);
 	EXPECT_EQ(returnValue.type, NONE);
-}
+};
 
 
-TEST(tokenizerTests_findExpectedTokenType, returnsTokenOfTypeNONEIfNoExpectedTokenIsFound){
+TEST(tokenizerTests_findExpectedTokenType, returnsTokenOfTypeNONEIfNoExpectedTokenIsFound) {
 	const char c = 'b';
 	tokenType returnVal = findExpectedTokenType(c);
 	EXPECT_EQ(returnVal, NONE);
-}
+};
