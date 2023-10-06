@@ -205,6 +205,35 @@ TEST(tokenizerTests, tokenizerDetectsSQRTFunction){
 	EXPECT_EQ(tokens[0].value, expectedToken.value);
 };
 
+TEST(tokenizerTests, tokenizerCreatesNewTokenTypeWhenVARIABLEFunctionIsUsed){
+	string input = "VARIABLE(x,10)";
+	tokenData data = {};
+	vector<token> tokens = getTokensFromInputString(input, data);
+	vector<token> expectedTokens = {
+		{
+			.type = FUNC_SET_VARIABLE
+		},
+		{
+			.type = PARENTHESE_LEFT
+		},
+		{
+			.type = VARIABLE,
+			.value = 1
+		},
+		{
+			.type = COMMA
+		},
+		{
+			.type = NUMBER,
+			.value = 10
+		},
+		{
+			.type = PARENTHESE_RIGHT
+		}
+	};
+	checkTokensMatch(tokens, expectedTokens);
+};
+
 TEST(tokenizerTests, tokenizerDetectsComma){
 	string input = ",";
 	tokenData data = {};
