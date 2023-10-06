@@ -273,7 +273,7 @@ vector<token> getTokensFromInputString(const string input, tokenData &data){
     int currentPosInString = 0; 
     while (currentPosInString < input.size()){
         tokenType expectedTokenType = NONE;
-        expectedTokenType = findExpectedTokenType(input.at(currentPosInString), data.tokenToInputString);
+        expectedTokenType = findTokenType(input, currentPosInString, data.tokenToInputString);
         
         //if we have a token of SET_VARIABLE then we want to start keeping track of that variable for the future
         if (expectedTokenType == FUNC_SET_VARIABLE) {
