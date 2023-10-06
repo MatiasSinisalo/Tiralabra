@@ -267,7 +267,7 @@ TEST(tokenizerTests, tokenizerDoesNotModifyVariableIfItIsDeclaredMultipleTimes){
 	checkTokensMatch(tokens, expectedTokens);
 	
 	string SecondInput = "VARIABLE(x,20)";
-	vector<token> tokensAfterDoubleDeclaration = getTokensFromInputString(input, data);
+	vector<token> tokensAfterDoubleDeclaration = getTokensFromInputString(SecondInput, data);
 	expectedTokens[4].value = 20;
 	checkTokensMatch(tokensAfterDoubleDeclaration, expectedTokens);
 	

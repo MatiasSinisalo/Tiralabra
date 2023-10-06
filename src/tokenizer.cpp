@@ -209,13 +209,20 @@ vector<token> extractNewVariableTokens(tokenData& data, int &currentPosInString,
     //extract the chars that define the variable
     string variableString = extractVariableString(currentPosInString, input);
 
-    //finally modify tokenData so that the program can use it in the future
-    int tokenID = data.tokenToInputString[VARIABLE].size() + 1;
-    data.tokenToInputString[VARIABLE].push_back(variableString);
-    data.variableStringToID.insert({ variableString, tokenID });
-    data.variableExpressions.insert({ tokenID, {{.type = NUMBER, .value = 0}} });
-    token variableToken = { .type = VARIABLE, .value = tokenID };
-    
+    token variableToken = {};
+    if(data.variableStringToID.find(variableString) != data.variableStringToID.end()){
+        //variable exists so return a token assigned to the variable
+        int tokenID  = data.variableStringToID.at(variableString);
+        variableToken = { .type = VARIABLE, .value = tokenID };
+    }
+    else{
+        //finally modify tokenData so that the program can use it in the future
+        int tokenID = data.tokenToInputString[VARIABLE].size() + 1;
+        data.tokenToInputString[VARIABLE].push_back(variableString);
+        data.variableStringToID.insert({ variableString, tokenID });
+        data.variableExpressions.insert({ tokenID, {{.type = NUMBER, .value = 0}} });
+        variableToken = { .type = VARIABLE, .value = tokenID };
+    }
     //returns the tokens that were extracted
     return { createVariableFuncToken, leftParenthesis, variableToken };
 }
