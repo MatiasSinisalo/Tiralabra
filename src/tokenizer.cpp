@@ -126,6 +126,28 @@ token extractVariableToken(const string input, int &currentPosInString, const to
     return { .type = NONE };
 }
 
+token extractCustomDeclarationToken(
+    const string input, 
+    int& currentPosInString, 
+    const map<const tokenType, vector<string>>& tokenToInputString,
+    const map<string, int>& stringToID,
+    tokenType customTokenType
+) {
+    for (const string& operatorStringToMatch : tokenToInputString.at(customTokenType)) {
+        string substringFromPosition = input.substr(currentPosInString, operatorStringToMatch.size());
+        //if strings are equal .compare returns 0, 
+        if (substringFromPosition.compare(operatorStringToMatch) == 0) {
+            currentPosInString += operatorStringToMatch.size();
+
+            //we have found the string matching the custom token so lets get its id and return
+            int tokenID = stringToID.at(substringFromPosition);
+            return { .type = customTokenType, .value = tokenID };
+        }
+    }
+
+    return { .type = NONE };
+}
+
 //Returns token if the input string contains a string of expectedTokenType
 //Modifies currentPosInString to the next char after the expectedToken if string of expectedTokenType is found successfully.
 //If function fails it returns token of tokenType::NONE and does not modify currentPosInString 
@@ -140,7 +162,20 @@ token extractToken(
         return extractNumberToken(input, currentPosInString);
     }
     else if (expectedTokenType == VARIABLE) {
-        return extractVariableToken(input, currentPosInString, data);
+        return extractCustomDeclarationToken(
+                input,
+                currentPosInString,
+                data.tokenToInputString,
+                data.variableStringToID,
+                VARIABLE);
+    }
+    else if (expectedTokenType == CUSTOM_FUNCTION) {
+        return extractCustomDeclarationToken(
+                input, 
+                currentPosInString, 
+                data.tokenToInputString, 
+                data.functionStringToID, 
+                CUSTOM_FUNCTION);
     }
     else{
         return extractNonNumberToken(input, currentPosInString, expectedTokenType, data.tokenToInputString);
