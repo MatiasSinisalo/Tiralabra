@@ -202,7 +202,7 @@ bool validParenthesis(const vector<token> tokens) {
     return true;
 }
 
-string extractVariableString(int& currentPosInString, const string input) {
+string extractTokenDefinitionString(int& currentPosInString, const string input) {
     string variableString = "";
 
     int i = currentPosInString - 1;
@@ -224,7 +224,7 @@ vector<token> extractNewVariableTokens(tokenData& data, int &currentPosInString,
     token leftParenthesis = extractToken(input, currentPosInString, PARENTHESE_LEFT, data);
     
     //extract the chars that define the variable
-    string variableString = extractVariableString(currentPosInString, input);
+    string variableString = extractTokenDefinitionString(currentPosInString, input);
 
     token variableToken = {};
     if(data.variableStringToID.find(variableString) != data.variableStringToID.end()){
@@ -242,6 +242,33 @@ vector<token> extractNewVariableTokens(tokenData& data, int &currentPosInString,
     }
     //returns the tokens that were extracted
     return { createVariableFuncToken, leftParenthesis, variableToken };
+}
+
+vector<token> extractNewFunctionTokens(tokenData& data, int& currentPosInString, const string input) {
+    //extract tokens from input so that we are at the symbols which define the string of the function
+    token createFunctionToken = extractToken(input, currentPosInString, FUNC_SET_CUSTOM_FUNCTION, data);
+    token leftParenthesis = extractToken(input, currentPosInString, PARENTHESE_LEFT, data);
+   
+    //extract the chars that define the function
+    string functionString = extractTokenDefinitionString(currentPosInString, input);
+
+    token functionToken = {};
+    if (data.functionStringToID.find(functionString) != data.functionStringToID.end()) {
+        //variable exists so return a id assigned to the variable
+        int tokenID = data.functionStringToID.at(functionString);
+        functionToken = { .type = CUSTOM_FUNCTION, .value = tokenID };
+    }
+    else {
+        //finally modify tokenData so that the program can use it in the future
+        int tokenID = data.tokenToInputString[CUSTOM_FUNCTION].size() + 1;
+        data.tokenToInputString[CUSTOM_FUNCTION].push_back(functionString);
+        data.functionStringToID.insert({ functionString, tokenID });
+        data.functionExpressions.insert({ tokenID, {} });
+        functionToken = { .type = CUSTOM_FUNCTION, .value = tokenID };
+    }
+
+    //returns the tokens that were extracted
+    return { createFunctionToken, leftParenthesis, functionToken };
 }
 
 void moveTokens(vector<token> &target, const vector<token> &src) {
@@ -266,6 +293,10 @@ vector<token> getTokensFromInputString(const string input, tokenData &data){
             vector<token> tokensFromSetVariable = extractNewVariableTokens(data, currentPosInString, input);
             moveTokens(tokens, tokensFromSetVariable);
         }
+        else if (expectedTokenType == FUNC_SET_CUSTOM_FUNCTION) {
+            vector<token> tokensFromSetFunction = extractNewFunctionTokens(data, currentPosInString, input);
+            moveTokens(tokens, tokensFromSetFunction);
+        }
         //extract a token normally
         else {
             token nextToken = extractToken(input, currentPosInString, expectedTokenType, data);
@@ -277,10 +308,13 @@ vector<token> getTokensFromInputString(const string input, tokenData &data){
 
             tokens.push_back(nextToken);
 
+            //validation needs a rework disabled for the time being...
+            /*
             if (!validTokensSoFar(tokens)){
                 cout << "error found when tokenizing character at: " << currentPosInString << "\n";
                 return {};
             }
+            */
         }
     }
 

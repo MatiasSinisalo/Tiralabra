@@ -24,6 +24,8 @@ enum tokenType {
     FUNC_SQRT,
     FUNC_SET_VARIABLE,
     FUNC_SET_CUSTOM_FUNCTION,
+    
+    CUSTOM_FUNCTION,
 
     COMMA,
 };
@@ -56,6 +58,8 @@ const vector<tokenFamily> tokenTypeToTokenFamily = {
     FUNCTIONS, // SQRT
     FUNCTIONS, //SET_VARIABLE
     FUNCTIONS, //SET_CUSTOM_FUNCTION
+    
+    FUNCTIONS, //CUSTOM_FUNCTION
 
     STRUCTURES // ,
 };
@@ -77,8 +81,10 @@ const vector<string> tokenTypeToString = {
     "FUNC_POWER",
     "FUNC_SQRT",
     "FUNC_SET_VARIABLE",
-    "FUNC_SET_CUSTOM_FUNCTION"
-
+    "FUNC_SET_CUSTOM_FUNCTION",
+    
+    "CUSTOM_FUNCTION",
+    
     "COMMA"
 };
 
@@ -99,6 +105,8 @@ public:
 
         {NUMBER, {"0", "1", "2",  "3", "4", "5", "6", "7", "8", "9"}},
         {VARIABLE, {}}, // variable inputStrings are at the start empty, since there are no variables to start with
+        {CUSTOM_FUNCTION, {}},
+
 
         {OP_PLUS, {"+"}},
         {OP_MINUS, {"-"}},
