@@ -218,6 +218,33 @@ string extractTokenDefinitionString(int& currentPosInString, const string input)
     return variableString;
 }
 
+token declareCustomToken(
+    map<const tokenType, vector<string>> &tokenToInputString, 
+    map<string, int> &stringToID, 
+    map<int, vector<token>> &IDToExpression, 
+    const string functionString,
+    tokenType customTokenType,
+    vector<token> customDeclaration
+    ) {
+    token newCustomToken = {};
+    if (stringToID.find(functionString) != stringToID.end()) {
+        //variable exists so return a id assigned to the variable
+        int tokenID = stringToID.at(functionString);
+        newCustomToken = { .type = customTokenType, .value = tokenID };
+    }
+    else {
+        //finally modify tokenData so that the program can use it in the future
+        int tokenID = tokenToInputString[customTokenType].size() + 1;
+        tokenToInputString[customTokenType].push_back(functionString);
+        stringToID.insert({ functionString, tokenID });
+        IDToExpression.insert({ tokenID, customDeclaration });
+        newCustomToken = { .type = customTokenType, .value = tokenID };
+    }
+
+    return newCustomToken;
+}
+
+
 vector<token> extractNewVariableTokens(tokenData& data, int &currentPosInString, const string input) {
     //extract tokens from input so that we are at the symbols which define the string of the variable
     token createVariableFuncToken = extractToken(input, currentPosInString, FUNC_SET_VARIABLE, data);
@@ -227,19 +254,11 @@ vector<token> extractNewVariableTokens(tokenData& data, int &currentPosInString,
     string variableString = extractTokenDefinitionString(currentPosInString, input);
 
     token variableToken = {};
-    if(data.variableStringToID.find(variableString) != data.variableStringToID.end()){
-        //variable exists so return a id assigned to the variable
-        int tokenID  = data.variableStringToID.at(variableString);
-        variableToken = { .type = VARIABLE, .value = tokenID };
-    }
-    else{
-        //finally modify tokenData so that the program can use it in the future
-        int tokenID = data.tokenToInputString[VARIABLE].size() + 1;
-        data.tokenToInputString[VARIABLE].push_back(variableString);
-        data.variableStringToID.insert({ variableString, tokenID });
-        data.variableExpressions.insert({ tokenID, {{.type = NUMBER, .value = 0}} });
-        variableToken = { .type = VARIABLE, .value = tokenID };
-    }
+    variableToken = declareCustomToken( data.tokenToInputString,
+                                                data.variableStringToID, 
+                                                data.variableExpressions, 
+                                                variableString, 
+                                                VARIABLE, {{.type = NUMBER, .value=0}});
     //returns the tokens that were extracted
     return { createVariableFuncToken, leftParenthesis, variableToken };
 }
@@ -253,19 +272,11 @@ vector<token> extractNewFunctionTokens(tokenData& data, int& currentPosInString,
     string functionString = extractTokenDefinitionString(currentPosInString, input);
 
     token functionToken = {};
-    if (data.functionStringToID.find(functionString) != data.functionStringToID.end()) {
-        //variable exists so return a id assigned to the variable
-        int tokenID = data.functionStringToID.at(functionString);
-        functionToken = { .type = CUSTOM_FUNCTION, .value = tokenID };
-    }
-    else {
-        //finally modify tokenData so that the program can use it in the future
-        int tokenID = data.tokenToInputString[CUSTOM_FUNCTION].size() + 1;
-        data.tokenToInputString[CUSTOM_FUNCTION].push_back(functionString);
-        data.functionStringToID.insert({ functionString, tokenID });
-        data.functionExpressions.insert({ tokenID, {} });
-        functionToken = { .type = CUSTOM_FUNCTION, .value = tokenID };
-    }
+    functionToken = declareCustomToken(data.tokenToInputString,
+                                                data.functionStringToID,
+                                                data.functionExpressions,
+                                                functionString, 
+                                                CUSTOM_FUNCTION, {});
 
     //returns the tokens that were extracted
     return { createFunctionToken, leftParenthesis, functionToken };
