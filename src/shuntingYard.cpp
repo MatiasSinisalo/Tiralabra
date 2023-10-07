@@ -139,6 +139,8 @@ vector<token> shuntingYard(const vector<token> tokens) {
         case FUNC_POWER:
         case FUNC_SQRT:
         case FUNC_SET_VARIABLE:
+        case FUNC_SET_CUSTOM_FUNCTION:
+        case CUSTOM_FUNCTION:
             operators.push_back(t);
             break;
         //comma operator appears in functions: POWER(A+B, C), 
