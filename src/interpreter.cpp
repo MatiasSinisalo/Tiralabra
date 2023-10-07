@@ -35,6 +35,19 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
         case VARIABLE:
             helperStack.push_back(tokensInRPN[i]);
             break;
+        case CUSTOM_FUNCTION:
+
+            //interpret the function if there is a expression for it
+            if (data.functionExpressions.find(tokensInRPN[i].value) != data.functionExpressions.end()) {
+                vector<token> functionTokens = data.functionExpressions.at(tokensInRPN[i].value);
+                if (functionTokens.size() > 0) {
+                    token result = interpretFromRPN(functionTokens, data);
+                    helperStack.push_back(result);
+                    break;
+                }
+            }
+
+            break;
         case OP_PLUS:
         {
             token evaluatedToken;
