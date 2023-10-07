@@ -23,6 +23,7 @@ enum tokenType {
     FUNC_POWER,
     FUNC_SQRT,
     FUNC_SET_VARIABLE,
+    FUNC_SET_CUSTOM_FUNCTION,
 
     COMMA,
 };
@@ -54,6 +55,7 @@ const vector<tokenFamily> tokenTypeToTokenFamily = {
     FUNCTIONS, // POWER
     FUNCTIONS, // SQRT
     FUNCTIONS, //SET_VARIABLE
+    FUNCTIONS, //SET_CUSTOM_FUNCTION
 
     STRUCTURES // ,
 };
@@ -75,6 +77,7 @@ const vector<string> tokenTypeToString = {
     "FUNC_POWER",
     "FUNC_SQRT",
     "FUNC_SET_VARIABLE",
+    "FUNC_SET_CUSTOM_FUNCTION"
 
     "COMMA"
 };
@@ -108,6 +111,7 @@ public:
         {FUNC_POWER, {"POWER"}},
         {FUNC_SQRT, {"SQRT"}},
         {FUNC_SET_VARIABLE, {"VARIABLE"}},
+        {FUNC_SET_CUSTOM_FUNCTION, {"FUNCTION"}},
 
         {COMMA, {","}}
     };
