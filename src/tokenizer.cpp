@@ -222,21 +222,21 @@ token declareCustomToken(
     map<const tokenType, vector<string>> &tokenToInputString, 
     map<string, int> &stringToID, 
     map<int, vector<token>> &IDToExpression, 
-    const string functionString,
+    const string tokenString,
     tokenType customTokenType,
     vector<token> customDeclaration
     ) {
     token newCustomToken = {};
-    if (stringToID.find(functionString) != stringToID.end()) {
+    if (stringToID.find(tokenString) != stringToID.end()) {
         //variable exists so return a id assigned to the variable
-        int tokenID = stringToID.at(functionString);
+        int tokenID = stringToID.at(tokenString);
         newCustomToken = { .type = customTokenType, .value = tokenID };
     }
     else {
         //finally modify tokenData so that the program can use it in the future
         int tokenID = tokenToInputString[customTokenType].size() + 1;
-        tokenToInputString[customTokenType].push_back(functionString);
-        stringToID.insert({ functionString, tokenID });
+        tokenToInputString[customTokenType].push_back(tokenString);
+        stringToID.insert({ tokenString, tokenID });
         IDToExpression.insert({ tokenID, customDeclaration });
         newCustomToken = { .type = customTokenType, .value = tokenID };
     }
