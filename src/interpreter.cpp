@@ -6,8 +6,12 @@ token getVariableValue(const token variableToken, const tokenData& data) {
     return variableValue;
 }
 
+token getFunctionValue(const token functionToken, tokenData& data) {
+    token result = interpretFromRPN(data.functionExpressions.at(functionToken.value), data);
+    return result;
+}
 
-token popTokenAsValue(vector<token> &src, const tokenData &data) {
+token popTokenAsValue(vector<token> &src, tokenData &data) {
     token token = src[src.size() - 1];
     src.pop_back();
 
@@ -18,6 +22,8 @@ token popTokenAsValue(vector<token> &src, const tokenData &data) {
         break;
     case VARIABLE:
         return getVariableValue(token, data);
+    case CUSTOM_FUNCTION:
+        return getFunctionValue(token, data);
     default:
         break;
     }
@@ -36,7 +42,7 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
             helperStack.push_back(tokensInRPN[i]);
             break;
         case CUSTOM_FUNCTION:
-
+        {
             //interpret the function if there is a expression for it
             if (data.functionExpressions.find(tokensInRPN[i].value) != data.functionExpressions.end()) {
                 vector<token> functionTokens = data.functionExpressions.at(tokensInRPN[i].value);
@@ -47,7 +53,21 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
                 }
             }
 
+            //pop tokens to helper stack until correct SET_CUSTOM_FUNCTION found
+            int j = i;
+            for (j < tokensInRPN.size(); j++;) {
+                if (tokensInRPN[j].type == FUNC_SET_CUSTOM_FUNCTION && tokensInRPN[j].value == tokensInRPN[i].value) {
+                    break;
+                }
+                helperStack.push_back(tokensInRPN[j]);
+            }
+
+            //leave the main loop to point at the SET_CUSTOM_FUNCTION
+            //take into acoount the i++ at the start of the main for loop
+            i = j - 1;
+
             break;
+        }
         case OP_PLUS:
         {
             token evaluatedToken;
@@ -132,6 +152,21 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
             data.variableExpressions.at(variableToken.value)[0] = startingValueToken;
 
             helperStack.push_back(startingValueToken);
+            break;
+        }
+      
+        case FUNC_SET_CUSTOM_FUNCTION:
+        {
+
+            //because of how CUSTOM_FUNCTION is treated when it is not declared the helperstack should now contain 
+            //the expression for the function
+            //copy the helper stack to the function expression
+            data.functionExpressions.at(tokensInRPN[i].value) = helperStack;
+            helperStack.clear();
+
+            //return the evaluated expression
+
+            helperStack.push_back({ .type = CUSTOM_FUNCTION, .value = tokensInRPN[i].value });
             break;
         }
         default:

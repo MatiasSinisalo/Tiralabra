@@ -277,6 +277,10 @@ vector<token> extractNewFunctionTokens(tokenData& data, int& currentPosInString,
                                                 data.functionExpressions,
                                                 functionString, 
                                                 CUSTOM_FUNCTION, {});
+   
+    //createFunction should have a reference to what function token it is declaring
+    createFunctionToken.value = functionToken.value;
+
 
     //returns the tokens that were extracted
     return { createFunctionToken, leftParenthesis, functionToken };
