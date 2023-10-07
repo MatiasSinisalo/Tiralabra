@@ -116,9 +116,14 @@ public:
         {COMMA, {","}}
     };
 
+
     //once variable is defined the tokens defining the variable are stored here
     map<string, int> variableStringToID;
-    map<int, vector<token>> variableExpressions;
+    map<int, vector<token>> variableExpressions; //this map probably does not need a vector of tokens since it only stores 1 token currently...
+
+    //once function is definet the tokens of the function are stored here.
+    map<string, int> functionStringToID;
+    map<int, vector<token>> functionExpressions;
 
 };
 
