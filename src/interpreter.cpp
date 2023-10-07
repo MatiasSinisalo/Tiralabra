@@ -54,9 +54,10 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
             }
 
             //pop tokens to helper stack until correct SET_CUSTOM_FUNCTION found
-            int j = i;
-            for (j < tokensInRPN.size(); j++;) {
+            int stopPoint = 0;
+            for (int j = i + 1; j < tokensInRPN.size(); j++) {
                 if (tokensInRPN[j].type == FUNC_SET_CUSTOM_FUNCTION && tokensInRPN[j].value == tokensInRPN[i].value) {
+                    stopPoint = j;
                     break;
                 }
                 helperStack.push_back(tokensInRPN[j]);
@@ -64,7 +65,7 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
 
             //leave the main loop to point at the SET_CUSTOM_FUNCTION
             //take into acoount the i++ at the start of the main for loop
-            i = j - 1;
+            i = stopPoint - 1;
 
             break;
         }
