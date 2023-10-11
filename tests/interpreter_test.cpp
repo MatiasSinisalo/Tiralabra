@@ -271,7 +271,7 @@ TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForSET_FUNCTION) {
         .functionStringToID = {{"foo", 1}},
         .functionExpressions = {
                 {1,
-                    {{}}
+                    {}
                 }
             }
     };
