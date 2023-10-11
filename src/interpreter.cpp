@@ -11,9 +11,21 @@ token getFunctionValue(const token functionToken, tokenData& data) {
     return result;
 }
 
-token popTokenAsValue(vector<token> &src, tokenData &data) {
+token popToken(vector<token>& src, tokenData& data) {
+    if (src.size() == 0) {
+        return {};
+    }
+
     token token = src[src.size() - 1];
     src.pop_back();
+
+    return token;
+}
+
+
+token popTokenAsValue(vector<token> &src, tokenData &data) {
+    token token = popToken(src, data);
+    
 
     switch (token.type)
     {
@@ -25,6 +37,8 @@ token popTokenAsValue(vector<token> &src, tokenData &data) {
     case CUSTOM_FUNCTION:
         return getFunctionValue(token, data);
     default:
+        //unsupported case, return NONE token
+        return {};
         break;
     }
 }
@@ -84,6 +98,13 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
 
             token firstToken = popTokenAsValue(helperStack, data);
             token secondToken = popTokenAsValue(helperStack, data);
+            
+            if (firstToken.type == NONE || secondToken.type == NONE) {
+                cout << "Expected a value!\n";
+                helperStack.push_back({});
+                break;
+            }
+
 
             evaluatedToken.value = secondToken.value + firstToken.value;
             helperStack.push_back(evaluatedToken);
@@ -97,6 +118,12 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
             token firstToken = popTokenAsValue(helperStack, data);
             token secondToken = popTokenAsValue(helperStack, data);
 
+            if (firstToken.type == NONE || secondToken.type == NONE) {
+                cout << "Expected a value!\n";
+                helperStack.push_back({});
+                break;
+            }
+
             evaluatedToken.value = secondToken.value - firstToken.value;
             helperStack.push_back(evaluatedToken);
             break;
@@ -108,6 +135,13 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
 
             token firstToken = popTokenAsValue(helperStack, data);
             token secondToken = popTokenAsValue(helperStack, data);
+
+            if (firstToken.type == NONE || secondToken.type == NONE) {
+                cout << "Expected a value!\n";
+                helperStack.push_back({});
+                break;
+            }
+
 
             evaluatedToken.value = secondToken.value * firstToken.value;
             helperStack.push_back(evaluatedToken);
@@ -121,6 +155,12 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
             token firstToken = popTokenAsValue(helperStack, data);
             token secondToken = popTokenAsValue(helperStack, data);
 
+            if (firstToken.type == NONE || secondToken.type == NONE) {
+                cout << "Expected a value!\n";
+                helperStack.push_back({});
+                break;
+            }
+
             evaluatedToken.value = secondToken.value / firstToken.value;
             helperStack.push_back(evaluatedToken);
             break;
@@ -133,6 +173,12 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
             token firstToken = popTokenAsValue(helperStack, data);
             token secondToken = popTokenAsValue(helperStack, data);
 
+            if (firstToken.type == NONE || secondToken.type == NONE) {
+                cout << "Expected a value!\n";
+                helperStack.push_back({});
+                break;
+            }
+
             evaluatedToken.value = pow(secondToken.value, firstToken.value);
             helperStack.push_back(evaluatedToken);
             break;
@@ -144,6 +190,12 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
 
             token firstToken = popTokenAsValue(helperStack, data);
             
+            if (firstToken.type == NONE) {
+                cout << "Expected a value!\n";
+                helperStack.push_back({});
+                break;
+            }
+
             float firstTokenValueToFloat = float(firstToken.value);
             float sqrtResult = sqrt(firstTokenValueToFloat);
             evaluatedToken.value = sqrtResult;
@@ -153,10 +205,18 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
         case FUNC_SET_VARIABLE:
         {
             token startingValueToken = popTokenAsValue(helperStack, data);
-    
-            token variableToken = helperStack[helperStack.size() - 1];
-            helperStack.pop_back();
+            if (startingValueToken.type == NONE) {
+                cout << "Expected a value!\n";
+                helperStack.push_back({});
+                break;
+            }
 
+            token variableToken = popToken(helperStack, data);
+            if (variableToken.type != VARIABLE) {
+                cout << "Expected a variable!\n";
+                helperStack.push_back({});
+                break;
+            }
             //assign the variable value to be firstToken
             data.variableExpressions.at(variableToken.value)[0] = startingValueToken;
 
