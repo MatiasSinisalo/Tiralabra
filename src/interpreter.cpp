@@ -29,14 +29,14 @@ token popTokenAsValue(vector<token> &src, tokenData &data) {
     }
 }
 
-bool customFunctionDeclared(token functionToken, const tokenData &data) {
+vector<token>  findCustomFunctionDeclaration(token functionToken, const tokenData &data) {
     if (data.functionExpressions.find(functionToken.value) != data.functionExpressions.end()) {
         vector<token> functionTokens = data.functionExpressions.at(functionToken.value);
         if (functionTokens.size() > 0) {
-            return true;
+            return functionTokens;
         }
     }
-    return false;
+    return {};
 }
 
 
@@ -54,8 +54,8 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
         case CUSTOM_FUNCTION:
         {
             //interpret the function if there is a expression for it
-            if (customFunctionDeclared(tokensInRPN[i], data)) {
-                vector<token> functionTokens = data.functionExpressions.at(tokensInRPN[i].value);
+            vector<token> functionTokens = findCustomFunctionDeclaration(tokensInRPN[i], data);
+            if (functionTokens.size() > 0) {
                 token result = interpretFromRPN(functionTokens, data);
                 helperStack.push_back(result);
                 break;
@@ -166,7 +166,8 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
       
         case FUNC_SET_CUSTOM_FUNCTION:
         {
-            if (customFunctionDeclared(tokensInRPN[i], data)) {
+
+            if (findCustomFunctionDeclaration(tokensInRPN[i], data).size() > 0){
                 cout << "Function already declared!\n";
                 helperStack.push_back({});
                 break;
