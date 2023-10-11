@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include "testUtilities.h"
 #include "tokenizer.h"
 #include "interpreter.h"
 
