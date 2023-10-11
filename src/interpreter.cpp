@@ -29,6 +29,16 @@ token popTokenAsValue(vector<token> &src, tokenData &data) {
     }
 }
 
+bool customFunctionDeclared(token functionToken, const tokenData &data) {
+    if (data.functionExpressions.find(functionToken.value) != data.functionExpressions.end()) {
+        vector<token> functionTokens = data.functionExpressions.at(functionToken.value);
+        if (functionTokens.size() > 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
 
 token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
     vector<token> helperStack;
@@ -44,13 +54,11 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
         case CUSTOM_FUNCTION:
         {
             //interpret the function if there is a expression for it
-            if (data.functionExpressions.find(tokensInRPN[i].value) != data.functionExpressions.end()) {
+            if (customFunctionDeclared(tokensInRPN[i], data)) {
                 vector<token> functionTokens = data.functionExpressions.at(tokensInRPN[i].value);
-                if (functionTokens.size() > 0) {
-                    token result = interpretFromRPN(functionTokens, data);
-                    helperStack.push_back(result);
-                    break;
-                }
+                token result = interpretFromRPN(functionTokens, data);
+                helperStack.push_back(result);
+                break;
             }
 
             //pop tokens to helper stack until correct SET_CUSTOM_FUNCTION found
@@ -158,6 +166,12 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
       
         case FUNC_SET_CUSTOM_FUNCTION:
         {
+            if (customFunctionDeclared(tokensInRPN[i], data)) {
+                cout << "Function already declared!\n";
+                helperStack.push_back({});
+                break;
+            }
+
 
             //because of how CUSTOM_FUNCTION is treated when it is not declared the helperstack should now contain 
             //the expression for the function
