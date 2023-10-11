@@ -264,4 +264,56 @@ TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForDeclaredVariables)
     testInterpreterFor(inputTokens, {  .type = NUMBER, .value = 110}, data);
 }
 
+TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForSET_FUNCTION) {
+    tokenData data = {
+
+        .functionStringToID = {{"foo", 1}},
+        .functionExpressions = {
+                {1,
+                    {{}}
+                }
+            }
+    };
+
+    vector<token> inputTokens = {
+        {
+            .type = CUSTOM_FUNCTION,
+            .value = 1
+        },
+        {
+            .type = NUMBER,
+            .value = 1
+        },
+        {
+            .type = NUMBER,
+            .value = 1
+        },
+        {
+            .type = OP_PLUS
+        },
+        {
+            .type = FUNC_SET_CUSTOM_FUNCTION,
+            .value = 1
+        }
+    };
+
+    testInterpreterFor(inputTokens, { .type = NUMBER, .value = 2}, data);
+
+    ASSERT_EQ(data.functionStringToID.size(), 1);
+    ASSERT_EQ(data.functionStringToID["foo"], 1);
+    checkTokensMatch(data.functionExpressions[1], {
+        {
+            .type = NUMBER,
+            .value = 1
+        },
+        {
+            .type = NUMBER,
+            .value = 1
+        },
+        {
+            .type = OP_PLUS
+        } });
+
+}
+
 
