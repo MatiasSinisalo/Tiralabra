@@ -31,6 +31,7 @@ bool beforeIsHigherPrecedence(vector<token>& output, vector<token>& operators, c
                 return true;
             }
         }
+        
         return false;
     }
     return false;
@@ -85,7 +86,7 @@ void popTokensBeforeLeftParenthesis(vector<token> &target, vector<token> &source
     source.erase(source.begin()+ stoppingIndex, source.end());
 
     //in case of FUNCTION(A, B), the program should push FUNCTION to target to maintain the order of operations correctly
-    if (source.size() > 0 && source.back().type == FUNC_POWER) {
+    if (source.size() > 0 && tokenTypeToTokenFamily[source.back().type] == FUNCTIONS) {
         token tokenToMove = source.back();
         target.push_back(tokenToMove);
         source.pop_back();
