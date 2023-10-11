@@ -717,3 +717,48 @@ TEST(shuntingYardTests_shuntingYard, producesExpectedOutputFor_FUNCTION_CUSTOM_F
     checkTokensMatch(output, expected_output);
 }
 
+TEST(shuntingYardTests_shuntingYard, producesExpectedOutputForCustomFunctionTimesFour) {
+    vector<token> input = {
+        {
+
+            .type = CUSTOM_FUNCTION,
+            .value = 1,
+        },
+        {
+
+            .type = PARENTHESE_LEFT,
+
+        },
+        {
+            .type = PARENTHESE_RIGHT
+        },
+        {
+            .type = OP_MULTIPLY
+        },
+        {
+            .type = NUMBER,
+            .value = 4
+        }
+    };
+
+    vector<token> expected_output = {
+        {
+
+            .type = CUSTOM_FUNCTION,
+            .value = 1,
+        },
+        {
+
+            .type = NUMBER,
+            .value = 4,
+        },
+        {
+
+            .type = OP_MULTIPLY,
+        },
+    };
+
+    vector<token> output = shuntingYard(input);
+
+    checkTokensMatch(output, expected_output);
+}
