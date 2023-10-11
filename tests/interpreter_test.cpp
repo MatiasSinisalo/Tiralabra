@@ -394,4 +394,140 @@ TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForMultipleSET_FUNCTI
 
 }
 
+TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForCustomFunction) {
+    tokenData data = {
+
+        .functionStringToID = {{"foo", 1}},
+        .functionExpressions = {
+            {1,
+                {
+                    {
+                        .type = NUMBER,
+                        .value = 1
+                    },
+                    {
+                        .type = NUMBER,
+                        .value = 1
+                    },
+                    {
+                        .type = OP_MINUS
+                    }
+                }
+            }
+        }
+    };
+
+    vector<token> inputTokens = {
+        {
+            .type = CUSTOM_FUNCTION,
+            .value = 1
+        },
+    };
+
+    testInterpreterFor(inputTokens, { .type = NUMBER, .value = 0 }, data);
+
+    ASSERT_EQ(data.functionStringToID.size(), 1);
+    ASSERT_EQ(data.functionStringToID["foo"], 1);
+    checkTokensMatch(data.functionExpressions[1], {
+        {
+            .type = NUMBER,
+            .value = 1
+        },
+        {
+            .type = NUMBER,
+            .value = 1
+        },
+        {
+            .type = OP_MINUS
+        } });
+
+}
+
+TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForMultipleDifferentCustomFunctions) {
+    tokenData data = {
+
+        .functionStringToID = {{"foo", 1}, {"bar", 2}},
+        .functionExpressions = {
+        {1,
+            {
+                {
+                    .type = NUMBER,
+                    .value = 1
+                },
+                {
+                    .type = NUMBER,
+                    .value = 1
+                },
+                {
+                    .type = OP_PLUS
+                }
+            }
+        },
+        {2,
+                {
+                    {
+                        .type = NUMBER,
+                        .value = 2
+                    },
+                    {
+                        .type = NUMBER,
+                        .value = 3
+                    },
+                    {
+                        .type = OP_PLUS
+                    }
+                }
+            }
+        }
+    };
+
+    vector<token> inputTokens = {
+        {
+            .type = CUSTOM_FUNCTION,
+            .value = 1
+        },
+        {
+            .type = CUSTOM_FUNCTION,
+            .value = 2
+        },
+        {
+            .type = OP_MULTIPLY
+        }
+    };
+
+    testInterpreterFor(inputTokens, { .type = NUMBER, .value = 10 }, data);
+
+    ASSERT_EQ(data.functionStringToID.size(), 2);
+
+    ASSERT_EQ(data.functionStringToID["foo"], 1);
+    checkTokensMatch(data.functionExpressions[1], {
+        {
+            .type = NUMBER,
+            .value = 1
+        },
+        {
+            .type = NUMBER,
+            .value = 1
+        },
+        {
+            .type = OP_PLUS
+        } });
+    
+
+    ASSERT_EQ(data.functionStringToID["bar"], 2);
+    checkTokensMatch(data.functionExpressions[2], {
+       {
+           .type = NUMBER,
+           .value = 2
+       },
+       {
+           .type = NUMBER,
+           .value = 3
+       },
+       {
+           .type = OP_PLUS
+       } });
+
+}
+
 
