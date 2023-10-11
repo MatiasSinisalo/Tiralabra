@@ -642,3 +642,78 @@ TEST(shuntingYardTests_shuntingYard, producesExpectedOutputFor_SquareRootOf_2_to
 
     checkTokensMatch(output, expected_output);
 }
+
+TEST(shuntingYardTests_shuntingYard, producesExpectedOutputFor_FUNCTION_CUSTOM_FUNCTION_1_plus_1) {
+    vector<token> input = {
+        {
+
+            .type = FUNC_SET_CUSTOM_FUNCTION,
+            .value = 1,
+        },
+        {
+
+            .type = PARENTHESE_LEFT,
+
+        },
+        {
+
+            .type = CUSTOM_FUNCTION,
+            .value = 1
+        },
+        {
+            .type = COMMA,
+        },
+        {
+
+            .type = NUMBER,
+            .value = 1,
+        },
+        {
+
+            .type = OP_PLUS,
+
+        },
+        {
+
+            .type = NUMBER,
+            .value = 1,
+        },
+        {
+            .type = PARENTHESE_RIGHT
+        },
+    };
+
+    vector<token> expected_output = {
+        {
+
+            .type = CUSTOM_FUNCTION,
+            .value = 1,
+        },
+        {
+
+            .type = NUMBER,
+            .value = 1,
+        },
+        {
+
+            .type = NUMBER,
+            .value = 1,
+        },
+         {
+
+            .type = OP_PLUS,
+
+        },
+        {
+
+            .type = FUNC_SET_CUSTOM_FUNCTION,
+            .value=1,
+
+        },
+    };
+
+    vector<token> output = shuntingYard(input);
+
+    checkTokensMatch(output, expected_output);
+}
+
