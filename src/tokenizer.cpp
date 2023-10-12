@@ -241,7 +241,7 @@ string extractTokenDefinitionString(int& currentPosInString, const string input)
     string variableString = "";
 
   
-    for (int i = currentPosInString - 1; i < input.size(); i++) {
+    for (int i = currentPosInString; i < input.size(); i++) {
         if (input[i] == ',') {
             currentPosInString = i;
             break;
