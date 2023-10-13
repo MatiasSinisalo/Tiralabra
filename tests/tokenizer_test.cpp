@@ -384,6 +384,36 @@ TEST(tokenizerTests, tokenizerBehavesCorrectlyWhenMultipleFUNCTIONFunctionIsUsed
 };
 
 
+TEST(tokenizerTests, tokenizerDetectsDefinedFunctionCorrectly) {
+	string firstInput = "FUNCTION(foo,50*5)";
+	tokenData data = {};
+	vector<token> tokensA = getTokensFromInputString(firstInput, data);
+
+	string input = "foo()";
+	vector<token> tokens = getTokensFromInputString(input, data);
+
+
+
+	vector<token> expectedTokens = {
+		{
+			.type = CUSTOM_FUNCTION,
+			.value = 1
+		},
+		{
+			.type = PARENTHESE_LEFT
+		},
+		{
+			.type = PARENTHESE_RIGHT
+		}
+	};
+	checkTokensMatch(tokens, expectedTokens);
+
+	ASSERT_EQ(data.functionStringToID.size(), 1);
+	ASSERT_EQ(data.functionStringToID["foo"], 1);
+	checkTokensMatch(data.functionExpressions[1], {});
+};
+
+
 
 TEST(tokenizerTests, tokenizerDetectsComma){
 	string input = ",";

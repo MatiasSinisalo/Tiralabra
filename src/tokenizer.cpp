@@ -263,7 +263,7 @@ token declareCustomToken(
     ) {
     token newCustomToken = {};
     if (stringToID.find(tokenString) != stringToID.end()) {
-        //variable exists so return a id assigned to the variable
+        //custom token exists so return a id assigned to the token
         int tokenID = stringToID.at(tokenString);
         newCustomToken = { .type = customTokenType, .value = tokenID };
     }
