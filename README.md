@@ -40,3 +40,35 @@ Planned features of the calculator:
 ## Using Cmake and make (for windows)
     Install cmake and make for windows and follow the instructions listed above. 
     Main difference is that the output of make command will be .exe files.
+
+# Using the calculator:
+Currently the calculator accepts calculations in latin infix notation without spaces.   
+The input can contain positive integer numbers such as 1, 2, 200, 500, .. etc.  
+
+The input can contain '(' and ')' as well to influence the order of operations.  
+for example: 2*(1+2) will return 6. 
+
+User can define Variables with VARIABLE(variableName,value).  
+User can define Functions with FUNCTION(functionName,expression). 
+Functions can contain variables and other functions as long as those variables/functions are defined before the function is defined:  
+1. VARIABLE(x,10)
+2. FUNCTION(foo,2*x)
+3. (typing foo() will return 20)
+
+Additional example inputs:  
+
+Calculating 2^4:
+POWER(2,4)
+
+Calculating square root of 16:
+SQRT(16)
+
+
+
+
+
+
+
+
+
+    
