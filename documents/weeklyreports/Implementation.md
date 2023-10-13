@@ -21,3 +21,8 @@ The calculator is split into 3 phases:
    - Implemented in shuntingYard.cpp and shuntingYard.h   
 4. Interpreter will read a list of tokens in RPN and return a single token containing the evaluated answer based on the input.
    - Implemented in interpreter.cpp and interpreter.h
+
+
+## additional notes:
+The tests of the application are dependent on the googletest testing libary.  
+It will be automatically downloaded and compiled if the project is configured and built using CMAKE.  
