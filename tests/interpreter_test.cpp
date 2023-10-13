@@ -531,3 +531,130 @@ TEST(InterpreterTests, interpretFromRPNReturnsCorrectResultForMultipleDifferentC
 }
 
 
+TEST(InterpreterTests, interpretFromRPNReturnsNONEIfOperatorDoesNotHaveValuesToOperateOn_1){
+    vector<token> tokens = {
+        {
+             
+            .type = NUMBER,
+            .value = 16
+        },
+        {
+             
+            .type = OP_PLUS,
+        }
+    };
+    testing::internal::CaptureStdout();
+    testInterpreterFor(tokens, {  .type = NONE, .value = 0});
+    string output  = testing::internal::GetCapturedStdout();
+    EXPECT_EQ(output, "Expected a value!\n");
+}
+
+
+
+TEST(InterpreterTests, interpretFromRPNReturnsNONEIfOperatorDoesNotHaveValuesToOperateOn_2){
+    vector<token> tokens = {
+        {
+             
+            .type = OP_MULTIPLY,
+        }
+    };
+    testing::internal::CaptureStdout();
+    testInterpreterFor(tokens, {  .type = NONE, .value = 0});
+    string output  = testing::internal::GetCapturedStdout();
+    EXPECT_EQ(output, "Expected a value!\n");
+}
+
+TEST(InterpreterTests, interpretFromRPNReturnsNONEIfOperatorDoesNotHaveValuesToOperateOn_3){
+    vector<token> tokens = {
+        {
+             
+            .type = OP_MINUS,
+        }
+    };
+    testing::internal::CaptureStdout();
+    testInterpreterFor(tokens, {  .type = NONE, .value = 0});
+    string output  = testing::internal::GetCapturedStdout();
+    EXPECT_EQ(output, "Expected a value!\n");
+}
+
+TEST(InterpreterTests, interpretFromRPNReturnsNONEIfOperatorDoesNotHaveValuesToOperateOn_4){
+    vector<token> tokens = {
+        {
+             
+            .type = OP_DIVIDE,
+        }
+    };
+    testing::internal::CaptureStdout();
+    testInterpreterFor(tokens, {  .type = NONE, .value = 0});
+    string output  = testing::internal::GetCapturedStdout();
+    EXPECT_EQ(output, "Expected a value!\n");
+}
+
+
+TEST(InterpreterTests, interpretFromRPNReturnsNONEIfFunctionDoesNotHaveValuesToOperateOn_1){
+    vector<token> tokens = {
+        {
+             
+            .type = FUNC_POWER,
+        },
+    };
+    testing::internal::CaptureStdout();
+    testInterpreterFor(tokens, {  .type = NONE, .value = 0});
+    string output  = testing::internal::GetCapturedStdout();
+    EXPECT_EQ(output, "Expected a value!\n");
+}
+
+TEST(InterpreterTests, interpretFromRPNReturnsNONEIfFunctionDoesNotHaveValuesToOperateOn_2){
+    vector<token> tokens = {
+        {
+            .type = NUMBER,
+            .value = 1
+        },
+        {
+             
+            .type = FUNC_POWER,
+        },
+    };
+    testing::internal::CaptureStdout();
+    testInterpreterFor(tokens, {  .type = NONE, .value = 0});
+    string output  = testing::internal::GetCapturedStdout();
+    EXPECT_EQ(output, "Expected a value!\n");
+}
+
+TEST(InterpreterTests, interpretFromRPNReturnsNONEIfFunctionDoesNotHaveValuesToOperateOn_3){
+    vector<token> tokens = {
+        {
+             
+            .type = FUNC_SQRT,
+        },
+    };
+    testing::internal::CaptureStdout();
+    testInterpreterFor(tokens, {  .type = NONE, .value = 0});
+    string output  = testing::internal::GetCapturedStdout();
+    EXPECT_EQ(output, "Expected a value!\n");
+}
+
+TEST(InterpreterTests, interpretFromRPNReturnsNONEIfSetFunctionDoesNotHaveValuesToOperateOn){
+     tokenData data = {
+
+        .functionStringToID = {{"foo", 1}},
+        .functionExpressions = {
+                {1,
+                    {}
+                }
+            }
+    };
+    
+    vector<token> tokens = {
+        {
+             
+            .type = CUSTOM_FUNCTION,
+            .value = 1
+        },
+
+    };
+    testing::internal::CaptureStdout();
+    testInterpreterFor(tokens, {  .type = NONE, .value = 0}, data);
+    string output  = testing::internal::GetCapturedStdout();
+    EXPECT_EQ(output, "Expected a function declaration!\n");
+}
