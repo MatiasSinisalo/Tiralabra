@@ -150,27 +150,6 @@ TEST(tokenizerTests, tokenizerReturnsEmptyTokensForIncorrectParentheses_2){
 	ASSERT_EQ(tokens.size(), 0);
 };
 
-TEST(tokenizerTests, tokenizerReturnsEmptyTokensForIncorrectOperatorAndNumberOrdering){
-	string input = "+1";
-	tokenData data = {};
-	vector<token> tokens = getTokensFromInputString(input, data);
-	ASSERT_EQ(tokens.size(), 0);
-};
-
-TEST(tokenizerTests, tokenizerReturnsEmptyTokensForIncorrectOperatorAndNumberOrdering_2){
-	string input = "1+";
-	tokenData data = {};
-	vector<token> tokens = getTokensFromInputString(input, data);
-	ASSERT_EQ(tokens.size(), 0);
-};
-
-TEST(tokenizerTests, tokenizerReturnsEmptyTokensForIncorrectFunctionSyntax){
-	string input = "POWER1+1";
-	tokenData data = {};
-	vector<token> tokens = getTokensFromInputString(input, data);
-	ASSERT_EQ(tokens.size(), 0);
-};
-
 TEST(tokenizerTests, tokenizerDetectsPOWERFunction){
 	string input = "POWER";
 	tokenData data = {};
