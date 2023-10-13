@@ -108,23 +108,7 @@ token extractNumberToken(const string input, int& currentPosInString) {
 };
 
 
-token extractVariableToken(const string input, int &currentPosInString, const tokenData& data){
 
-    
-    for (const string& operatorStringToMatch : data.tokenToInputString.at(VARIABLE)) {
-        string substringFromPosition = input.substr(currentPosInString, operatorStringToMatch.size());
-        //if strings are equal .compare returns 0, 
-        if (substringFromPosition.compare(operatorStringToMatch) == 0) {
-            currentPosInString += operatorStringToMatch.size();
-            
-            //we have found the string matching the variable so lets get its id and return the variable token
-            int variableID = data.variableStringToID.at(substringFromPosition);
-            return { .type = VARIABLE, .value = variableID };
-        }
-    }
-
-    return { .type = NONE };
-}
 
 token extractCustomDeclarationToken(
     const string input, 
@@ -183,32 +167,6 @@ token extractToken(
 
     return {};
 };
-
-
-
-
-bool validTokensSoFar(const vector<token> tokens) {
-    if (tokens.size() >= 2) {
-        token topToken = tokens[tokens.size() - 1];
-        token secondToken = tokens[tokens.size() - 2];
-        //Number should be before an operator
-        if (tokenTypeToTokenFamily[topToken.type] == OPERATORS) {
-            if (tokenTypeToTokenFamily[secondToken.type] != NUMBERS && tokenTypeToTokenFamily[secondToken.type] != VARIABLES) {
-                cout << "expected an operator after number!\n";
-                return false;
-            }
-        }
-
-        //Left parenthesis should always be after operator
-        if (tokenTypeToTokenFamily[secondToken.type] == FUNCTIONS) {
-            if (topToken.type != PARENTHESE_LEFT) {
-                cout << "expected '(' after function!\n";
-                return false;
-            }
-        }
-    }
-    return true;
-}
 
 bool validParenthesis(const vector<token> tokens) {
     vector<token> helper;
