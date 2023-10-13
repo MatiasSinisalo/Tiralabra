@@ -11,9 +11,21 @@ token getFunctionValue(const token functionToken, tokenData& data) {
     return result;
 }
 
-token popTokenAsValue(vector<token> &src, tokenData &data) {
+token popToken(vector<token>& src, tokenData& data) {
+    if (src.size() == 0) {
+        return {};
+    }
+
     token token = src[src.size() - 1];
     src.pop_back();
+
+    return token;
+}
+
+
+token popTokenAsValue(vector<token> &src, tokenData &data) {
+    token token = popToken(src, data);
+    
 
     switch (token.type)
     {
@@ -25,8 +37,20 @@ token popTokenAsValue(vector<token> &src, tokenData &data) {
     case CUSTOM_FUNCTION:
         return getFunctionValue(token, data);
     default:
+        //unsupported case, return NONE token
+        return {};
         break;
     }
+}
+
+vector<token>  findCustomFunctionDeclaration(token functionToken, const tokenData &data) {
+    if (data.functionExpressions.find(functionToken.value) != data.functionExpressions.end()) {
+        vector<token> functionTokens = data.functionExpressions.at(functionToken.value);
+        if (functionTokens.size() > 0) {
+            return functionTokens;
+        }
+    }
+    return {};
 }
 
 
@@ -44,13 +68,11 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
         case CUSTOM_FUNCTION:
         {
             //interpret the function if there is a expression for it
-            if (data.functionExpressions.find(tokensInRPN[i].value) != data.functionExpressions.end()) {
-                vector<token> functionTokens = data.functionExpressions.at(tokensInRPN[i].value);
-                if (functionTokens.size() > 0) {
-                    token result = interpretFromRPN(functionTokens, data);
-                    helperStack.push_back(result);
-                    break;
-                }
+            vector<token> functionTokens = findCustomFunctionDeclaration(tokensInRPN[i], data);
+            if (functionTokens.size() > 0) {
+                token result = interpretFromRPN(functionTokens, data);
+                helperStack.push_back(result);
+                break;
             }
 
             //pop tokens to helper stack until correct SET_CUSTOM_FUNCTION found
@@ -76,6 +98,13 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
 
             token firstToken = popTokenAsValue(helperStack, data);
             token secondToken = popTokenAsValue(helperStack, data);
+            
+            if (firstToken.type == NONE || secondToken.type == NONE) {
+                cout << "Expected a value!\n";
+                helperStack.push_back({});
+                break;
+            }
+
 
             evaluatedToken.value = secondToken.value + firstToken.value;
             helperStack.push_back(evaluatedToken);
@@ -89,6 +118,12 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
             token firstToken = popTokenAsValue(helperStack, data);
             token secondToken = popTokenAsValue(helperStack, data);
 
+            if (firstToken.type == NONE || secondToken.type == NONE) {
+                cout << "Expected a value!\n";
+                helperStack.push_back({});
+                break;
+            }
+
             evaluatedToken.value = secondToken.value - firstToken.value;
             helperStack.push_back(evaluatedToken);
             break;
@@ -100,6 +135,13 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
 
             token firstToken = popTokenAsValue(helperStack, data);
             token secondToken = popTokenAsValue(helperStack, data);
+
+            if (firstToken.type == NONE || secondToken.type == NONE) {
+                cout << "Expected a value!\n";
+                helperStack.push_back({});
+                break;
+            }
+
 
             evaluatedToken.value = secondToken.value * firstToken.value;
             helperStack.push_back(evaluatedToken);
@@ -113,6 +155,12 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
             token firstToken = popTokenAsValue(helperStack, data);
             token secondToken = popTokenAsValue(helperStack, data);
 
+            if (firstToken.type == NONE || secondToken.type == NONE) {
+                cout << "Expected a value!\n";
+                helperStack.push_back({});
+                break;
+            }
+
             evaluatedToken.value = secondToken.value / firstToken.value;
             helperStack.push_back(evaluatedToken);
             break;
@@ -125,6 +173,12 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
             token firstToken = popTokenAsValue(helperStack, data);
             token secondToken = popTokenAsValue(helperStack, data);
 
+            if (firstToken.type == NONE || secondToken.type == NONE) {
+                cout << "Expected a value!\n";
+                helperStack.push_back({});
+                break;
+            }
+
             evaluatedToken.value = pow(secondToken.value, firstToken.value);
             helperStack.push_back(evaluatedToken);
             break;
@@ -136,6 +190,12 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
 
             token firstToken = popTokenAsValue(helperStack, data);
             
+            if (firstToken.type == NONE) {
+                cout << "Expected a value!\n";
+                helperStack.push_back({});
+                break;
+            }
+
             float firstTokenValueToFloat = float(firstToken.value);
             float sqrtResult = sqrt(firstTokenValueToFloat);
             evaluatedToken.value = sqrtResult;
@@ -145,10 +205,18 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
         case FUNC_SET_VARIABLE:
         {
             token startingValueToken = popTokenAsValue(helperStack, data);
-    
-            token variableToken = helperStack[helperStack.size() - 1];
-            helperStack.pop_back();
+            if (startingValueToken.type == NONE) {
+                cout << "Expected a value!\n";
+                helperStack.push_back({});
+                break;
+            }
 
+            token variableToken = popToken(helperStack, data);
+            if (variableToken.type != VARIABLE) {
+                cout << "Expected a variable!\n";
+                helperStack.push_back({});
+                break;
+            }
             //assign the variable value to be firstToken
             data.variableExpressions.at(variableToken.value)[0] = startingValueToken;
 
@@ -158,6 +226,13 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
       
         case FUNC_SET_CUSTOM_FUNCTION:
         {
+
+            if (findCustomFunctionDeclaration(tokensInRPN[i], data).size() > 0){
+                cout << "Function already declared!\n";
+                helperStack.push_back({});
+                break;
+            }
+
 
             //because of how CUSTOM_FUNCTION is treated when it is not declared the helperstack should now contain 
             //the expression for the function

@@ -295,6 +295,96 @@ TEST(tokenizerTests, tokenizerDetectsDeclaredVariablesCorrectly){
 	checkTokensMatch(output, expectedTokens);
 };
 
+TEST(tokenizerTests, tokenizerCreatesNewFunctionTokenTypeWhenFUNCTIONFunctionIsUsed) {
+	string input = "FUNCTION(foo,50*5)";
+	tokenData data = {};
+	vector<token> tokens = getTokensFromInputString(input, data);
+	vector<token> expectedTokens = {
+		{
+			.type = FUNC_SET_CUSTOM_FUNCTION,
+			.value = 1
+		},
+		{
+			.type = PARENTHESE_LEFT
+		},
+		{
+			.type = CUSTOM_FUNCTION,
+			.value = 1
+		},
+		{
+			.type = COMMA
+		},
+		{
+			.type = NUMBER,
+			.value = 50
+		},
+		{
+			.type = OP_MULTIPLY,
+		},
+		{
+			.type = NUMBER,
+			.value = 5
+		},
+		{
+			.type = PARENTHESE_RIGHT
+		}
+	};
+	checkTokensMatch(tokens, expectedTokens);
+
+	ASSERT_EQ(data.functionStringToID.size(), 1);
+	ASSERT_EQ(data.functionStringToID["foo"], 1);
+	checkTokensMatch(data.functionExpressions[1], {});
+};
+
+TEST(tokenizerTests, tokenizerBehavesCorrectlyWhenMultipleFUNCTIONFunctionIsUsed) {
+	string firstInput = "FUNCTION(foo,50*5)";
+	tokenData data = {};
+	vector<token> tokensA = getTokensFromInputString(firstInput, data);
+
+	string input = "FUNCTION(foo,1+1)";
+	vector<token> tokens = getTokensFromInputString(input, data);
+
+
+
+	vector<token> expectedTokens = {
+		{
+			.type = FUNC_SET_CUSTOM_FUNCTION,
+			.value = 1
+		},
+		{
+			.type = PARENTHESE_LEFT
+		},
+		{
+			.type = CUSTOM_FUNCTION,
+			.value = 1
+		},
+		{
+			.type = COMMA
+		},
+		{
+			.type = NUMBER,
+			.value = 1
+		},
+		{
+			.type = OP_PLUS,
+		},
+		{
+			.type = NUMBER,
+			.value = 1
+		},
+		{
+			.type = PARENTHESE_RIGHT
+		}
+	};
+	checkTokensMatch(tokens, expectedTokens);
+
+	ASSERT_EQ(data.functionStringToID.size(), 1);
+	ASSERT_EQ(data.functionStringToID["foo"], 1);
+	checkTokensMatch(data.functionExpressions[1], {});
+};
+
+
+
 TEST(tokenizerTests, tokenizerDetectsComma){
 	string input = ",";
 	tokenData data = {};
@@ -410,4 +500,6 @@ TEST(tokenizerTests_extractNumberToken, extractNumberTokenReturnsTokenOfTypeNONE
 	token returnValue = extractNumberToken("POWER", pos);
 	EXPECT_EQ(returnValue.type, NONE);
 };
+
+
 

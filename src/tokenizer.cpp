@@ -240,16 +240,16 @@ bool validParenthesis(const vector<token> tokens) {
 string extractTokenDefinitionString(int& currentPosInString, const string input) {
     string variableString = "";
 
-    int i = currentPosInString - 1;
-    for (i < input.size(); i++;) {
+  
+    for (int i = currentPosInString; i < input.size(); i++) {
         if (input[i] == ',') {
+            currentPosInString = i;
             break;
         }
 
         variableString.push_back(input[i]);
        
     };
-    currentPosInString = i;
     return variableString;
 }
 
