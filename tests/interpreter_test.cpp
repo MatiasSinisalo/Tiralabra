@@ -634,7 +634,7 @@ TEST(InterpreterTests, interpretFromRPNReturnsNONEIfFunctionDoesNotHaveValuesToO
     EXPECT_EQ(output, "Expected a value!\n");
 }
 
-TEST(InterpreterTests, interpretFromRPNReturnsNONEIfSetFunctionDoesNotHaveValuesToOperateOn){
+TEST(InterpreterTests, interpretFromRPNReturnsNONEIfCustomFunctionIsNotDeclaredAndNoDeclaration){
      tokenData data = {
 
         .functionStringToID = {{"foo", 1}},
@@ -657,4 +657,24 @@ TEST(InterpreterTests, interpretFromRPNReturnsNONEIfSetFunctionDoesNotHaveValues
     testInterpreterFor(tokens, {  .type = NONE, .value = 0}, data);
     string output  = testing::internal::GetCapturedStdout();
     EXPECT_EQ(output, "Expected a function declaration!\n");
+}
+
+TEST(InterpreterTests, interpretFromRPNReturnsNONEIfSetVariableDoesNotHaveValuesToOperateOn_2){
+    
+    
+    vector<token> tokens = {
+        {
+            .type = NUMBER,
+            .value = 10
+        },
+        {
+             
+            .type = FUNC_SET_VARIABLE,
+            .value = 1
+        },
+    };
+    testing::internal::CaptureStdout();
+    testInterpreterFor(tokens, {  .type = NONE, .value = 0});
+    string output  = testing::internal::GetCapturedStdout();
+    EXPECT_EQ(output, "Expected a variable!\n");
 }
