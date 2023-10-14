@@ -15,6 +15,7 @@ The application is also missing integration tests where the calculator is tested
 
 Overall I'm quite happy with the progress achieved. Maybe I should have allocated more time towards this project this week in order to implement arguments to user defined functions.
 
+There are a couple of places on the project where the code could be made more readable and less repeatable. 
 
 # Goals for the next week:
 - Interpreter should tell the user what token caused an interpreter error.
