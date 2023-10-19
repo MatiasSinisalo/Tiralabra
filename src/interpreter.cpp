@@ -173,6 +173,14 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
                 break;
             }
 
+            if (firstToken.value == 0) {
+                cout << "Error from char: " << tokensInRPN[i].originalPosition << "\n";
+                cout << "Division by zero!\n";
+                helperStack.push_back({});
+                break;
+            }
+
+
             evaluatedToken.value = secondToken.value / firstToken.value;
             evaluatedToken.originalPosition = tokensInRPN[i].originalPosition;
             helperStack.push_back(evaluatedToken);
