@@ -85,6 +85,7 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
                 helperStack.push_back(tokensInRPN[j]);
             }
             if(stopPoint < 0){
+                cout << "Error from char: "<< tokensInRPN[i].originalPosition << "\n";
                 cout << "Expected a function declaration!\n";
                 helperStack.push_back({});
                 break;
@@ -104,6 +105,7 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
             token secondToken = popTokenAsValue(helperStack, data);
             
             if (firstToken.type == NONE || secondToken.type == NONE) {
+                cout << "Error from char: " << tokensInRPN[i].originalPosition << "\n";
                 cout << "Expected a value!\n";
                 helperStack.push_back({});
                 break;
@@ -123,6 +125,7 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
             token secondToken = popTokenAsValue(helperStack, data);
 
             if (firstToken.type == NONE || secondToken.type == NONE) {
+                cout << "Error from char: " << tokensInRPN[i].originalPosition << "\n";
                 cout << "Expected a value!\n";
                 helperStack.push_back({});
                 break;
@@ -141,6 +144,7 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
             token secondToken = popTokenAsValue(helperStack, data);
 
             if (firstToken.type == NONE || secondToken.type == NONE) {
+                cout << "Error from char: " << tokensInRPN[i].originalPosition << "\n";
                 cout << "Expected a value!\n";
                 helperStack.push_back({});
                 break;
@@ -160,6 +164,7 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
             token secondToken = popTokenAsValue(helperStack, data);
 
             if (firstToken.type == NONE || secondToken.type == NONE) {
+                cout << "Error from char: " << tokensInRPN[i].originalPosition << "\n";
                 cout << "Expected a value!\n";
                 helperStack.push_back({});
                 break;
@@ -178,6 +183,7 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
             token secondToken = popTokenAsValue(helperStack, data);
 
             if (firstToken.type == NONE || secondToken.type == NONE) {
+                cout << "Error from char: " << tokensInRPN[i].originalPosition << "\n";
                 cout << "Expected a value!\n";
                 helperStack.push_back({});
                 break;
@@ -195,6 +201,7 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
             token firstToken = popTokenAsValue(helperStack, data);
             
             if (firstToken.type == NONE) {
+                cout << "Error from char: " << tokensInRPN[i].originalPosition << "\n";
                 cout << "Expected a value!\n";
                 helperStack.push_back({});
                 break;
@@ -210,6 +217,7 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
         {
             token startingValueToken = popTokenAsValue(helperStack, data);
             if (startingValueToken.type == NONE) {
+                cout << "Error from char: " << tokensInRPN[i].originalPosition << "\n";
                 cout << "Expected a value!\n";
                 helperStack.push_back({});
                 break;
@@ -217,6 +225,7 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
 
             token variableToken = popToken(helperStack, data);
             if (variableToken.type != VARIABLE) {
+                cout << "Error from char: " << tokensInRPN[i].originalPosition << "\n";
                 cout << "Expected a variable!\n";
                 helperStack.push_back({});
                 break;
@@ -232,6 +241,7 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
         {
 
             if (findCustomFunctionDeclaration(tokensInRPN[i], data).size() > 0){
+                cout << "Error from char: " << tokensInRPN[i].originalPosition << "\n";
                 cout << "Function already declared!\n";
                 helperStack.push_back({});
                 break;
