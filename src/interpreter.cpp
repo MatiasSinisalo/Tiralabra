@@ -113,6 +113,7 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
 
 
             evaluatedToken.value = secondToken.value + firstToken.value;
+            evaluatedToken.originalPosition = tokensInRPN[i].originalPosition;
             helperStack.push_back(evaluatedToken);
             break;
         }
@@ -132,6 +133,7 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
             }
 
             evaluatedToken.value = secondToken.value - firstToken.value;
+            evaluatedToken.originalPosition = tokensInRPN[i].originalPosition;
             helperStack.push_back(evaluatedToken);
             break;
         }
@@ -152,6 +154,7 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
 
 
             evaluatedToken.value = secondToken.value * firstToken.value;
+            evaluatedToken.originalPosition = tokensInRPN[i].originalPosition;
             helperStack.push_back(evaluatedToken);
             break;
         }
@@ -171,6 +174,7 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
             }
 
             evaluatedToken.value = secondToken.value / firstToken.value;
+            evaluatedToken.originalPosition = tokensInRPN[i].originalPosition;
             helperStack.push_back(evaluatedToken);
             break;
         }
@@ -190,6 +194,7 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
             }
 
             evaluatedToken.value = pow(secondToken.value, firstToken.value);
+            evaluatedToken.originalPosition = tokensInRPN[i].originalPosition;
             helperStack.push_back(evaluatedToken);
             break;
         }
@@ -210,6 +215,7 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
             float firstTokenValueToFloat = float(firstToken.value);
             float sqrtResult = sqrt(firstTokenValueToFloat);
             evaluatedToken.value = sqrtResult;
+            evaluatedToken.originalPosition = tokensInRPN[i].originalPosition;
             helperStack.push_back(evaluatedToken);
             break;
         }
@@ -233,6 +239,7 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
             //assign the variable value to be firstToken
             data.variableExpressions.at(variableToken.value)[0] = startingValueToken;
 
+            startingValueToken.originalPosition = tokensInRPN[i].originalPosition;
             helperStack.push_back(startingValueToken);
             break;
         }
@@ -256,7 +263,10 @@ token interpretFromRPN(const vector<token> tokensInRPN, tokenData &data){
 
             //return the evaluated expression
 
-            helperStack.push_back({ .type = CUSTOM_FUNCTION, .value = tokensInRPN[i].value });
+            helperStack.push_back({ 
+                .type = CUSTOM_FUNCTION, 
+                .value = tokensInRPN[i].value, 
+                .originalPosition = tokensInRPN[i].originalPosition});
             break;
         }
         default:
