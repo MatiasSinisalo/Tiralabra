@@ -33,10 +33,11 @@ token extractNonNumberToken(
         return { .type = NONE };
     }
 
+    int startOfToken = currentPosInString;
     pair<tokenType, string> result = verifyStringIsTokenType(input, currentPosInString, expectedTokenType, tokenToInputString);
     if (result.first != NONE) {
         currentPosInString += result.second.size();
-        return { .type = result.first };
+        return { .type = result.first, .originalPosition = startOfToken};
     }
 
     return { .type = NONE };
@@ -92,13 +93,15 @@ string extractNumberString(const string input, const int startIndex) {
 token extractNumberToken(const string input, int& currentPosInString) {
 
     string numberString = extractNumberString(input, currentPosInString);
+    int startOfNumberToken = currentPosInString;
 
     if (numberString.size() > 0)
     {
         currentPosInString += numberString.size();
         token numberToken = {
                    .type = NUMBER,
-                   .value = stoi(numberString)
+                   .value = stoi(numberString),
+                   .originalPosition = startOfNumberToken
         };
         return numberToken;
     }
@@ -117,6 +120,7 @@ token extractCustomDeclarationToken(
     const map<string, int>& stringToID,
     tokenType customTokenType
 ) {
+    int startOfCustomDeclarationToken = currentPosInString;
     for (const string& operatorStringToMatch : tokenToInputString.at(customTokenType)) {
         string substringFromPosition = input.substr(currentPosInString, operatorStringToMatch.size());
         //if strings are equal .compare returns 0, 
@@ -125,7 +129,7 @@ token extractCustomDeclarationToken(
 
             //we have found the string matching the custom token so lets get its id and return
             int tokenID = stringToID.at(substringFromPosition);
-            return { .type = customTokenType, .value = tokenID };
+            return { .type = customTokenType, .value = tokenID, .originalPosition = startOfCustomDeclarationToken};
         }
     }
 

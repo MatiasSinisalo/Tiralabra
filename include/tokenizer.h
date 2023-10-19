@@ -94,6 +94,7 @@ class token {
 public:
     tokenType type;
     int value;
+    int originalPosition;
 };
 
 
