@@ -70,7 +70,8 @@ SQRT(16)
 - https://gcovr.com/en/stable/installation.html  
 - http://google.github.io/googletest/primer.html  
 - https://coderefinery.github.io/cmake-workshop/fetch-content/  
-
+- https://en.wikipedia.org/wiki/Shunting_yard_algorithm
+- https://en.wikipedia.org/wiki/Reverse_Polish_notation
 
 
 
