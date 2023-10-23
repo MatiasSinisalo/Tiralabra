@@ -64,6 +64,14 @@ Calculating square root of 16:
 SQRT(16)
 
 
+# Sources
+- https://cmake.org/cmake/help/latest/guide/tutorial/  
+- https://github.com/google/googletest/tree/main/googletest  
+- https://gcovr.com/en/stable/installation.html  
+- http://google.github.io/googletest/primer.html  
+- https://coderefinery.github.io/cmake-workshop/fetch-content/  
+
+
 
 
 
