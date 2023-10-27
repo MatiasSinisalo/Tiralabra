@@ -536,17 +536,19 @@ TEST(InterpreterTests, interpretFromRPNReturnsNONEIfOperatorDoesNotHaveValuesToO
         {
              
             .type = NUMBER,
-            .value = 16
+            .value = 16,
+            .originalPosition = 0,
         },
         {
              
             .type = OP_PLUS,
+            .originalPosition = 1,
         }
     };
     testing::internal::CaptureStdout();
     testInterpreterFor(tokens, {  .type = NONE, .value = 0});
     string output  = testing::internal::GetCapturedStdout();
-    EXPECT_EQ(output, "Expected a value!\n");
+    EXPECT_EQ(output, "Error from char: 1\nExpected a value!\n");
 }
 
 
@@ -561,7 +563,7 @@ TEST(InterpreterTests, interpretFromRPNReturnsNONEIfOperatorDoesNotHaveValuesToO
     testing::internal::CaptureStdout();
     testInterpreterFor(tokens, {  .type = NONE, .value = 0});
     string output  = testing::internal::GetCapturedStdout();
-    EXPECT_EQ(output, "Expected a value!\n");
+    EXPECT_EQ(output, "Error from char: 0\nExpected a value!\n");
 }
 
 TEST(InterpreterTests, interpretFromRPNReturnsNONEIfOperatorDoesNotHaveValuesToOperateOn_3){
@@ -574,7 +576,7 @@ TEST(InterpreterTests, interpretFromRPNReturnsNONEIfOperatorDoesNotHaveValuesToO
     testing::internal::CaptureStdout();
     testInterpreterFor(tokens, {  .type = NONE, .value = 0});
     string output  = testing::internal::GetCapturedStdout();
-    EXPECT_EQ(output, "Expected a value!\n");
+    EXPECT_EQ(output, "Error from char: 0\nExpected a value!\n");
 }
 
 TEST(InterpreterTests, interpretFromRPNReturnsNONEIfOperatorDoesNotHaveValuesToOperateOn_4){
@@ -587,7 +589,7 @@ TEST(InterpreterTests, interpretFromRPNReturnsNONEIfOperatorDoesNotHaveValuesToO
     testing::internal::CaptureStdout();
     testInterpreterFor(tokens, {  .type = NONE, .value = 0});
     string output  = testing::internal::GetCapturedStdout();
-    EXPECT_EQ(output, "Expected a value!\n");
+    EXPECT_EQ(output, "Error from char: 0\nExpected a value!\n");
 }
 
 
@@ -601,24 +603,26 @@ TEST(InterpreterTests, interpretFromRPNReturnsNONEIfFunctionDoesNotHaveValuesToO
     testing::internal::CaptureStdout();
     testInterpreterFor(tokens, {  .type = NONE, .value = 0});
     string output  = testing::internal::GetCapturedStdout();
-    EXPECT_EQ(output, "Expected a value!\n");
+    EXPECT_EQ(output, "Error from char: 0\nExpected a value!\n");
 }
 
 TEST(InterpreterTests, interpretFromRPNReturnsNONEIfFunctionDoesNotHaveValuesToOperateOn_2){
     vector<token> tokens = {
         {
             .type = NUMBER,
-            .value = 1
+            .value = 1,
+            .originalPosition = 6 // POWER(2,) 2 is at index 6
         },
         {
              
             .type = FUNC_POWER,
+            .originalPosition = 0
         },
     };
     testing::internal::CaptureStdout();
     testInterpreterFor(tokens, {  .type = NONE, .value = 0});
     string output  = testing::internal::GetCapturedStdout();
-    EXPECT_EQ(output, "Expected a value!\n");
+    EXPECT_EQ(output, "Error from char: 0\nExpected a value!\n");
 }
 
 TEST(InterpreterTests, interpretFromRPNReturnsNONEIfFunctionDoesNotHaveValuesToOperateOn_3){
@@ -631,7 +635,7 @@ TEST(InterpreterTests, interpretFromRPNReturnsNONEIfFunctionDoesNotHaveValuesToO
     testing::internal::CaptureStdout();
     testInterpreterFor(tokens, {  .type = NONE, .value = 0});
     string output  = testing::internal::GetCapturedStdout();
-    EXPECT_EQ(output, "Expected a value!\n");
+    EXPECT_EQ(output, "Error from char: 0\nExpected a value!\n");
 }
 
 TEST(InterpreterTests, interpretFromRPNReturnsNONEIfCustomFunctionIsNotDeclaredAndNoDeclaration){
@@ -656,7 +660,7 @@ TEST(InterpreterTests, interpretFromRPNReturnsNONEIfCustomFunctionIsNotDeclaredA
     testing::internal::CaptureStdout();
     testInterpreterFor(tokens, {  .type = NONE, .value = 0}, data);
     string output  = testing::internal::GetCapturedStdout();
-    EXPECT_EQ(output, "Expected a function declaration!\n");
+    EXPECT_EQ(output, "Error from char: 0\nExpected a function declaration!\n");
 }
 
 TEST(InterpreterTests, interpretFromRPNReturnsNONEIfSetVariableDoesNotHaveValuesToOperateOn_2){
@@ -665,16 +669,18 @@ TEST(InterpreterTests, interpretFromRPNReturnsNONEIfSetVariableDoesNotHaveValues
     vector<token> tokens = {
         {
             .type = NUMBER,
-            .value = 10
+            .value = 10,
+            .originalPosition = 10 // VARIABLE(,10) 10 is at index 10
         },
         {
              
             .type = FUNC_SET_VARIABLE,
-            .value = 1
+            .value = 1,
+            .originalPosition = 0
         },
     };
     testing::internal::CaptureStdout();
     testInterpreterFor(tokens, {  .type = NONE, .value = 0});
     string output  = testing::internal::GetCapturedStdout();
-    EXPECT_EQ(output, "Expected a variable!\n");
+    EXPECT_EQ(output, "Error from char: 0\nExpected a variable!\n");
 }
